@@ -170,14 +170,14 @@ const PENALTY_CONFIGS = {
   male: [
     { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
     { key: 'solo',      icon: '⚠️', ja: '自慰（ポルノなし）',en: 'Solo (no porn)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.10, isEjac: true,  isSoloEjac: false, isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isSoloEjac: false, isFemaleB: false },
+    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.15, isEjac: true,  isSoloEjac: false, isFemaleB: false },
+    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false },
   ],
   female: [
     { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
     { key: 'solo',      icon: '💜', ja: '自慰（ポルノなし）',en: 'Self-care Solo',    rate: 0.15, isEjac: true,  isSoloEjac: false, isFemaleB: true  },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.10, isEjac: true,  isSoloEjac: false, isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isSoloEjac: false, isFemaleB: false },
+    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.05, isEjac: true,  isSoloEjac: false, isFemaleB: false },
+    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false },
   ]
 };
 
