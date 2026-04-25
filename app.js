@@ -482,7 +482,7 @@ function clearAllData() {
     'energy_ejac_recovery', 'energy_junk_recovery_date',
     'energy_junk_penalty_amt', 'energy_last_junk_date',
     'energy_junk_bonus_awarded', 'energy_female_week_count',
-    'energy_last_solo_ejac',
+    'energy_last_solo_ejac', 'energy_history',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -516,18 +516,38 @@ function addToTodayChange(amount) {
   localStorage.setItem('energy_today_change', JSON.stringify(data));
 }
 
+// ========== HISTORY ==========
+
+function recordHistorySnapshot() {
+  if (!startDate) return;
+  const today = todayStr();
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem('energy_history') || '[]'); } catch(e) { history = []; }
+  const snap = { date: today, pts: Math.round(points) };
+  const idx = history.findIndex(e => e.date === today);
+  if (idx >= 0) {
+    history[idx] = snap;
+  } else {
+    history.push(snap);
+    if (history.length > 90) history = history.slice(-90);
+  }
+  localStorage.setItem('energy_history', JSON.stringify(history));
+}
+
 // ========== POINTS ==========
 
 function addPoints(amount) {
   points = Math.max(0, points + amount);
   savePoints();
   addToTodayChange(amount);
+  recordHistorySnapshot();
 }
 
 function subtractPoints(newValue, lost) {
   points = newValue;
   savePoints();
   addToTodayChange(-lost);
+  recordHistorySnapshot();
 }
 
 // ========== DAILY BASE POINTS ==========
@@ -1111,6 +1131,123 @@ function toggleBg() {
   applyBg();
 }
 
+// ========== CHART ==========
+
+let chartMode = false;
+
+function toggleChartView() {
+  chartMode = !chartMode;
+  document.getElementById('card-stats').classList.toggle('hidden', chartMode);
+  document.getElementById('card-chart').classList.toggle('hidden', !chartMode);
+  document.getElementById('streak-card').classList.toggle('chart-mode', chartMode);
+  document.getElementById('btn-chart-toggle').classList.toggle('active', chartMode);
+  if (chartMode) {
+    renderChart();
+  } else {
+    applyBg();
+  }
+}
+
+function renderChart() {
+  const container = document.getElementById('chart-svg-container');
+  if (!container) return;
+
+  // Load & update history
+  let history = [];
+  try { history = JSON.parse(localStorage.getItem('energy_history') || '[]'); } catch(e) { history = []; }
+  const today = todayStr();
+  const snap = { date: today, pts: Math.round(points) };
+  const existIdx = history.findIndex(e => e.date === today);
+  if (existIdx >= 0) history[existIdx] = snap;
+  else history = [...history, snap];
+
+  const data = history.slice(-30);
+
+  // Labels
+  const totalEl = document.getElementById('chart-total-label');
+  const rangeEl = document.getElementById('chart-range-label');
+  if (totalEl) totalEl.textContent = `${Math.round(points).toLocaleString()} pt`;
+  if (rangeEl) {
+    rangeEl.textContent = lang === 'en'
+      ? `${data.length}-day history`
+      : `過去 ${data.length} 日間`;
+  }
+
+  if (data.length < 2) {
+    container.innerHTML = `<div class="chart-no-data">${lang === 'en' ? '2 days of data needed to show chart' : '2日分のデータが貯まるとグラフが表示されます'}</div>`;
+    return;
+  }
+
+  const W = 310, H = 140;
+  const PAD = { top: 10, right: 10, bottom: 28, left: 48 };
+  const innerW = W - PAD.left - PAD.right;
+  const innerH = H - PAD.top - PAD.bottom;
+
+  const vals = data.map(d => d.pts);
+  const minV = Math.min(...vals);
+  const maxV = Math.max(...vals);
+  const vRange = maxV - minV || Math.max(100, maxV * 0.1);
+  const vPad  = vRange * 0.12;
+  const yMin  = Math.max(0, minV - vPad);
+  const yMax  = maxV + vPad;
+  const yRange = yMax - yMin || 1;
+
+  const xScale = i => PAD.left + (i / (data.length - 1)) * innerW;
+  const yScale = v => PAD.top + (1 - (v - yMin) / yRange) * innerH;
+
+  // Line & area paths
+  const linePts = data.map((d, i) => `${xScale(i).toFixed(1)},${yScale(d.pts).toFixed(1)}`);
+  const pathD = 'M' + linePts.join(' L');
+  const baseY = (PAD.top + innerH).toFixed(1);
+  const areaD = `${pathD} L${xScale(data.length - 1).toFixed(1)},${baseY} L${xScale(0).toFixed(1)},${baseY} Z`;
+
+  // Y-axis grid (3 lines)
+  const gridLines = [0, 0.5, 1].map(frac => {
+    const v = yMin + yRange * frac;
+    const y = yScale(v).toFixed(1);
+    const label = v >= 10000 ? `${(v/1000).toFixed(0)}k` : v >= 1000 ? `${(v/1000).toFixed(1)}k` : Math.round(v).toString();
+    return `<line x1="${PAD.left}" y1="${y}" x2="${W - PAD.right}" y2="${y}" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="4,3"/><text x="${PAD.left - 5}" y="${(parseFloat(y) + 3.5).toFixed(1)}" text-anchor="end" fill="rgba(255,255,255,0.32)" font-size="8.5" font-family="system-ui,sans-serif">${label}</text>`;
+  }).join('');
+
+  // Dots
+  const dots = data.map((d, i) => {
+    const cx = xScale(i).toFixed(1);
+    const cy = yScale(d.pts).toFixed(1);
+    if (d.date === today) {
+      return `<circle cx="${cx}" cy="${cy}" r="5.5" fill="#f5c842" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>`;
+    }
+    return `<circle cx="${cx}" cy="${cy}" r="2.5" fill="#4ade80" opacity="0.8"/>`;
+  }).join('');
+
+  // X-axis date labels
+  const step = data.length <= 7 ? 1 : data.length <= 14 ? 2 : data.length <= 21 ? 3 : 5;
+  const xLabels = data.map((d, i) => {
+    const isLast = i === data.length - 1;
+    if (i % step !== 0 && !isLast) return '';
+    // don't double-print last if it coincides with a step
+    if (isLast && i % step === 0 && i !== 0) return '';
+    const dt = new Date(d.date + 'T00:00:00');
+    const label = `${dt.getMonth() + 1}/${dt.getDate()}`;
+    const x = xScale(i).toFixed(1);
+    const anchor = i === 0 ? 'start' : isLast ? 'end' : 'middle';
+    return `<text x="${x}" y="${H - PAD.bottom + 14}" text-anchor="${anchor}" fill="${d.date === today ? 'rgba(245,200,66,0.7)' : 'rgba(255,255,255,0.28)'}" font-size="8.5" font-family="system-ui,sans-serif">${label}</text>`;
+  }).join('');
+
+  container.innerHTML = `<svg width="100%" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0.01"/>
+    </linearGradient>
+  </defs>
+  ${gridLines}
+  <path d="${areaD}" fill="url(#cg)"/>
+  <path d="${pathD}" fill="none" stroke="#4ade80" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  ${dots}
+  ${xLabels}
+</svg>`;
+}
+
 // ========== LANG ==========
 
 function applyLang() {
@@ -1248,6 +1385,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Main screen
   document.getElementById('btn-bg-toggle').addEventListener('click', toggleBg);
+  document.getElementById('btn-chart-toggle').addEventListener('click', toggleChartView);
   document.getElementById('btn-settings').addEventListener('click', openSettings);
   document.getElementById('btn-open-activity').addEventListener('click', openActivityModal);
   document.getElementById('btn-emergency').addEventListener('click', openEmergency);

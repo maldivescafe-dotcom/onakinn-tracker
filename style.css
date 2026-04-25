@@ -148,11 +148,16 @@ header h1 {
   margin-top: 8px;
 }
 
-/* ========== BG TOGGLE ========== */
-.btn-bg-toggle {
+/* ========== CARD TOP BUTTONS ========== */
+.card-top-btns {
   position: absolute;
   top: 12px;
   right: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+.btn-card-icon {
   background: rgba(255,255,255,0.12);
   border: none;
   border-radius: 50%;
@@ -160,10 +165,53 @@ header h1 {
   height: 34px;
   font-size: 1rem;
   cursor: pointer;
-  z-index: 2;
+  font-family: inherit;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.btn-bg-toggle:active { background: rgba(255,255,255,0.24); }
+.btn-card-icon:active { background: rgba(255,255,255,0.24); }
+.btn-card-icon.active { background: rgba(245,200,66,0.28); }
+/* keep old selector working */
+.btn-bg-toggle { display: none; }
+
+/* ========== CHART VIEW ========== */
+.streak-card.chart-mode {
+  background: linear-gradient(135deg, #0a120a, #111e11) !important;
+}
+#card-chart {
+  padding-top: 4px;
+}
+.chart-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+.chart-total-label {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: -0.5px;
+}
+.chart-range-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.38);
+  font-weight: 600;
+}
+#chart-svg-container svg {
+  display: block;
+  width: 100%;
+}
+.chart-no-data {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 28px 0 20px;
+  line-height: 1.6;
+}
 
 /* ========== ACTIVITY LAUNCH CARD ========== */
 .activity-launch-card {

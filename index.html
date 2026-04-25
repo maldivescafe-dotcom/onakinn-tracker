@@ -56,14 +56,28 @@
 
     <!-- Points Card -->
     <div class="streak-card" id="streak-card">
-      <button id="btn-bg-toggle" class="btn-bg-toggle" title="背景を切り替え">🖼</button>
-      <div class="level-label" id="level-label">Lv.1 スターター</div>
-      <div class="points-row">
-        <span class="streak-days" id="points-display">0</span>
-        <span class="streak-unit">pt</span>
+      <div class="card-top-btns">
+        <button id="btn-chart-toggle" class="btn-card-icon" title="グラフ">📊</button>
+        <button id="btn-bg-toggle" class="btn-card-icon" title="背景を切り替え">🖼</button>
       </div>
-      <div class="streak-sub" id="today-gain-display">今日 +50pt</div>
-      <div class="streak-start" id="streak-start"></div>
+      <!-- Stats view (default) -->
+      <div id="card-stats">
+        <div class="level-label" id="level-label">Lv.1 スターター</div>
+        <div class="points-row">
+          <span class="streak-days" id="points-display">0</span>
+          <span class="streak-unit">pt</span>
+        </div>
+        <div class="streak-sub" id="today-gain-display">今日 +50pt</div>
+        <div class="streak-start" id="streak-start"></div>
+      </div>
+      <!-- Chart view (hidden) -->
+      <div id="card-chart" class="hidden">
+        <div class="chart-header-row">
+          <div class="chart-total-label" id="chart-total-label"></div>
+          <div class="chart-range-label" id="chart-range-label"></div>
+        </div>
+        <div id="chart-svg-container"></div>
+      </div>
     </div>
 
     <!-- Activity Button -->
