@@ -221,6 +221,17 @@ const MESSAGES = [
   '困難な道を選ぶ者だけが、たどり着ける場所がある。',
   '今日の我慢が、明日の自信になる。',
   '何かを手放すことで、もっと大切なものが手に入る。',
+  // ── スピリチュアル・エネルギー系メッセージ ──
+  'シャクティは静寂の中で燃える。欲望に向けた炎を内へ向けるとき、それは神聖な光となる。',
+  'オージャス（生命精気）とは内なる輝きだ。それを守るとき、意識は清澄になり、本物の力が宿る。',
+  '「神はあなたの中に、あなたとして宿っている。」—バーバー・ムクタナンダ',
+  'ヨーガ・スートラ（II-38）：「禁欲を確立することで、活力が得られる。」—パタンジャリ',
+  '禁欲を実践する者に獅子のような力が宿る。エネルギーが内側で熟成するからだ。—ヴィヴェーカーナンダの教えより',
+  'クンダリニーは脊柱の底に眠る。欲求を制するたびに、その火は少しずつ上昇していく。',
+  '性的エネルギーと宇宙の創造力は同じ源から来る。どちらに向けるかで、人生の質が決まる。',
+  'タオの教え：精（ジン）を守ることは命の木に水をやることだ。流せば散り、守れば根が深まる。',
+  '「欲望を満たすことで欲望は消えない。炎に油を注ぐようなものだ。」—古代インドの知恵',
+  'エネルギーは消えない。形を変えるだけだ。今日の自制が、明日の創造力・集中力・輝きとなる。',
 ];
 
 const MESSAGES_EN = [
@@ -244,6 +255,17 @@ const MESSAGES_EN = [
   'Only those who choose the harder path reach places others cannot.',
   "Today's patience becomes tomorrow's confidence.",
   'By letting go of something, you gain something far more valuable.',
+  // ── Spiritual / Energy messages ──
+  'Shakti burns in silence. When you turn the flame of desire inward, it becomes divine light.',
+  'Ojas — the vital essence — becomes luminosity within. Preserve it, and consciousness grows clear and powerful.',
+  '"God dwells within you, as you." — Baba Muktananda',
+  'Yoga Sutra II.38: "From the establishment of brahmacharya, vigor is gained." — Patanjali',
+  'One who practices restraint attains the strength of a lion — energy undissipated matures into inner power. (After Vivekananda)',
+  'Kundalini sleeps at the base of the spine. Each time you master desire, that fire rises a little higher.',
+  'Sexual energy and cosmic creative force share the same source. Where you direct it determines the quality of your life.',
+  'Taoist teaching: To guard one\'s jing is to water the tree of life. What flows out scatters; what is held deepens the roots.',
+  '"Satisfying desire does not quench it — it is like pouring oil on fire." — Ancient Indian wisdom',
+  'Energy is never destroyed. It only changes form. Today\'s restraint becomes tomorrow\'s creativity, focus, and radiance.',
 ];
 
 // ========== DATA: EMERGENCY ==========
