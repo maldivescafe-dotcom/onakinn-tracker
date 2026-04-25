@@ -5,20 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="オナ禁">
-  <meta name="theme-color" content="#0f0f1a">
-  <title>オナ禁トラッカー</title>
+  <meta name="apple-mobile-web-app-title" content="Energy">
+  <meta name="theme-color" content="#0d1a0d">
+  <title>Energy Tracker</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
+  <!-- ======== GENDER SCREEN ======== -->
+  <div id="gender-screen" class="setup-screen hidden">
+    <button class="btn-lang btn-lang-setup">EN</button>
+    <div class="setup-icon">⚡</div>
+    <h2 data-i18n="appTitle">Energy Tracker</h2>
+    <p data-i18n="genderDesc">あなたのモードを選んでください</p>
+    <div class="gender-buttons">
+      <button class="btn-gender" data-gender="male">
+        <span class="gender-btn-icon">👨</span>
+        <span data-i18n="genderMale">男性モード</span>
+      </button>
+      <button class="btn-gender" data-gender="female">
+        <span class="gender-btn-icon">👩</span>
+        <span data-i18n="genderFemale">女性モード</span>
+      </button>
+    </div>
+    <p class="gender-note" data-i18n="genderNote">後から設定で変更できます</p>
+  </div>
+
   <!-- ======== SETUP SCREEN ======== -->
   <div id="setup-screen" class="setup-screen hidden">
     <button class="btn-lang btn-lang-setup">EN</button>
-    <h2 data-i18n="appTitle">オナ禁トラッカー</h2>
-    <p data-i18n-html="setupDescHtml">禁欲の継続日数・効果・一言メッセージを<br>毎日確認できます。</p>
-
+    <div class="setup-icon">⚡</div>
+    <h2 data-i18n="appTitle">Energy Tracker</h2>
+    <p data-i18n="setupDesc">エネルギーを積み上げ、自分を進化させよう。</p>
     <label for="start-date-input" data-i18n="startDateLabel">開始日を選択</label>
     <input type="date" id="start-date-input" class="date-input">
     <button id="btn-start" class="btn-start" data-i18n="btnStart">スタートする</button>
@@ -28,39 +47,45 @@
   <div id="main-screen" class="hidden">
 
     <header>
-      <h1 data-i18n="headerTitle">オナ禁トラッカー</h1>
-      <button class="btn-lang">EN</button>
+      <h1 data-i18n="headerTitle">⚡ Energy Tracker</h1>
+      <div class="header-right">
+        <button class="btn-lang">EN</button>
+        <button id="btn-settings" class="btn-settings">⚙️</button>
+      </div>
     </header>
 
-    <!-- Streak -->
+    <!-- Points Card -->
     <div class="streak-card" id="streak-card">
       <button id="btn-bg-toggle" class="btn-bg-toggle" title="背景を切り替え">🖼</button>
-      <div class="streak-label" data-i18n="streakLabel">現在の記録</div>
-      <div>
-        <span class="streak-days" id="streak-days">0</span>
-        <span class="streak-unit" data-i18n="streakUnit">日達成中</span>
+      <div class="level-label" id="level-label">Lv.1 スターター</div>
+      <div class="points-row">
+        <span class="streak-days" id="points-display">0</span>
+        <span class="streak-unit">pt</span>
       </div>
-      <div class="streak-sub" data-i18n="streakSub">今日も続けています</div>
+      <div class="streak-sub" id="today-gain-display">今日 +50pt</div>
       <div class="streak-start" id="streak-start"></div>
+    </div>
+
+    <!-- Activity Button -->
+    <div class="activity-launch-card">
+      <div class="activity-today-row" id="activity-today-row">
+        <!-- today's done activity chips rendered by JS -->
+      </div>
+      <button id="btn-open-activity" class="btn-open-activity">
+        <span>⚡</span>
+        <span data-i18n="activityBtnText">活動を記録する</span>
+      </button>
     </div>
 
     <!-- Message -->
     <div class="message-card">
-      <div class="label" data-i18n="messageLabel">今日の一言</div>
+      <div class="label" data-i18n="messageLabel">今日のメッセージ</div>
       <div class="message-text" id="message-text"></div>
-    </div>
-
-    <!-- Effect -->
-    <div class="effect-card">
-      <div class="label" data-i18n="effectLabel">現在の想定効果</div>
-      <div class="effect-period" id="effect-period"></div>
-      <div class="effect-title" id="effect-title"></div>
-      <ul class="effect-list" id="effect-list"></ul>
     </div>
 
     <!-- Milestones -->
     <div class="progress-section">
-      <div class="label" data-i18n="milestonesLabel">マイルストーン達成度</div>
+      <div class="label" data-i18n="milestonesLabel">マイルストーン</div>
       <div class="milestones" id="milestones"></div>
     </div>
 
@@ -70,6 +95,14 @@
         <span class="emergency-icon">🆘</span>
         <span data-i18n="emergencyBtn">今すぐしたくなった…</span>
       </button>
+    </div>
+
+    <!-- Penalty Section -->
+    <div class="penalty-section">
+      <div class="label" data-i18n="penaltyLabel">悪習慣を記録</div>
+      <div class="penalty-buttons" id="penalty-buttons">
+        <!-- rendered by JS -->
+      </div>
     </div>
 
     <!-- Recommended Links -->
@@ -86,13 +119,101 @@
       </a>
     </div>
 
-    <!-- Actions -->
+    <!-- Share -->
     <div class="actions">
-      <button id="btn-reset" class="btn btn-reset" data-i18n="btnReset">リセット</button>
       <button id="btn-share" class="btn btn-share" data-i18n="btnShare">シェア</button>
     </div>
 
     <footer data-i18n="footer">毎日の積み重ねが、あなたを変える。</footer>
+  </div>
+
+  <!-- ======== ACTIVITY MODAL ======== -->
+  <div id="activity-modal" class="modal-overlay">
+    <div class="modal modal-activity">
+      <div class="modal-header-row">
+        <div class="modal-title" data-i18n="activityModalTitle">活動を記録する</div>
+        <button id="btn-activity-close" class="modal-close-btn">✕</button>
+      </div>
+      <p class="modal-desc" data-i18n="activityModalDesc">今日行ったことをタップしてください</p>
+      <div class="activity-modal-grid" id="activity-modal-grid">
+        <!-- rendered by JS -->
+      </div>
+      <div class="activity-feedback" id="activity-feedback"></div>
+    </div>
+  </div>
+
+  <!-- ======== PENALTY MODAL ======== -->
+  <div id="penalty-modal" class="modal-overlay">
+    <div class="modal modal-penalty">
+      <div class="modal-header-row">
+        <div class="modal-title" data-i18n="penaltyModalTitle">悪習慣を記録</div>
+        <button id="btn-penalty-close" class="modal-close-btn">✕</button>
+      </div>
+      <!-- Step 1: selection -->
+      <div id="penalty-step1">
+        <p class="modal-desc" data-i18n="penaltyModalDesc">記録する行動を選んでください</p>
+        <div class="penalty-modal-list" id="penalty-modal-list">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+      <!-- Step 2: confirm -->
+      <div id="penalty-step2" class="hidden">
+        <div class="penalty-confirm-box" id="penalty-confirm-box"></div>
+        <div class="modal-buttons">
+          <button id="btn-penalty-back" class="btn-cancel" data-i18n="btnBack">戻る</button>
+          <button id="btn-penalty-confirm" class="btn-confirm-penalty" data-i18n="btnConfirmPenalty">記録する</button>
+        </div>
+      </div>
+      <!-- Step 3: result -->
+      <div id="penalty-step3" class="hidden">
+        <div class="penalty-result-box" id="penalty-result-box"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== SETTINGS MODAL ======== -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal modal-settings">
+      <div class="modal-header-row">
+        <div class="modal-title" data-i18n="settingsTitle">設定</div>
+        <button id="btn-settings-close" class="modal-close-btn">✕</button>
+      </div>
+      <div class="settings-section">
+        <div class="settings-label" data-i18n="settingsModeLabel">モードを変更</div>
+        <div class="gender-buttons gender-buttons-sm">
+          <button class="btn-gender-sm" data-gender="male">
+            <span>👨</span><span data-i18n="genderMale">男性モード</span>
+          </button>
+          <button class="btn-gender-sm" data-gender="female">
+            <span>👩</span><span data-i18n="genderFemale">女性モード</span>
+          </button>
+        </div>
+        <div class="current-mode-info" id="current-mode-info"></div>
+      </div>
+      <div class="settings-section" id="female-limit-section">
+        <div class="settings-label" data-i18n="settingsFemaleLimit">「適度」の上限（回/週）</div>
+        <div class="limit-row">
+          <button id="btn-limit-minus" class="btn-limit">−</button>
+          <span id="limit-display" class="limit-num">3</span>
+          <button id="btn-limit-plus" class="btn-limit">＋</button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <button id="btn-reset-all" class="btn-reset-all" data-i18n="btnResetAll">全データをリセット</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== RESET CONFIRM MODAL ======== -->
+  <div id="reset-modal" class="modal-overlay">
+    <div class="modal">
+      <h3 data-i18n="resetTitle">全データをリセットしますか？</h3>
+      <p data-i18n-html="resetBodyHtml">ポイント・記録がすべて消えます。<br>本当にリセットしますか？</p>
+      <div class="modal-buttons">
+        <button id="btn-cancel" class="btn-cancel" data-i18n="btnCancel">キャンセル</button>
+        <button id="btn-confirm" class="btn-confirm" data-i18n="btnConfirm">リセットする</button>
+      </div>
+    </div>
   </div>
 
   <!-- ======== EMERGENCY MODAL ======== -->
@@ -114,18 +235,6 @@
         <button id="btn-tip-next" class="btn-tip-nav" data-i18n="btnNext">次へ ›</button>
       </div>
       <div class="emergency-affirmation" id="emergency-affirmation"></div>
-    </div>
-  </div>
-
-  <!-- ======== RESET MODAL ======== -->
-  <div id="reset-modal" class="modal-overlay">
-    <div class="modal">
-      <h3 data-i18n="resetTitle">記録をリセットしますか？</h3>
-      <p data-i18n-html="resetBodyHtml">現在の記録がすべて消えます。<br>本当にリセットしますか？</p>
-      <div class="modal-buttons">
-        <button id="btn-cancel" class="btn-cancel" data-i18n="btnCancel">キャンセル</button>
-        <button id="btn-confirm" class="btn-confirm" data-i18n="btnConfirm">リセットする</button>
-      </div>
     </div>
   </div>
 

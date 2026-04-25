@@ -1,11 +1,11 @@
 {
-  "name": "オナ禁トラッカー",
-  "short_name": "オナ禁",
-  "description": "禁欲の継続日数と効果を記録するアプリ",
+  "name": "Energy Tracker",
+  "short_name": "Energy",
+  "description": "エネルギーを積み上げ、自分を進化させるポイント制トラッカー",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0f0f1a",
-  "theme_color": "#6c63ff",
+  "background_color": "#0d1a0d",
+  "theme_color": "#f5c842",
   "orientation": "portrait",
   "icons": [
     {
