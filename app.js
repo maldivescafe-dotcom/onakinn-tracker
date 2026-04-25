@@ -70,6 +70,11 @@ const T = {
     femaleLimitReached: '今週の上限に達しています（設定で変更可）',
     femaleSelfCareNote: '適度範囲内 — セルフケアボーナスが明日解放されます！',
     bonusApplied: 'ボーナス適用！',
+    effectsLabel: '想定される効果',
+    effectsSubSolo: (d) => `禁欲（ポルノ・自慰なし）${d}日目`,
+    effectsSubStart: (d) => `開始から${d}日目`,
+    effectsNote: '※ セックスでは効果はリセットされません',
+    effectsLocked: 'まだ未到達',
   },
   en: {
     appTitle: 'Energy Tracker',
@@ -136,6 +141,11 @@ const T = {
     femaleLimitReached: 'Weekly limit reached (change in Settings)',
     femaleSelfCareNote: 'Within moderate range — self-care bonus unlocked tomorrow!',
     bonusApplied: 'Bonus applied!',
+    effectsLabel: 'Expected Effects',
+    effectsSubSolo: (d) => `Day ${d} without solo ejaculation`,
+    effectsSubStart: (d) => `Day ${d} from start`,
+    effectsNote: '* Sex with a partner does not reset your effects',
+    effectsLocked: 'Not yet reached',
   }
 };
 
@@ -158,16 +168,16 @@ const ACTIVITIES = [
 
 const PENALTY_CONFIGS = {
   male: [
-    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.65, isEjac: true,  isFemaleB: false },
-    { key: 'solo',      icon: '⚠️', ja: '自慰（ポルノなし）',en: 'Solo (no porn)',    rate: 0.45, isEjac: true,  isFemaleB: false },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.20, isEjac: true,  isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isFemaleB: false },
+    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
+    { key: 'solo',      icon: '⚠️', ja: '自慰（ポルノなし）',en: 'Solo (no porn)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
+    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.10, isEjac: true,  isSoloEjac: false, isFemaleB: false },
+    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isSoloEjac: false, isFemaleB: false },
   ],
   female: [
-    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.45, isEjac: true,  isFemaleB: false },
-    { key: 'solo',      icon: '💜', ja: '自慰（ポルノなし）',en: 'Self-care Solo',    rate: 0.15, isEjac: true,  isFemaleB: true  },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.10, isEjac: true,  isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isFemaleB: false },
+    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
+    { key: 'solo',      icon: '💜', ja: '自慰（ポルノなし）',en: 'Self-care Solo',    rate: 0.15, isEjac: true,  isSoloEjac: false, isFemaleB: true  },
+    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.10, isEjac: true,  isSoloEjac: false, isFemaleB: false },
+    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.25, isEjac: false, isSoloEjac: false, isFemaleB: false },
   ]
 };
 
@@ -312,6 +322,30 @@ const EMERGENCY_AFFIRMATIONS_EN = [
   'Your future self, 10 minutes from now, is grateful for your choice today.',
 ];
 
+// ========== DATA: EFFECTS ==========
+
+const EFFECTS_MALE = [
+  { days: 1,  icon: '⚡', ja: '自制心と意識が高まる',                       en: 'Willpower and awareness increase' },
+  { days: 3,  icon: '💪', ja: 'エネルギーが増し、気力が回復し始める',       en: 'Energy rises, vitality begins recovering' },
+  { days: 7,  icon: '📈', ja: 'テストステロンが最大+45%上昇（研究データ）', en: 'Testosterone peaks up to +45% (research)' },
+  { days: 14, icon: '🧠', ja: '集中力・記憶力が向上する',                   en: 'Focus and memory sharpen significantly' },
+  { days: 21, icon: '😌', ja: 'ドーパミン感受性が改善し始める',             en: 'Dopamine sensitivity begins to normalize' },
+  { days: 30, icon: '🌟', ja: '社会的自信が増す・肌ツヤが改善する',         en: 'Social confidence grows, skin improves' },
+  { days: 60, icon: '🔥', ja: '脳の報酬回路が大幅に回復する',               en: 'Brain reward circuit significantly heals' },
+  { days: 90, icon: '🦁', ja: 'エネルギーが安定・創造性と活力が最大化する', en: 'Energy stabilizes, creativity and vitality peak' },
+];
+
+const EFFECTS_FEMALE = [
+  { days: 1,  icon: '⚡', ja: '自分との向き合い方が変わり始める',                 en: 'Your relationship with yourself begins shifting' },
+  { days: 3,  icon: '😌', ja: 'ストレス反応が穏やかになる',                       en: 'Stress response becomes calmer' },
+  { days: 7,  icon: '🧠', ja: '感情の波が安定し始める',                           en: 'Emotional waves start to stabilize' },
+  { days: 14, icon: '💆', ja: '集中力と自己効力感が向上する',                     en: 'Focus and self-efficacy improve' },
+  { days: 21, icon: '🌸', ja: 'セルフイメージが改善・内的な充実感が増す',         en: 'Self-image improves, inner fulfillment grows' },
+  { days: 30, icon: '🌟', ja: '創造性・感受性が豊かになる',                       en: 'Creativity and sensitivity flourish' },
+  { days: 60, icon: '🔥', ja: 'エネルギーが安定し、本来の活力を取り戻す',         en: 'Energy stabilizes, natural vitality returns' },
+  { days: 90, icon: '🦁', ja: '内なる強さと充実した自己感覚が確立される',         en: 'Inner strength and authentic self-sense established' },
+];
+
 const RECOMMEND_LINKS = [
   { type: 'YouTube', icon: '▶️', title: 'Better Than Yesterday', desc: '自己改善・禁欲・習慣化をテーマにした英語チャンネル。科学的根拠に基づく解説が人気。', url: 'https://www.youtube.com/@BetterThanYesterday' },
   { type: 'YouTube', icon: '▶️', title: 'Improvement Pill', desc: 'NoFap・自己鍛錬・メンタル強化をアニメーション解説。初心者にわかりやすい。', url: 'https://www.youtube.com/@ImprovementPill' },
@@ -396,6 +430,20 @@ function getPenalties() {
   return PENALTY_CONFIGS[gender] || PENALTY_CONFIGS.male;
 }
 
+// ========== EFFECT DAYS ==========
+// Days without solo ejaculation (porn+solo or solo). Sex does NOT reset this.
+
+function getEffectDays() {
+  const lastSolo = localStorage.getItem('energy_last_solo_ejac');
+  if (!lastSolo) return getDays();
+  const daysSince = Math.floor((Date.now() - parseInt(lastSolo)) / (1000 * 60 * 60 * 24));
+  return Math.max(0, daysSince);
+}
+
+function setSoloEjacTime() {
+  localStorage.setItem('energy_last_solo_ejac', Date.now().toString());
+}
+
 // ========== STATE ==========
 
 let points   = 0;
@@ -434,6 +482,7 @@ function clearAllData() {
     'energy_ejac_recovery', 'energy_junk_recovery_date',
     'energy_junk_penalty_amt', 'energy_last_junk_date',
     'energy_junk_bonus_awarded', 'energy_female_week_count',
+    'energy_last_solo_ejac',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -674,6 +723,10 @@ function recordPenalty(penaltyKey) {
     extraMsg = tr().recoveryTip;
   }
 
+  if (penalty.isSoloEjac) {
+    setSoloEjacTime();
+  }
+
   if (penalty.key === 'junk') {
     // Set junk recovery for tomorrow
     const tomorrow = new Date();
@@ -739,11 +792,52 @@ function render() {
     container.appendChild(row);
   });
 
+  // Effects section
+  renderEffects();
+
   // Penalty buttons
   renderPenaltyButtons();
 
   // Today's activities row
   renderTodayActivityRow();
+}
+
+function renderEffects() {
+  const effectDays = getEffectDays();
+  const effects = gender === 'female' ? EFFECTS_FEMALE : EFFECTS_MALE;
+  const t = tr();
+  const lastSolo = localStorage.getItem('energy_last_solo_ejac');
+
+  // Sub label
+  const sub = document.getElementById('effects-sub');
+  if (sub) {
+    sub.textContent = lastSolo
+      ? t.effectsSubSolo(effectDays)
+      : t.effectsSubStart(effectDays);
+  }
+
+  // Note
+  const noteEl = document.getElementById('effects-note');
+  if (noteEl) noteEl.textContent = t.effectsNote;
+
+  // Effects list
+  const list = document.getElementById('effects-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  effects.forEach(eff => {
+    const unlocked = effectDays >= eff.days;
+    const label = lang === 'en' ? eff.en : eff.ja;
+    const dayLabel = lang === 'en' ? `Day ${eff.days}` : `${eff.days}日`;
+    const item = document.createElement('div');
+    item.className = `effect-item${unlocked ? ' unlocked' : ''}`;
+    item.innerHTML = `
+      <div class="effect-day-badge">${dayLabel}</div>
+      <div class="effect-icon-col">${unlocked ? eff.icon : '🔒'}</div>
+      <div class="effect-text">${label}</div>
+    `;
+    list.appendChild(item);
+  });
 }
 
 function renderPenaltyButtons() {
