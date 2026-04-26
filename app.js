@@ -1136,14 +1136,15 @@ let celebrateTimeout = null;
 
 function playCelebrate() {
   const overlay = document.getElementById('celebrate-overlay');
-  const v1 = document.getElementById('celebrate-video-1');
-  const v2 = document.getElementById('celebrate-video-2');
-  if (!overlay || !v1 || !v2) return;
+  const videos = [
+    document.getElementById('celebrate-video-1'),
+    document.getElementById('celebrate-video-2'),
+    document.getElementById('celebrate-video-3'),
+  ].filter(Boolean);
+  if (!overlay || videos.length === 0) return;
 
   // Randomly pick one video
-  const useV2 = Math.random() < 0.5;
-  const active  = useV2 ? v2 : v1;
-  const inactive = useV2 ? v1 : v2;
+  const active = videos[Math.floor(Math.random() * videos.length)];
 
   // Reset if already playing
   if (celebrateTimeout) {
@@ -1151,11 +1152,8 @@ function playCelebrate() {
     celebrateTimeout = null;
   }
 
-  // Show chosen video, hide the other
-  inactive.classList.add('hidden');
-  inactive.pause();
-  inactive.currentTime = 0;
-
+  // Show chosen video, hide others
+  videos.forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
   active.classList.remove('hidden');
   active.currentTime = 0;
 
