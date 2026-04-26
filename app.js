@@ -779,14 +779,21 @@ function recordPenalty(penaltyKey) {
 
 // ========== RENDER ==========
 
+let _lastRenderedLevel = '';
+
 function render() {
   if (!startDate) return;
   const days = getDays();
   const t = tr();
 
-  // Points card
+  // Points card — detect level-up
+  const currentLevel = getLevel(points);
+  const didLevelUp = _lastRenderedLevel && _lastRenderedLevel !== currentLevel;
+  _lastRenderedLevel = currentLevel;
+  if (didLevelUp) playCelebrate();
+
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
-  document.getElementById('level-label').textContent = getLevel(points);
+  document.getElementById('level-label').textContent = currentLevel;
 
   const todayChange = getTodayChange();
   document.getElementById('today-gain-display').textContent = t.todayGain(todayChange);
@@ -964,6 +971,9 @@ function onActivityTap(key, btn) {
   feedbackEl.className = 'activity-feedback show';
   setTimeout(() => feedbackEl.classList.remove('show'), 2500);
 
+  // Celebrate on point gain
+  playCelebrate();
+
   // Update main screen
   render();
   renderRecommend();
@@ -1118,6 +1128,39 @@ function onTipNext() {
 function onTipPrev() {
   currentTipIndex = (currentTipIndex - 1 + getTips().length) % getTips().length;
   renderTip();
+}
+
+// ========== CELEBRATE VIDEO ==========
+
+let celebrateTimeout = null;
+
+function playCelebrate() {
+  const overlay = document.getElementById('celebrate-overlay');
+  const video   = document.getElementById('celebrate-video');
+  if (!overlay || !video) return;
+
+  // Reset if already playing
+  if (celebrateTimeout) {
+    clearTimeout(celebrateTimeout);
+    celebrateTimeout = null;
+  }
+  video.currentTime = 0;
+  overlay.classList.remove('hidden');
+  // Small delay so transition applies
+  requestAnimationFrame(() => {
+    overlay.classList.add('playing');
+    video.play().catch(() => {});
+  });
+
+  // Hide after 5s (video length)
+  celebrateTimeout = setTimeout(() => {
+    overlay.classList.remove('playing');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      video.pause();
+      video.currentTime = 0;
+    }, 350); // wait for fade-out
+  }, 5000);
 }
 
 // ========== BACKGROUND TOGGLE ==========
