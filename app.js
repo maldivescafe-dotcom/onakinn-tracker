@@ -1136,30 +1136,43 @@ let celebrateTimeout = null;
 
 function playCelebrate() {
   const overlay = document.getElementById('celebrate-overlay');
-  const video   = document.getElementById('celebrate-video');
-  if (!overlay || !video) return;
+  const v1 = document.getElementById('celebrate-video-1');
+  const v2 = document.getElementById('celebrate-video-2');
+  if (!overlay || !v1 || !v2) return;
+
+  // Randomly pick one video
+  const useV2 = Math.random() < 0.5;
+  const active  = useV2 ? v2 : v1;
+  const inactive = useV2 ? v1 : v2;
 
   // Reset if already playing
   if (celebrateTimeout) {
     clearTimeout(celebrateTimeout);
     celebrateTimeout = null;
   }
-  video.currentTime = 0;
+
+  // Show chosen video, hide the other
+  inactive.classList.add('hidden');
+  inactive.pause();
+  inactive.currentTime = 0;
+
+  active.classList.remove('hidden');
+  active.currentTime = 0;
+
   overlay.classList.remove('hidden');
-  // Small delay so transition applies
   requestAnimationFrame(() => {
     overlay.classList.add('playing');
-    video.play().catch(() => {});
+    active.play().catch(() => {});
   });
 
-  // Hide after 5s (video length)
+  // Hide after 5s
   celebrateTimeout = setTimeout(() => {
     overlay.classList.remove('playing');
     setTimeout(() => {
       overlay.classList.add('hidden');
-      video.pause();
-      video.currentTime = 0;
-    }, 350); // wait for fade-out
+      active.pause();
+      active.currentTime = 0;
+    }, 350);
   }, 5000);
 }
 
