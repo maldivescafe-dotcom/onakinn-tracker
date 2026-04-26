@@ -351,15 +351,19 @@ const RECOMMEND_LINKS = [
   { type: 'YouTube', icon: '▶️', title: 'Improvement Pill', desc: 'NoFap・自己鍛錬・メンタル強化をアニメーション解説。初心者にわかりやすい。', url: 'https://www.youtube.com/@ImprovementPill' },
   { type: 'YouTube', icon: '▶️', title: 'RedFrost Motivation', desc: '禁欲・自己規律・モチベーション動画を多数公開。継続の後押しに最適。', url: 'https://www.youtube.com/@RedFrostMotivation' },
   { type: 'YouTube', icon: '▶️', title: 'Hamza Ahmed', desc: 'NoFap・筋トレ・自己改善を組み合わせた実践的なアドバイスが人気。', url: 'https://www.youtube.com/@HamzaAhmed' },
+  { type: 'YouTube 🌿', icon: '▶️', title: 'Yoga With Adriene', desc: 'ヨガ・呼吸・マインドフルネスで心身のエネルギーを整える。男女問わず人気の世界最大級ヨガチャンネル。', url: 'https://www.youtube.com/@yogawithadriene' },
+  { type: 'YouTube ✨', icon: '▶️', title: 'Sadhguru', desc: 'クンダリニー・プラーナ・エネルギー管理をスピリチュアルな視点で解説。世界的グル。', url: 'https://www.youtube.com/@SadhguruJV' },
+  { type: 'YouTube 🌸', icon: '▶️', title: 'Lavendaire', desc: '女性向け自己成長・ライフスタイルデザイン・フェミニンエネルギーの活かし方を発信。', url: 'https://www.youtube.com/@Lavendaire' },
   { type: 'コミュニティ', icon: '💬', title: 'Reddit r/NoFap', desc: '世界最大の禁欲コミュニティ。体験談・アドバイス・励ましが日々投稿される。', url: 'https://www.reddit.com/r/NoFap/' },
   { type: 'コミュニティ', icon: '💬', title: 'Reddit r/pornfree', desc: 'ポルノ依存からの解放に特化したコミュニティ。', url: 'https://www.reddit.com/r/pornfree/' },
   { type: 'ブログ', icon: '📖', title: 'Your Brain on Porn', desc: 'ポルノが脳に与える影響を科学的に解説したサイト。', url: 'https://www.yourbrainonporn.com' },
   { type: 'ブログ', icon: '📖', title: 'NoFap公式サイト', desc: '禁欲の科学・よくある質問・回復プログラムなど体系的な情報が揃う。', url: 'https://nofap.com' },
   { type: 'ツール', icon: '🛠️', title: 'Brainbuddy（アプリ）', desc: 'NoFap専用のトラッカーアプリ。コーチング機能・誘惑ブロックも搭載。', url: 'https://www.brainbuddyapp.com' },
   { type: 'ツール', icon: '🛠️', title: 'Cold Turkey Blocker', desc: 'ポルノサイトをPC・スマホで完全ブロックできるアプリ。意志力を補助する。', url: 'https://getcoldturkey.com' },
-  { type: '🇯🇵 YouTube', icon: '▶️', title: 'マコなり社長', desc: '自己規律・習慣化・メンタル強化を日本語で解説。', url: 'https://www.youtube.com/@makonari' },
   { type: '🇯🇵 YouTube', icon: '▶️', title: 'メンタリストDaiGo', desc: '依存症・自己制御・ドーパミン管理を科学的に解説。', url: 'https://www.youtube.com/@mentalistdaigo' },
+  { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru日本語', desc: 'サドゥグルの動画を日本語字幕・吹き替えで届けるチャンネル。エネルギー・瞑想・内なる変容。', url: 'https://www.youtube.com/@SadhguruJapanese' },
   { type: '🇯🇵 まとめ', icon: '💬', title: 'Note「エネルギー管理」記事一覧', desc: '日本人ユーザーによる体験談・コツをまとめた記事が多数掲載。', url: 'https://note.com/search?q=%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC+%E7%AE%A1%E7%90%86' },
+  { type: '🇯🇵 まとめ 🌸', icon: '💬', title: 'Note「フェミニンエネルギー」', desc: '女性向け：フェミニンエネルギー・生活習慣・自己肯定感に関する記事。', url: 'https://note.com/search?q=%E3%83%95%E3%82%A7%E3%83%9F%E3%83%8B%E3%83%B3%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC' },
 ];
 
 const RECOMMEND_LINKS_EN = [
@@ -367,14 +371,17 @@ const RECOMMEND_LINKS_EN = [
   { type: 'YouTube', icon: '▶️', title: 'Improvement Pill', desc: 'Animated explanations of NoFap, discipline & mental training.', url: 'https://www.youtube.com/@ImprovementPill' },
   { type: 'YouTube', icon: '▶️', title: 'RedFrost Motivation', desc: 'NoFap, discipline & motivation videos.', url: 'https://www.youtube.com/@RedFrostMotivation' },
   { type: 'YouTube', icon: '▶️', title: 'Hamza Ahmed', desc: 'Practical advice combining NoFap, fitness & self-improvement.', url: 'https://www.youtube.com/@HamzaAhmed' },
+  { type: 'YouTube 🌿', icon: '▶️', title: 'Yoga With Adriene', desc: 'Yoga, breathwork & mindfulness to restore energy balance. Beloved by millions worldwide.', url: 'https://www.youtube.com/@yogawithadriene' },
+  { type: 'YouTube ✨', icon: '▶️', title: 'Sadhguru', desc: 'Kundalini, prana & energy management from a world-renowned spiritual guide.', url: 'https://www.youtube.com/@SadhguruJV' },
+  { type: 'YouTube 🌸', icon: '▶️', title: 'Lavendaire', desc: 'Self-growth, lifestyle design & feminine energy — ideal for women on this journey.', url: 'https://www.youtube.com/@Lavendaire' },
   { type: 'Community', icon: '💬', title: 'Reddit r/NoFap', desc: "The world's largest NoFap community.", url: 'https://www.reddit.com/r/NoFap/' },
   { type: 'Community', icon: '💬', title: 'Reddit r/pornfree', desc: 'Community focused on freedom from porn addiction.', url: 'https://www.reddit.com/r/pornfree/' },
   { type: 'Article', icon: '📖', title: 'Your Brain on Porn', desc: 'Science-based site explaining how porn affects the brain.', url: 'https://www.yourbrainonporn.com' },
   { type: 'Article', icon: '📖', title: 'NoFap Official Site', desc: 'Science of abstinence, FAQs, and recovery programs.', url: 'https://nofap.com' },
   { type: 'Tool', icon: '🛠️', title: 'Brainbuddy (App)', desc: 'Dedicated tracker app with coaching and blocking features.', url: 'https://www.brainbuddyapp.com' },
   { type: 'Tool', icon: '🛠️', title: 'Cold Turkey Blocker', desc: 'Block adult sites on PC and mobile. Supports your willpower.', url: 'https://getcoldturkey.com' },
-  { type: '🇯🇵 YouTube', icon: '▶️', title: 'Makonari (JP)', desc: 'Japanese channel on discipline, habits & mental strength.', url: 'https://www.youtube.com/@makonari' },
   { type: '🇯🇵 YouTube', icon: '▶️', title: 'Mentalist DaiGo (JP)', desc: 'Science-based explanations of addiction & self-control. (Japanese)', url: 'https://www.youtube.com/@mentalistdaigo' },
+  { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru Japanese', desc: "Sadhguru's teachings on energy, meditation & inner transformation in Japanese.", url: 'https://www.youtube.com/@SadhguruJapanese' },
 ];
 
 // ========== HELPERS ==========
