@@ -1149,6 +1149,9 @@ function playCelebrate() {
     document.getElementById('celebrate-video-12'),
     document.getElementById('celebrate-video-14'),
     document.getElementById('celebrate-video-15'),
+    document.getElementById('celebrate-video-16'),
+    document.getElementById('celebrate-video-17'),
+    document.getElementById('celebrate-video-18'),
   ].filter(Boolean);
   if (!overlay || videos.length === 0) return;
 
