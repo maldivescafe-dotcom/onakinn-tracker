@@ -1790,6 +1790,12 @@ document.addEventListener('DOMContentLoaded', () => {
       setGender(btn.dataset.gender);
       const femaleSection = document.getElementById('female-limit-section');
       femaleSection.style.display = gender === 'female' ? 'block' : 'none';
+      // 男性専用設定の表示切り替え
+      const isMale = gender === 'male';
+      document.getElementById('sex-ejac-rate-label').style.display = isMale ? '' : 'none';
+      document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
+      document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
+      document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
       updateSettingsModeDisplay();
       if (startDate) render();
     });
