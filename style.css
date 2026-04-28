@@ -891,6 +891,54 @@ header h1 {
   margin-bottom: 8px;
   opacity: 0.8;
 }
+/* ========== WELCOME SCREEN ========== */
+.welcome-intro {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.welcome-content {
+  width: 100%;
+  max-width: 360px;
+  text-align: left;
+}
+.welcome-section {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.welcome-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.welcome-row {
+  display: grid;
+  grid-template-columns: 24px 1fr 88px;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.82rem;
+}
+.welcome-row:last-child { border-bottom: none; }
+.welcome-row-icon { font-size: 1rem; text-align: center; }
+.welcome-row-label { color: var(--text); }
+.welcome-row-rate { font-size: 0.76rem; font-weight: 700; color: #f87171; text-align: right; line-height: 1.4; }
+.welcome-recovery-desc { font-size: 0.85rem; color: var(--text); }
+.welcome-settings-note {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 4px 0 16px;
+  text-align: center;
+}
+
 .btn-toggle-wide {
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);

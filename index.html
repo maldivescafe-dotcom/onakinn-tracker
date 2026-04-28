@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0d1a0d">
   <title>Energy Tracker</title>
   <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css?v=2">
+  <link rel="stylesheet" href="./style.css?v=5">
 </head>
 <body>
 
@@ -41,6 +41,17 @@
     <label for="start-date-input" data-i18n="startDateLabel">開始日を選択</label>
     <input type="date" id="start-date-input" class="date-input">
     <button id="btn-start" class="btn-start" data-i18n="btnStart">スタートする</button>
+  </div>
+
+  <!-- ======== WELCOME SCREEN ======== -->
+  <div id="welcome-screen" class="setup-screen hidden">
+    <button class="btn-lang btn-lang-setup">EN</button>
+    <div class="setup-icon">📋</div>
+    <h2 data-i18n="welcomeTitle">初期設定のご確認</h2>
+    <p class="welcome-intro" data-i18n="welcomeIntro">このアプリの初期設定です。あなたに合わせて自由に変更できます。</p>
+    <div id="welcome-content" class="welcome-content"></div>
+    <p class="welcome-settings-note" data-i18n="welcomeSettingsNote">⚙️ 右上の設定ボタンからいつでも変更できます</p>
+    <button id="btn-welcome-start" class="btn-start" data-i18n="welcomeBtn">はじめる →</button>
   </div>
 
   <!-- ======== MAIN SCREEN ======== -->
@@ -368,6 +379,6 @@
     </video>
   </div>
 
-  <script src="./app.js?v=2"></script>
+  <script src="./app.js?v=4"></script>
 </body>
 </html>

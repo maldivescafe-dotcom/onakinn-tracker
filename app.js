@@ -70,6 +70,14 @@ const T = {
     femaleLimitReached: '今週の上限に達しています（設定で変更可）',
     femaleSelfCareNote: '適度範囲内 — セルフケアボーナスが明日解放されます！',
     bonusApplied: 'ボーナス適用！',
+    welcomeTitle: '初期設定のご確認',
+    welcomeIntro: 'このアプリの初期設定です。あなたに合わせて自由に変更できます。',
+    welcomePenaltyLabel: 'ペナルティ設定',
+    welcomeRecoveryLabel: '継続回復システム',
+    welcomeSettingsNote: '⚙️ 右上の設定ボタンからいつでも変更できます',
+    welcomeBtn: 'はじめる →',
+    welcomeSexLimitDesc: (n, r) => `週${n}回まで免除、以降 −${r}%`,
+    welcomeForgivenessDesc: (n) => `${n}日間継続でペナルティが自動回復`,
     sexWithinLimitNote: '今週の免除内 ✓ ペナルティなし',
     settingsSexLabel: 'セックスの設定',
     settingsSexEjacRate: '射精あり 減産率',
@@ -156,6 +164,14 @@ const T = {
     femaleLimitReached: 'Weekly limit reached (change in Settings)',
     femaleSelfCareNote: 'Within moderate range — self-care bonus unlocked tomorrow!',
     bonusApplied: 'Bonus applied!',
+    welcomeTitle: 'Default Settings',
+    welcomeIntro: 'Here are your starting settings. You can adjust them anytime.',
+    welcomePenaltyLabel: 'Penalty Settings',
+    welcomeRecoveryLabel: 'Recovery System',
+    welcomeSettingsNote: '⚙️ Tap the Settings button anytime to adjust',
+    welcomeBtn: 'Get Started →',
+    welcomeSexLimitDesc: (n, r) => `first ${n}/wk free, then −${r}%`,
+    welcomeForgivenessDesc: (n) => `Points restored after ${n} clean days`,
     sexWithinLimitNote: 'Within weekly limit ✓ No penalty',
     settingsSexLabel: 'Sex Settings',
     settingsSexEjacRate: 'Ejaculation penalty rate',
@@ -1547,14 +1563,59 @@ function toggleLang() {
   if (startDate) { render(); renderRecommend(); }
   if (document.getElementById('emergency-modal').classList.contains('open')) renderTip();
   updateSettingsModeDisplay();
+  const ws = document.getElementById('welcome-screen');
+  if (ws && !ws.classList.contains('hidden')) {
+    document.getElementById('welcome-content').innerHTML = renderWelcomeContent();
+  }
 }
 
 // ========== SCREENS ==========
 
 function showScreen(id) {
-  ['gender-screen','setup-screen','main-screen'].forEach(s => {
+  ['gender-screen','setup-screen','welcome-screen','main-screen'].forEach(s => {
     document.getElementById(s).classList.toggle('hidden', s !== id);
   });
+}
+
+// ========== WELCOME SCREEN ==========
+
+function renderWelcomeContent() {
+  const t = tr();
+  const penalties = getPenalties();
+  const sexLimit = getSexWeeklyLimit();
+  const forgiveDays = getForgivenessdays();
+
+  const rows = penalties.map(p => {
+    let rateStr;
+    if (p.isSexEjac && p.rate > 0) {
+      const freeStr = lang === 'en' ? `first ${sexLimit}/wk free` : `週${sexLimit}回まで免除`;
+      const penStr = lang === 'en' ? `then −${Math.round(p.rate*100)}%` : `以降 −${Math.round(p.rate*100)}%`;
+      rateStr = `${freeStr}<br><span style="opacity:.7">${penStr}</span>`;
+    } else if (p.rate === 0) {
+      rateStr = lang === 'en' ? 'log only' : '記録のみ';
+    } else {
+      rateStr = `−${Math.round(p.rate * 100)}%`;
+    }
+    const label = lang === 'en' ? p.en : p.ja;
+    return `<div class="welcome-row"><span class="welcome-row-icon">${p.icon}</span><span class="welcome-row-label">${label}</span><span class="welcome-row-rate">${rateStr}</span></div>`;
+
+  }).join('');
+
+  return `
+    <div class="welcome-section">
+      <div class="welcome-section-title">${t.welcomePenaltyLabel}</div>
+      ${rows}
+    </div>
+    <div class="welcome-section">
+      <div class="welcome-section-title">${t.welcomeRecoveryLabel}</div>
+      <div class="welcome-recovery-desc">🔄 ${t.welcomeForgivenessDesc(forgiveDays)}</div>
+    </div>
+  `;
+}
+
+function showWelcome() {
+  document.getElementById('welcome-content').innerHTML = renderWelcomeContent();
+  showScreen('welcome-screen');
 }
 
 function showMain() {
@@ -1631,7 +1692,11 @@ function onStart() {
   now.setHours(23, 59, 59, 999);
   if (date > now) { alert(t.alertFutureDate); return; }
   saveState(date);
-  showMain();
+  if (!localStorage.getItem('energy_welcomed')) {
+    showWelcome();
+  } else {
+    showMain();
+  }
 }
 
 function onShare() {
@@ -1673,6 +1738,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup
   document.getElementById('btn-start').addEventListener('click', onStart);
+  document.getElementById('btn-welcome-start').addEventListener('click', () => {
+    localStorage.setItem('energy_welcomed', '1');
+    showMain();
+  });
 
   // Main screen
   document.getElementById('btn-bg-toggle').addEventListener('click', toggleBg);
