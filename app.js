@@ -543,10 +543,12 @@ function clearAllData() {
     'energy_junk_bonus_awarded', 'energy_female_week_count',
     'energy_last_solo_ejac', 'energy_history',
     'energy_sex_ejac_week', 'energy_forgiveness_q',
+    'energy_gender', 'energy_welcomed',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
   startDate = null;
+  gender = null;
 }
 
 // ========== DAY CALCULATION ==========
@@ -1722,7 +1724,7 @@ function onResetCancel() {
 function onResetConfirm() {
   document.getElementById('reset-modal').classList.remove('open');
   clearAllData();
-  showSetup();
+  showGenderScreen();
 }
 
 // ========== INIT ==========
