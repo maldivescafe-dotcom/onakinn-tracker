@@ -546,6 +546,8 @@ function clearAllData() {
     'energy_last_solo_ejac', 'energy_history',
     'energy_sex_ejac_week', 'energy_forgiveness_q',
     'energy_gender', 'energy_welcomed',
+    'energy_sex_ejac_pct_m', 'energy_sex_ejac_pct_f',
+    'energy_sex_weekly_limit', 'energy_forgiveness_days', 'energy_sex_no_ejac',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -1657,8 +1659,12 @@ function openSettings() {
   document.getElementById('sex-limit-display').textContent = getSexWeeklyLimit();
   document.getElementById('forgiveness-days-display').textContent = getForgivenessdays();
 
-  // Hide sex_no_ejac row for female (not applicable)
-  document.getElementById('sex-no-ejac-row').style.display = gender === 'female' ? 'none' : 'flex';
+  // Hide male-only sex settings for female mode
+  const isMale = gender === 'male';
+  document.getElementById('sex-ejac-rate-label').style.display = isMale ? '' : 'none';
+  document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
+  document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
+  document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
 
   document.getElementById('settings-modal').classList.add('open');
 }
