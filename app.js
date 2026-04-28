@@ -1387,7 +1387,6 @@ function playCelebrate() {
     document.getElementById('celebrate-video-16'),
     document.getElementById('celebrate-video-17'),
     document.getElementById('celebrate-video-18'),
-    document.getElementById('celebrate-video-19'),
     document.getElementById('celebrate-video-20'),
     document.getElementById('celebrate-video-21'),
     document.getElementById('celebrate-video-22'),
