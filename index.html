@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0d1a0d">
   <title>Energy Tracker</title>
   <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./style.css?v=2">
 </head>
 <body>
 
@@ -221,6 +221,42 @@
           <button id="btn-limit-plus" class="btn-limit">＋</button>
         </div>
       </div>
+
+      <!-- セックス設定 -->
+      <div class="settings-section">
+        <div class="settings-label" data-i18n="settingsSexLabel">セックスの設定</div>
+
+        <div class="settings-sub-label" data-i18n="settingsSexEjacRate">射精あり 減産率</div>
+        <div class="limit-row">
+          <button id="btn-sex-ejac-minus" class="btn-limit">−</button>
+          <span id="sex-ejac-pct-display" class="limit-num">15%</span>
+          <button id="btn-sex-ejac-plus" class="btn-limit">＋</button>
+        </div>
+
+        <div class="settings-sub-label" id="sex-no-ejac-label" data-i18n="settingsSexNoEjacLabel">射精なし をカウント</div>
+        <div class="limit-row" id="sex-no-ejac-row">
+          <button id="btn-sex-no-ejac-toggle" class="btn-toggle-wide">しない（推奨）</button>
+        </div>
+
+        <div class="settings-sub-label" data-i18n="settingsSexWeeklyLimit">セックス 週免除回数</div>
+        <div class="limit-row">
+          <button id="btn-sex-limit-minus" class="btn-limit">−</button>
+          <span id="sex-limit-display" class="limit-num">2</span>
+          <button id="btn-sex-limit-plus" class="btn-limit">＋</button>
+        </div>
+      </div>
+
+      <!-- 継続回復システム -->
+      <div class="settings-section">
+        <div class="settings-label" data-i18n="settingsForgivenessLabel">継続回復システム</div>
+        <div class="settings-hint" data-i18n="settingsForgivenessHint">X日間継続でペナルティを自動回復</div>
+        <div class="limit-row">
+          <button id="btn-forgiveness-minus" class="btn-limit">−</button>
+          <span id="forgiveness-days-display" class="limit-num">30</span>
+          <button id="btn-forgiveness-plus" class="btn-limit">＋</button>
+        </div>
+      </div>
+
       <div class="settings-section">
         <button id="btn-reset-all" class="btn-reset-all" data-i18n="btnResetAll">全データをリセット</button>
       </div>
@@ -332,6 +368,6 @@
     </video>
   </div>
 
-  <script src="./app.js"></script>
+  <script src="./app.js?v=2"></script>
 </body>
 </html>

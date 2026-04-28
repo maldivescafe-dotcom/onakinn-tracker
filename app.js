@@ -70,6 +70,19 @@ const T = {
     femaleLimitReached: '今週の上限に達しています（設定で変更可）',
     femaleSelfCareNote: '適度範囲内 — セルフケアボーナスが明日解放されます！',
     bonusApplied: 'ボーナス適用！',
+    sexWithinLimitNote: '今週の免除内 ✓ ペナルティなし',
+    settingsSexLabel: 'セックスの設定',
+    settingsSexEjacRate: '射精あり 減産率',
+    settingsSexNoEjacLabel: '射精なし をカウント',
+    settingsSexWeeklyLimit: 'セックス 週免除回数',
+    settingsForgivenessLabel: '継続回復システム',
+    settingsForgivenessHint: 'X日間継続でペナルティを自動回復',
+    sexNoEjacOff: 'しない（推奨）',
+    sexNoEjacOn: 'する（−5%）',
+    forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt 継続回復！`,
+    penaltyLogOnly: '記録のみ（ペナルティなし）',
+    penaltyWithinLimit: '記録のみ — 週免除内 ✓',
+    noChange: '変化なし',
     nextLevel: (pt, name) => `次のレベルまで ${pt.toLocaleString()} pt → ${name}`,
     maxLevel: '🏆 最高レベル達成！',
     effectsLabel: '想定される効果',
@@ -143,6 +156,19 @@ const T = {
     femaleLimitReached: 'Weekly limit reached (change in Settings)',
     femaleSelfCareNote: 'Within moderate range — self-care bonus unlocked tomorrow!',
     bonusApplied: 'Bonus applied!',
+    sexWithinLimitNote: 'Within weekly limit ✓ No penalty',
+    settingsSexLabel: 'Sex Settings',
+    settingsSexEjacRate: 'Ejaculation penalty rate',
+    settingsSexNoEjacLabel: 'Count sex w/o ejaculation',
+    settingsSexWeeklyLimit: 'Weekly free quota (sex)',
+    settingsForgivenessLabel: 'Recovery System',
+    settingsForgivenessHint: 'Penalty restored after X clean days',
+    sexNoEjacOff: 'Off (recommended)',
+    sexNoEjacOn: 'On (−5%)',
+    forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt streak recovery!`,
+    penaltyLogOnly: 'Log only (no penalty)',
+    penaltyWithinLimit: 'Log only — within weekly limit ✓',
+    noChange: 'no change',
     nextLevel: (pt, name) => `${pt.toLocaleString()} pt to ${name}`,
     maxLevel: '🏆 Max level reached!',
     effectsLabel: 'Expected Effects',
@@ -168,22 +194,7 @@ const ACTIVITIES = [
   { key: 'healthy_meal',icon: '🥦', ja: '野菜多め',       en: 'Healthy Meal',     points: 10, isRecovery: false, isJunkRecovery: true  },
 ];
 
-// ========== DATA: PENALTIES ==========
-
-const PENALTY_CONFIGS = {
-  male: [
-    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
-    { key: 'solo',      icon: '⚠️', ja: '自慰（ポルノなし）',en: 'Solo (no porn)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.15, isEjac: true,  isSoloEjac: false, isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false },
-  ],
-  female: [
-    { key: 'porn_solo', icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',       rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false },
-    { key: 'solo',      icon: '💜', ja: '自慰（ポルノなし）',en: 'Self-care Solo',    rate: 0.15, isEjac: true,  isSoloEjac: false, isFemaleB: true  },
-    { key: 'sex',       icon: '💛', ja: 'セックス',           en: 'Sex',               rate: 0.05, isEjac: true,  isSoloEjac: false, isFemaleB: false },
-    { key: 'junk',      icon: '🍔', ja: 'ジャンクフード',     en: 'Junk Food',         rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false },
-  ]
-};
+// ========== DATA: PENALTIES (dynamic — built in getPenalties()) ==========
 
 // ========== DATA: LEVELS ==========
 
@@ -443,7 +454,23 @@ function getWeekKey() {
 }
 
 function getPenalties() {
-  return PENALTY_CONFIGS[gender] || PENALTY_CONFIGS.male;
+  const sexEjacRate = getSexEjacPct() / 100;
+  if (gender === 'female') {
+    return [
+      { key: 'porn_solo',   icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',        rate: 0.35, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+      { key: 'solo',        icon: '💜', ja: '自慰（ポルノなし）', en: 'Self-care Solo',      rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: true,  isSexEjac: false },
+      { key: 'sex',         icon: '💛', ja: 'セックス',            en: 'Sex',                 rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
+      { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',      en: 'Junk Food',           rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    ];
+  }
+  const noEjacRate = getSexNoEjacEnabled() ? 0.05 : 0;
+  return [
+    { key: 'porn_solo',   icon: '⛔', ja: 'ポルノ＋自慰（射精）',  en: 'Porn + Solo (ejac)',    rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+    { key: 'solo',        icon: '⚠️', ja: '自慰（射精あり）',       en: 'Solo (ejaculation)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+    { key: 'sex_ejac',    icon: '💛', ja: 'セックス（射精あり）',   en: 'Sex (ejaculation)',     rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
+    { key: 'sex_no_ejac', icon: '💚', ja: 'セックス（射精なし）',   en: 'Sex (no ejaculation)', rate: noEjacRate, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',          en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+  ];
 }
 
 // ========== EFFECT DAYS ==========
@@ -499,6 +526,7 @@ function clearAllData() {
     'energy_junk_penalty_amt', 'energy_last_junk_date',
     'energy_junk_bonus_awarded', 'energy_female_week_count',
     'energy_last_solo_ejac', 'energy_history',
+    'energy_sex_ejac_week', 'energy_forgiveness_q',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -601,6 +629,9 @@ function checkAndAwardDailyPoints() {
 
   // Check 7-day junk-free bonus
   checkJunkFreeWeekBonus();
+
+  // Check forgiveness recovery
+  checkForgiveness();
 }
 
 // ========== TODAY ACTIVITIES ==========
@@ -689,6 +720,98 @@ function getFemaleLimit() {
   return parseInt(localStorage.getItem('energy_female_limit') || '3');
 }
 
+// ========== SETTINGS: SEX & FORGIVENESS ==========
+
+function getSexEjacPct() {
+  const key = gender === 'female' ? 'energy_sex_ejac_pct_f' : 'energy_sex_ejac_pct_m';
+  const def = gender === 'female' ? 5 : 15;
+  const s = localStorage.getItem(key);
+  return s !== null ? parseInt(s) : def;
+}
+
+function setSexEjacPct(pct) {
+  const key = gender === 'female' ? 'energy_sex_ejac_pct_f' : 'energy_sex_ejac_pct_m';
+  localStorage.setItem(key, pct);
+}
+
+function getSexNoEjacEnabled() {
+  return localStorage.getItem('energy_sex_no_ejac') === 'true';
+}
+
+function getSexWeeklyLimit() {
+  const s = localStorage.getItem('energy_sex_weekly_limit');
+  return s !== null ? parseInt(s) : 1;
+}
+
+function getForgivenessdays() {
+  const s = localStorage.getItem('energy_forgiveness_days');
+  return s !== null ? parseInt(s) : 30;
+}
+
+// ========== SEX WEEKLY COUNT ==========
+
+function getSexEjacWeekCount() {
+  const s = localStorage.getItem('energy_sex_ejac_week');
+  if (!s) return 0;
+  const d = JSON.parse(s);
+  if (d.week !== getWeekKey()) return 0;
+  return d.count || 0;
+}
+
+function incrementSexEjacWeekCount() {
+  const week = getWeekKey();
+  const s = localStorage.getItem('energy_sex_ejac_week');
+  let d = s ? JSON.parse(s) : { week, count: 0 };
+  if (d.week !== week) d = { week, count: 0 };
+  d.count++;
+  localStorage.setItem('energy_sex_ejac_week', JSON.stringify(d));
+}
+
+// ========== FORGIVENESS QUEUE ==========
+
+function getForgivenessQueue() {
+  try { return JSON.parse(localStorage.getItem('energy_forgiveness_q') || '[]'); } catch(e) { return []; }
+}
+
+function addToForgivenessQueue(lost, key) {
+  if (lost <= 0) return;
+  const queue = getForgivenessQueue();
+  queue.push({ ts: Date.now(), lost, key });
+  if (queue.length > 90) queue.splice(0, queue.length - 90);
+  localStorage.setItem('energy_forgiveness_q', JSON.stringify(queue));
+}
+
+function checkForgiveness() {
+  const days = getForgivenessdays();
+  if (days <= 0) return 0;
+  const queue = getForgivenessQueue();
+  const threshold = days * 86400000;
+  const now = Date.now();
+  let totalRestore = 0;
+  const remaining = [];
+  for (const item of queue) {
+    if (now - item.ts >= threshold) {
+      totalRestore += item.lost;
+    } else {
+      remaining.push(item);
+    }
+  }
+  localStorage.setItem('energy_forgiveness_q', JSON.stringify(remaining));
+  if (totalRestore > 0) addPoints(totalRestore);
+  return totalRestore;
+}
+
+// ========== EFFECTIVE RATE HELPER ==========
+
+function getEffectivePenaltyRate(p) {
+  if (p.isSexEjac) {
+    const count = getSexEjacWeekCount();
+    const limit = getSexWeeklyLimit();
+    if (count < limit) return 0;
+  }
+  return p.rate;
+}
+
 // ========== RECORD ACTIVITY ==========
 
 // Returns { earned, bonusMsg } or null if already done
@@ -747,16 +870,35 @@ function recordPenalty(penaltyKey) {
   const penalty = penalties.find(p => p.key === penaltyKey);
   if (!penalty) return null;
 
+  let effectiveRate = penalty.rate;
+  let extraMsg = '';
+
+  // Sex ejac: check weekly limit first
+  if (penalty.isSexEjac) {
+    const count = getSexEjacWeekCount();
+    const limit = getSexWeeklyLimit();
+    if (count < limit) {
+      effectiveRate = 0;
+      extraMsg = tr().sexWithinLimitNote;
+    }
+    incrementSexEjacWeekCount();
+  }
+
+  // Zero rate: record event only, no point loss
+  if (effectiveRate === 0) {
+    if (penalty.isSoloEjac) setSoloEjacTime();
+    return { lost: 0, remaining: Math.round(points), extraMsg };
+  }
+
   const oldPoints = points;
-  const newPoints = applyPenaltyCalc(points, penalty.rate);
+  const newPoints = applyPenaltyCalc(points, effectiveRate);
   const lost = oldPoints - newPoints;
   subtractPoints(newPoints, lost);
 
-  let extraMsg = '';
-
   if (penalty.isEjac) {
     setEjacRecovery();
-    extraMsg = tr().recoveryTip;
+    if (!extraMsg) extraMsg = tr().recoveryTip;
+    addToForgivenessQueue(lost, penaltyKey);
   }
 
   if (penalty.isSoloEjac) {
@@ -764,21 +906,19 @@ function recordPenalty(penaltyKey) {
   }
 
   if (penalty.key === 'junk') {
-    // Set junk recovery for tomorrow
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     localStorage.setItem('energy_junk_recovery_date', dateStr(tomorrow));
     localStorage.setItem('energy_junk_penalty_amt', lost.toString());
     localStorage.setItem('energy_last_junk_date', todayStr());
-    extraMsg = tr().junkRecoveryTip;
+    if (!extraMsg) extraMsg = tr().junkRecoveryTip;
   }
 
-  // Female Type B: track weekly count, check limit
   if (gender === 'female' && penalty.isFemaleB) {
     incrementFemaleWeekCount();
     const count = getFemaleWeekCount();
     const limit = getFemaleLimit();
-    if (count <= limit) {
+    if (count <= limit && !extraMsg) {
       extraMsg = tr().femaleSelfCareNote;
     }
   }
@@ -906,17 +1046,22 @@ function renderEffects() {
   });
 }
 
+function penaltyRateLabel(p) {
+  const eff = getEffectivePenaltyRate(p);
+  if (eff === 0) return lang === 'en' ? 'log only' : '記録のみ';
+  return `−${Math.round(eff * 100)}%`;
+}
+
 function renderPenaltyButtons() {
   const penalties = getPenalties();
   const container = document.getElementById('penalty-buttons');
   container.innerHTML = '';
   penalties.forEach(p => {
     const label = lang === 'en' ? p.en : p.ja;
-    const pct = Math.round(p.rate * 100);
     const btn = document.createElement('button');
     btn.className = 'btn-penalty-inline';
     btn.dataset.key = p.key;
-    btn.innerHTML = `<span class="penalty-btn-icon">${p.icon}</span><span class="penalty-btn-label">${label}</span><span class="penalty-btn-rate">−${pct}%</span>`;
+    btn.innerHTML = `<span class="penalty-btn-icon">${p.icon}</span><span class="penalty-btn-label">${label}</span><span class="penalty-btn-rate">${penaltyRateLabel(p)}</span>`;
     btn.addEventListener('click', () => openPenaltyConfirm(p.key));
     container.appendChild(btn);
   });
@@ -1044,7 +1189,7 @@ function renderPenaltyModalList() {
     btn.innerHTML = `
       <span class="penalty-item-icon">${p.icon}</span>
       <span class="penalty-item-label">${label}</span>
-      <span class="penalty-item-rate">−${pct}%</span>
+      <span class="penalty-item-rate">${penaltyRateLabel(p)}</span>
     `;
     btn.addEventListener('click', () => openPenaltyConfirm(p.key));
     list.appendChild(btn);
@@ -1060,12 +1205,19 @@ function openPenaltyConfirm(key) {
   const pct = Math.round(p.rate * 100);
   const t = tr();
 
+  const effectiveRate = getEffectivePenaltyRate(p);
   const box = document.getElementById('penalty-confirm-box');
+  const confirmBody = effectiveRate === 0
+    ? (p.isSexEjac ? t.penaltyWithinLimit : t.penaltyLogOnly)
+    : t.penaltyConfirmBody(label, Math.round(effectiveRate * 100));
+  const ptsPreview = effectiveRate === 0
+    ? `${Math.round(points).toLocaleString()} pt（${t.noChange}）`
+    : `${Math.round(points).toLocaleString()} pt → ${applyPenaltyCalc(points, effectiveRate).toLocaleString()} pt`;
   box.innerHTML = `
     <div class="confirm-icon">${p.icon}</div>
     <div class="confirm-title">${t.penaltyConfirmTitle}</div>
-    <div class="confirm-body">${t.penaltyConfirmBody(label, pct)}</div>
-    <div class="confirm-pts-preview">${Math.round(points).toLocaleString()} pt → ${applyPenaltyCalc(points, p.rate).toLocaleString()} pt</div>
+    <div class="confirm-body">${confirmBody}</div>
+    <div class="confirm-pts-preview">${ptsPreview}</div>
   `;
 
   // If penalty modal is not open (called from main screen buttons), open it
@@ -1089,11 +1241,12 @@ function onPenaltyConfirm() {
 
   const t = tr();
   const box = document.getElementById('penalty-result-box');
+  const ptsLine = result.lost > 0
+    ? `<div class="result-pts">−${result.lost}pt</div><div class="result-remaining">${t.penaltyResultBody(result.lost, result.remaining)}</div><div class="result-riseup">${t.riseUp}</div>`
+    : `<div class="result-pts" style="color:#6aff6a;font-size:2rem">✓</div><div class="result-remaining">${t.penaltyResultTitle}</div>`;
   box.innerHTML = `
     <div class="result-title">${t.penaltyResultTitle}</div>
-    <div class="result-pts">−${result.lost}pt</div>
-    <div class="result-remaining">${t.penaltyResultBody(result.lost, result.remaining)}</div>
-    <div class="result-riseup">${t.riseUp}</div>
+    ${ptsLine}
     ${result.extraMsg ? `<div class="result-tip">${result.extraMsg}</div>` : ''}
   `;
   showPenaltyStep(3);
@@ -1432,7 +1585,24 @@ function openSettings() {
   const femaleSection = document.getElementById('female-limit-section');
   femaleSection.style.display = gender === 'female' ? 'block' : 'none';
   document.getElementById('limit-display').textContent = getFemaleLimit();
+
+  // Sex settings
+  document.getElementById('sex-ejac-pct-display').textContent = getSexEjacPct() + '%';
+  updateSexNoEjacBtn();
+  document.getElementById('sex-limit-display').textContent = getSexWeeklyLimit();
+  document.getElementById('forgiveness-days-display').textContent = getForgivenessdays();
+
+  // Hide sex_no_ejac row for female (not applicable)
+  document.getElementById('sex-no-ejac-row').style.display = gender === 'female' ? 'none' : 'flex';
+
   document.getElementById('settings-modal').classList.add('open');
+}
+
+function updateSexNoEjacBtn() {
+  const btn = document.getElementById('btn-sex-no-ejac-toggle');
+  if (!btn) return;
+  const t = tr();
+  btn.textContent = getSexNoEjacEnabled() ? t.sexNoEjacOn : t.sexNoEjacOff;
 }
 
 function closeSettings() {
@@ -1552,6 +1722,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   document.getElementById('btn-reset-all').addEventListener('click', onResetAll);
+
+  // Sex ejac rate
+  document.getElementById('btn-sex-ejac-minus').addEventListener('click', () => {
+    const cur = getSexEjacPct();
+    if (cur > 0) { setSexEjacPct(cur - 5); document.getElementById('sex-ejac-pct-display').textContent = getSexEjacPct() + '%'; if (startDate) render(); }
+  });
+  document.getElementById('btn-sex-ejac-plus').addEventListener('click', () => {
+    const cur = getSexEjacPct();
+    if (cur < 30) { setSexEjacPct(cur + 5); document.getElementById('sex-ejac-pct-display').textContent = getSexEjacPct() + '%'; if (startDate) render(); }
+  });
+
+  // Sex no-ejac toggle
+  document.getElementById('btn-sex-no-ejac-toggle').addEventListener('click', () => {
+    localStorage.setItem('energy_sex_no_ejac', getSexNoEjacEnabled() ? 'false' : 'true');
+    updateSexNoEjacBtn();
+    if (startDate) render();
+  });
+
+  // Sex weekly limit
+  document.getElementById('btn-sex-limit-minus').addEventListener('click', () => {
+    const cur = getSexWeeklyLimit();
+    if (cur > 0) { localStorage.setItem('energy_sex_weekly_limit', cur - 1); document.getElementById('sex-limit-display').textContent = cur - 1; }
+  });
+  document.getElementById('btn-sex-limit-plus').addEventListener('click', () => {
+    const cur = getSexWeeklyLimit();
+    if (cur < 7) { localStorage.setItem('energy_sex_weekly_limit', cur + 1); document.getElementById('sex-limit-display').textContent = cur + 1; }
+  });
+
+  // Forgiveness days
+  document.getElementById('btn-forgiveness-minus').addEventListener('click', () => {
+    const cur = getForgivenessdays();
+    if (cur > 7) { localStorage.setItem('energy_forgiveness_days', cur - 7); document.getElementById('forgiveness-days-display').textContent = cur - 7; }
+  });
+  document.getElementById('btn-forgiveness-plus').addEventListener('click', () => {
+    const cur = getForgivenessdays();
+    if (cur < 90) { localStorage.setItem('energy_forgiveness_days', cur + 7); document.getElementById('forgiveness-days-display').textContent = cur + 7; }
+  });
+
   document.getElementById('settings-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeSettings();
   });
