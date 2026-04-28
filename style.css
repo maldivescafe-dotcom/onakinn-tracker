@@ -573,6 +573,13 @@ header h1 {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+.age-note {
+  font-size: 0.72rem;
+  color: var(--muted);
+  opacity: 0.6;
+  margin-top: 10px !important;
+  margin-bottom: 0 !important;
+}
 
 /* ========== MODAL ========== */
 .modal-overlay {
