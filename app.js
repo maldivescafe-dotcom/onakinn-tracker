@@ -780,17 +780,25 @@ function recordPenalty(penaltyKey) {
 // ========== RENDER ==========
 
 let _lastRenderedLevel = '';
+let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
 
 function render() {
   if (!startDate) return;
   const days = getDays();
   const t = tr();
 
-  // Points card — detect level-up
+  // Points card — detect level-up; level-up takes priority over regular celebrate
   const currentLevel = getLevel(points);
   const didLevelUp = _lastRenderedLevel && _lastRenderedLevel !== currentLevel;
   _lastRenderedLevel = currentLevel;
-  if (didLevelUp) playLevelUp();
+
+  if (didLevelUp) {
+    playLevelUp();
+    _pendingCelebrate = false; // cancel regular celebrate when level-up
+  } else if (_pendingCelebrate) {
+    playCelebrate();
+  }
+  _pendingCelebrate = false;
 
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
@@ -971,8 +979,8 @@ function onActivityTap(key, btn) {
   feedbackEl.className = 'activity-feedback show';
   setTimeout(() => feedbackEl.classList.remove('show'), 2500);
 
-  // Celebrate on point gain
-  playCelebrate();
+  // Request celebrate — render() will play levelup video instead if level-up occurred
+  _pendingCelebrate = true;
 
   // Update main screen
   render();
