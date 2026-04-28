@@ -790,7 +790,7 @@ function render() {
   const currentLevel = getLevel(points);
   const didLevelUp = _lastRenderedLevel && _lastRenderedLevel !== currentLevel;
   _lastRenderedLevel = currentLevel;
-  if (didLevelUp) playCelebrate();
+  if (didLevelUp) playLevelUp();
 
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
@@ -1130,13 +1130,43 @@ function onTipPrev() {
   renderTip();
 }
 
-// ========== CELEBRATE VIDEO ==========
+// ========== VIDEO OVERLAY HELPER ==========
 
-let celebrateTimeout = null;
+function _playOverlay(overlayId, videos, timeoutRef) {
+  const overlay = document.getElementById(overlayId);
+  const validVideos = videos.filter(Boolean);
+  if (!overlay || validVideos.length === 0) return;
+
+  const active = validVideos[Math.floor(Math.random() * validVideos.length)];
+
+  if (timeoutRef.id) { clearTimeout(timeoutRef.id); timeoutRef.id = null; }
+
+  validVideos.forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
+  active.classList.remove('hidden');
+  active.currentTime = 0;
+
+  overlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    overlay.classList.add('playing');
+    active.play().catch(() => {});
+  });
+
+  timeoutRef.id = setTimeout(() => {
+    overlay.classList.remove('playing');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      active.pause();
+      active.currentTime = 0;
+    }, 350);
+  }, 5000);
+}
+
+// ========== CELEBRATE VIDEO（ポイント加算時） ==========
+
+const _celebrateTimer = { id: null };
 
 function playCelebrate() {
-  const overlay = document.getElementById('celebrate-overlay');
-  const videos = [
+  _playOverlay('celebrate-overlay', [
     document.getElementById('celebrate-video-1'),
     document.getElementById('celebrate-video-2'),
     document.getElementById('celebrate-video-3'),
@@ -1152,38 +1182,18 @@ function playCelebrate() {
     document.getElementById('celebrate-video-16'),
     document.getElementById('celebrate-video-17'),
     document.getElementById('celebrate-video-18'),
-  ].filter(Boolean);
-  if (!overlay || videos.length === 0) return;
+  ], _celebrateTimer);
+}
 
-  // Randomly pick one video
-  const active = videos[Math.floor(Math.random() * videos.length)];
+// ========== LEVELUP VIDEO（レベルアップ時） ==========
 
-  // Reset if already playing
-  if (celebrateTimeout) {
-    clearTimeout(celebrateTimeout);
-    celebrateTimeout = null;
-  }
+const _levelupTimer = { id: null };
 
-  // Show chosen video, hide others
-  videos.forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
-  active.classList.remove('hidden');
-  active.currentTime = 0;
-
-  overlay.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    overlay.classList.add('playing');
-    active.play().catch(() => {});
-  });
-
-  // Hide after 5s
-  celebrateTimeout = setTimeout(() => {
-    overlay.classList.remove('playing');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      active.pause();
-      active.currentTime = 0;
-    }, 350);
-  }, 5000);
+function playLevelUp() {
+  _playOverlay('levelup-overlay', [
+    document.getElementById('levelup-video-1'),
+    // 今後の動画はここに追加: document.getElementById('levelup-video-2'), ...
+  ], _levelupTimer);
 }
 
 // ========== BACKGROUND TOGGLE ==========
