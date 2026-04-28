@@ -1230,9 +1230,9 @@ function playLevelUp() {
 // ========== BACKGROUND TOGGLE ==========
 
 const BG_STYLES = [
-  'linear-gradient(135deg, rgba(10,10,20,0.55), rgba(20,10,30,0.45)), url(\'./bg-hero.png\') center right/cover no-repeat',
+  'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero.png\') center right/cover no-repeat',
   'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero-male.jpg\') center right/cover no-repeat',
-  'linear-gradient(135deg, rgba(20,10,15,0.45), rgba(60,20,40,0.35)), url(\'./bg-hero-female.jpg\') center top/cover no-repeat',
+  'linear-gradient(135deg, rgba(10,10,20,0.52), rgba(20,10,30,0.42)), url(\'./bg-hero-female.jpg\') center right/cover no-repeat',
   'linear-gradient(135deg, #1a2e0a, #2d4a10)',
 ];
 
