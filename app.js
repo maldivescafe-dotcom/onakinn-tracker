@@ -404,13 +404,18 @@ function getTips()     { return lang === 'en' ? EMERGENCY_TIPS_EN : EMERGENCY_TI
 function getAffirmations() { return lang === 'en' ? EMERGENCY_AFFIRMATIONS_EN : EMERGENCY_AFFIRMATIONS; }
 function getLinks()    { return lang === 'en' ? RECOMMEND_LINKS_EN : RECOMMEND_LINKS; }
 
-function getLevel(pts) {
+function getLevelObj(pts) {
   let current = LEVELS[0];
   for (const l of LEVELS) {
     if (pts >= l.min) current = l;
     else break;
   }
-  return lang === 'en' ? current.en : current.ja;
+  return current;
+}
+
+function getLevel(pts) {
+  const l = getLevelObj(pts);
+  return lang === 'en' ? l.en : l.ja;
 }
 
 function getDailyBasePoints(day) {
@@ -783,7 +788,7 @@ function recordPenalty(penaltyKey) {
 
 // ========== RENDER ==========
 
-let _lastRenderedLevel = '';
+let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
 let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
 
 function render() {
@@ -791,10 +796,11 @@ function render() {
   const days = getDays();
   const t = tr();
 
-  // Points card — detect level-up; level-up takes priority over regular celebrate
-  const currentLevel = getLevel(points);
-  const didLevelUp = _lastRenderedLevel && _lastRenderedLevel !== currentLevel;
-  _lastRenderedLevel = currentLevel;
+  // Points card — detect level-up; compare by level min (language-independent)
+  const currentLevelObj = getLevelObj(points);
+  const currentLevel = lang === 'en' ? currentLevelObj.en : currentLevelObj.ja;
+  const didLevelUp = _lastRenderedLevel !== -1 && _lastRenderedLevel !== currentLevelObj.min;
+  _lastRenderedLevel = currentLevelObj.min;
 
   if (didLevelUp) {
     playLevelUp();
