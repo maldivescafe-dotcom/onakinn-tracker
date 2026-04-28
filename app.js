@@ -70,6 +70,8 @@ const T = {
     femaleLimitReached: '今週の上限に達しています（設定で変更可）',
     femaleSelfCareNote: '適度範囲内 — セルフケアボーナスが明日解放されます！',
     bonusApplied: 'ボーナス適用！',
+    nextLevel: (pt, name) => `次のレベルまで ${pt.toLocaleString()} pt → ${name}`,
+    maxLevel: '🏆 最高レベル達成！',
     effectsLabel: '想定される効果',
     effectsSubSolo: (d) => `禁欲（ポルノ・自慰なし）${d}日目`,
     effectsSubStart: (d) => `開始から${d}日目`,
@@ -141,6 +143,8 @@ const T = {
     femaleLimitReached: 'Weekly limit reached (change in Settings)',
     femaleSelfCareNote: 'Within moderate range — self-care bonus unlocked tomorrow!',
     bonusApplied: 'Bonus applied!',
+    nextLevel: (pt, name) => `${pt.toLocaleString()} pt to ${name}`,
+    maxLevel: '🏆 Max level reached!',
     effectsLabel: 'Expected Effects',
     effectsSubSolo: (d) => `Day ${d} without solo ejaculation`,
     effectsSubStart: (d) => `Day ${d} from start`,
@@ -805,6 +809,20 @@ function render() {
 
   const todayChange = getTodayChange();
   document.getElementById('today-gain-display').textContent = t.todayGain(todayChange);
+
+  // Next level display
+  const nextLevelEl = document.getElementById('next-level-display');
+  if (nextLevelEl) {
+    const currentPts = Math.round(points);
+    const nextL = LEVELS.find(l => l.min > currentPts);
+    if (nextL) {
+      const needed = nextL.min - currentPts;
+      const name = lang === 'en' ? nextL.en : nextL.ja;
+      nextLevelEl.textContent = t.nextLevel(needed, name);
+    } else {
+      nextLevelEl.textContent = t.maxLevel;
+    }
+  }
 
   if (startDate) {
     document.getElementById('streak-start').textContent =
