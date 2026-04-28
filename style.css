@@ -558,6 +558,15 @@ header h1 {
 }
 .btn-gender:active { background: rgba(245,200,66,0.1); border-color: var(--accent); }
 .gender-btn-icon { font-size: 2.4rem; }
+.gender-face {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-size: 280%;
+  border: 2px solid rgba(245,200,66,0.5);
+  box-shadow: 0 0 12px rgba(245,200,66,0.2);
+  flex-shrink: 0;
+}
 .gender-note {
   font-size: 0.78rem;
   color: var(--muted);
