@@ -1393,6 +1393,14 @@ function playCelebrate() {
     document.getElementById('celebrate-video-21'),
     document.getElementById('celebrate-video-22'),
     document.getElementById('celebrate-video-23'),
+    document.getElementById('celebrate-video-24'),
+    document.getElementById('celebrate-video-25'),
+    document.getElementById('celebrate-video-26'),
+    document.getElementById('celebrate-video-27'),
+    document.getElementById('celebrate-video-28'),
+    document.getElementById('celebrate-video-29'),
+    document.getElementById('celebrate-video-30'),
+    document.getElementById('celebrate-video-31'),
   ], _celebrateTimer);
 }
 
