@@ -97,6 +97,9 @@ const T = {
     settingsSexWeeklyLimit: 'セックス 週免除回数',
     settingsForgivenessLabel: '継続回復システム',
     settingsForgivenessHint: 'X日間継続でペナルティを自動回復',
+    settingsVideoLabel: 'ご褒美動画',
+    videoOn: 'ON（表示する）',
+    videoOff: 'OFF（表示しない）',
     settingsPeriodLabel: '月のサイクル（女性）',
     settingsPeriodHint: '最終生理開始日を入力',
     moonPhaseNames: ['🔴 生理期', '🌱 卵胞期', '✨ 排卵期', '🌘 黄体期'],
@@ -210,6 +213,9 @@ const T = {
     settingsSexWeeklyLimit: 'Weekly free quota (sex)',
     settingsForgivenessLabel: 'Recovery System',
     settingsForgivenessHint: 'Penalty restored after X clean days',
+    settingsVideoLabel: 'Reward Videos',
+    videoOn: 'ON (show)',
+    videoOff: 'OFF (hide)',
     settingsPeriodLabel: 'Moon Cycle (Female)',
     settingsPeriodHint: 'Enter last period start date',
     moonPhaseNames: ['🔴 Menstrual', '🌱 Follicular', '✨ Ovulation', '🌘 Luteal'],
@@ -391,6 +397,118 @@ const EMERGENCY_AFFIRMATIONS_EN = [
   'Every time you get through this, you become more real.',
   'There is something you truly want on the other side of this urge.',
   'Your future self, 10 minutes from now, is grateful for your choice today.',
+];
+
+// ========== DATA: PHASE MESSAGES (female) ==========
+
+const MESSAGES_PHASE = [
+  // Phase 0: 生理期
+  [
+    '今日は無理しなくていい。休むことも、立派な選択だ。',
+    '体が休息を求めている。それに従うことは弱さではなく、知性だ。',
+    'この痛みや重さの中でも、続けているあなたはすごい。',
+    '今は内側に向かう時間。自分を責めず、ただ存在していい。',
+    '嵐の中でも根は張り続けている。あなたもそうだ。',
+    '体のリズムを無視しない。今日の休息が、明日の力になる。',
+    '自分の体を大切にすることが、最高のセルフケアだ。',
+    '今日できることだけで十分。それ以上を求めなくていい。',
+    '月が満ち欠けするように、あなたのエネルギーも循環している。',
+    '今日の自分に優しくすることが、習慣を守ることと同じくらい大切だ。',
+  ],
+  // Phase 1: 卵胞期
+  [
+    'エネルギーが静かに満ちてきている。この波に乗ろう。',
+    '今週は新しいことを始めるのに最高のタイミング。',
+    '体が軽くなってきた感覚を大切に、前へ進もう。',
+    '春の芽吹きのように、内側でも新しい何かが育っている。',
+    '行動を起こすなら今。エネルギーはあなたの味方だ。',
+    '昨日より今日、今日より明日。着実に上昇中だ。',
+    'クリアな頭で物事を見られる時期。大切な決断をするならいま。',
+    '種を蒔く季節。今日の行動が、未来の自分を育てる。',
+    '活力が戻ってくるこの感覚を、思い切り使い切ろう。',
+    '今の自分は、何でもできる準備ができている。',
+  ],
+  // Phase 2: 排卵期
+  [
+    '今、あなたは最も輝いている。その魅力を自分のために使おう。',
+    'エネルギーも自信も最高潮。今日の自分を信じて行動しよう。',
+    '人とのつながりが深まりやすい時期。笑顔を惜しまないで。',
+    'あなたが放つエネルギーは、周りの人を動かす力がある。',
+    'この輝きは、毎日続けてきたあなたが手に入れたものだ。',
+    '自信がみなぎっているとき、恐れていたことも小さく見える。',
+    '今がピーク。この感覚を全力で生きよう。',
+    '内側から溢れるエネルギーを、創造と成長に向けよう。',
+    '自分の魅力に気づいているか？それはあなたの努力の結晶だ。',
+    '今日の選択は、最高の自分から生まれている。',
+  ],
+  // Phase 3: 黄体期
+  [
+    '感情の波を感じても大丈夫。それはあなたの感受性の証だ。',
+    '今は内省の時間。自分の本当の気持ちに耳を傾けて。',
+    '感情が揺れるのは、あなたが人間だから。それでいい。',
+    '今の気分に正直でいること。無理に「元気なふり」しなくていい。',
+    '小さなことに気づける今の繊細さは、特別な才能だ。',
+    '嵐が来てもあなたの根は深い。流されることはない。',
+    '今週乗り越えたら、また新しいサイクルが始まる。あともう少し。',
+    '疲れを感じたら、それはサインだ。立ち止まる勇気を持って。',
+    '感情と上手に付き合えるようになることが、本当の強さだ。',
+    '今日も自分を責めなかった。それだけで十分、よくやった。',
+  ],
+];
+
+const MESSAGES_PHASE_EN = [
+  // Phase 0: Menstrual
+  [
+    "You don't have to push today. Rest is a valid, powerful choice.",
+    "Your body is asking for rest. Listening to it is wisdom, not weakness.",
+    "Even through pain and fatigue, the fact that you're still here is remarkable.",
+    "This is a time to turn inward. You don't have to do anything. Just be.",
+    "Even in the storm, roots keep growing. So do yours.",
+    "Respecting your body's rhythm today builds tomorrow's strength.",
+    "Taking care of yourself is the highest form of self-care.",
+    "What you can do today is enough. Nothing more is required.",
+    "Just as the moon waxes and wanes, your energy moves in cycles. Trust it.",
+    "Being kind to yourself today matters just as much as keeping your streak.",
+  ],
+  // Phase 1: Follicular
+  [
+    "Energy is quietly rising within you. Ride this wave.",
+    "This week is the perfect time to start something new.",
+    "Your body feels lighter. Carry that feeling forward.",
+    "Like spring buds, something new is growing inside you.",
+    "If there's something to start, now is the time. Energy is on your side.",
+    "Yesterday, today, tomorrow — you are steadily rising.",
+    "Your mind is clear. If there's an important decision, now is the moment.",
+    "Plant seeds today. Your actions now will grow your future self.",
+    "Drink in this returning vitality and use it fully.",
+    "The version of you right now is ready for anything.",
+  ],
+  // Phase 2: Ovulation
+  [
+    "Right now, you are at your brightest. Use that light for yourself.",
+    "Energy and confidence are at their peak. Trust yourself and act.",
+    "This is a time when connections deepen easily. Don't hold back your smile.",
+    "The energy you radiate has the power to move the people around you.",
+    "This radiance is something you earned through daily effort.",
+    "When confidence flows, even the things you feared look small.",
+    "This is your peak. Live it with everything you have.",
+    "Channel the energy overflowing from within into creation and growth.",
+    "Do you see your own brilliance? It is the result of everything you've built.",
+    "The choices you make today come from your best self.",
+  ],
+  // Phase 3: Luteal
+  [
+    "It's okay to feel the emotional waves. They are proof of your sensitivity.",
+    "This is a time for reflection. Listen to what you truly feel.",
+    "Emotions shifting is part of being human. That's perfectly fine.",
+    "Be honest about how you feel. You don't have to pretend to be okay.",
+    "The sensitivity you feel right now — the ability to notice small things — is a rare gift.",
+    "Even when storms come, your roots run deep. You won't be swept away.",
+    "Once you get through this week, a new cycle begins. You're almost there.",
+    "If you feel tired, it's a signal. Have the courage to pause.",
+    "Learning to work with your emotions is true strength.",
+    "You didn't blame yourself today. That alone is enough. Well done.",
+  ],
 ];
 
 // ========== DATA: EFFECTS ==========
@@ -1088,6 +1206,19 @@ function recordPenalty(penaltyKey) {
   return { lost, remaining: newPoints, extraMsg };
 }
 
+// ========== VIDEO SETTING ==========
+
+function getVideosEnabled() {
+  return localStorage.getItem('energy_videos_enabled') !== 'false';
+}
+
+function updateVideoToggleBtn() {
+  const btn = document.getElementById('btn-video-toggle');
+  if (!btn) return;
+  const t = tr();
+  btn.textContent = getVideosEnabled() ? t.videoOn : t.videoOff;
+}
+
 // ========== MOON CYCLE ==========
 
 function getPeriodStart() {
@@ -1194,8 +1325,15 @@ function render() {
       `${t.startedPrefix}${t.formatDate(startDate)} ／ ${days}${t.daysUnit}`;
   }
 
-  // Message
-  const messages = getMessages();
+  // Message (female: use phase-specific messages if period date is set)
+  let messages = getMessages();
+  if (gender === 'female') {
+    const mp = getMoonPhase();
+    if (mp) {
+      const phaseArr = lang === 'en' ? MESSAGES_PHASE_EN[mp.phase] : MESSAGES_PHASE[mp.phase];
+      if (phaseArr && phaseArr.length > 0) messages = phaseArr;
+    }
+  }
   document.getElementById('message-text').textContent = messages[days % messages.length];
 
   // Milestones
@@ -1594,6 +1732,7 @@ function _playOverlay(overlayId, videos, timeoutRef) {
 const _celebrateTimer = { id: null };
 
 function playCelebrate() {
+  if (!getVideosEnabled()) return;
   _playOverlay('celebrate-overlay', [
     document.getElementById('celebrate-video-1'),
     document.getElementById('celebrate-video-2'),
@@ -1635,6 +1774,7 @@ function playCelebrate() {
 const _levelupTimer = { id: null };
 
 function playLevelUp() {
+  if (!getVideosEnabled()) return;
   _playOverlay('levelup-overlay', [
     document.getElementById('levelup-video-1'),
     // 今後の動画はここに追加: document.getElementById('levelup-video-2'), ...
@@ -1908,6 +2048,9 @@ function openSettings() {
   document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
   document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
 
+  // Video toggle
+  updateVideoToggleBtn();
+
   // Moon cycle section (female only)
   const moonSection = document.getElementById('moon-cycle-section');
   if (moonSection) moonSection.style.display = isMale ? 'none' : 'block';
@@ -2118,6 +2261,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-tip-prev').addEventListener('click', onTipPrev);
   document.getElementById('emergency-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeEmergency();
+  });
+
+  // Video toggle
+  document.getElementById('btn-video-toggle').addEventListener('click', () => {
+    localStorage.setItem('energy_videos_enabled', getVideosEnabled() ? 'false' : 'true');
+    updateVideoToggleBtn();
   });
 
   // Period start date
