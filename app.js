@@ -80,6 +80,9 @@ const T = {
     welcomeSexLimitDesc: (n, r) => `週${n}回まで免除、以降 −${r}%`,
     welcomeForgivenessDesc: (n) => `${n}日間継続でペナルティが自動回復`,
     sexWithinLimitNote: '今週の免除内 ✓ ペナルティなし',
+    intervalHalfPenalty: '3〜6日経過 — ペナルティ半減 ✓',
+    intervalNoPenalty: '7日以上経過 — ペナルティ無効 🎉',
+    intervalBonus: (n) => `14日以上の制御！ ボーナス +${n}pt 🌟`,
     settingsSexLabel: 'セックスの設定',
     settingsSexEjacRate: '射精あり 減産率',
     settingsSexNoEjacLabel: '射精なし をカウント',
@@ -175,6 +178,9 @@ const T = {
     welcomeSexLimitDesc: (n, r) => `first ${n}/wk free, then −${r}%`,
     welcomeForgivenessDesc: (n) => `Points restored after ${n} clean days`,
     sexWithinLimitNote: 'Within weekly limit ✓ No penalty',
+    intervalHalfPenalty: '3–6 days since last act — Penalty halved ✓',
+    intervalNoPenalty: '7+ days since last act — Penalty nullified 🎉',
+    intervalBonus: (n) => `14+ days of control! Bonus +${n}pt 🌟`,
     settingsSexLabel: 'Sex Settings',
     settingsSexEjacRate: 'Ejaculation penalty rate',
     settingsSexNoEjacLabel: 'Count sex w/o ejaculation',
@@ -552,7 +558,7 @@ function clearAllData() {
     'energy_junk_penalty_amt', 'energy_last_junk_date',
     'energy_junk_bonus_awarded', 'energy_female_week_count',
     'energy_last_solo_ejac', 'energy_history',
-    'energy_sex_ejac_week', 'energy_forgiveness_q',
+    'energy_sex_ejac_week', 'energy_forgiveness_q', 'energy_last_ejac',
     'energy_gender', 'energy_welcomed',
     'energy_sex_ejac_pct_m', 'energy_sex_ejac_pct_f',
     'energy_sex_weekly_limit', 'energy_forgiveness_days', 'energy_sex_no_ejac',
@@ -831,6 +837,30 @@ function checkForgiveness() {
   return totalRestore;
 }
 
+// ========== EJAC INTERVAL SYSTEM ==========
+
+function getLastEjacTime() {
+  const s = localStorage.getItem('energy_last_ejac');
+  return s ? parseInt(s) : null;
+}
+function setLastEjacTime() {
+  localStorage.setItem('energy_last_ejac', Date.now().toString());
+}
+function getDaysSinceLastEjac() {
+  const last = getLastEjacTime();
+  if (!last) return null;
+  return Math.floor((Date.now() - last) / (1000 * 60 * 60 * 24));
+}
+function getEjacIntervalModifier() {
+  const days = getDaysSinceLastEjac();
+  const t = tr();
+  if (days === null)  return { mult: 1.0, bonusPts: 0, msg: '' };   // 初回
+  if (days >= 14)     return { mult: 0,   bonusPts: 100, msg: t.intervalBonus(100) };
+  if (days >= 7)      return { mult: 0,   bonusPts: 0,   msg: t.intervalNoPenalty };
+  if (days >= 3)      return { mult: 0.5, bonusPts: 0,   msg: t.intervalHalfPenalty };
+  return               { mult: 1.0, bonusPts: 0, msg: '' };          // 3日未満
+}
+
 // ========== EFFECTIVE RATE HELPER ==========
 
 function getEffectivePenaltyRate(p) {
@@ -914,9 +944,26 @@ function recordPenalty(penaltyKey) {
     incrementSexEjacWeekCount();
   }
 
-  // Zero rate: record event only, no point loss
+  // Ejac interval modifier (applies only when not already zero)
+  let intervalBonusPts = 0;
+  if (penalty.isEjac && effectiveRate > 0) {
+    const mod = getEjacIntervalModifier();
+    effectiveRate = effectiveRate * mod.mult;
+    intervalBonusPts = mod.bonusPts;
+    if (mod.msg) extraMsg = mod.msg;
+  }
+
+  // Update last ejac timestamp (always, regardless of penalty amount)
+  if (penalty.isEjac) setLastEjacTime();
+
+  // Zero rate: record event only (possibly with interval bonus)
   if (effectiveRate === 0) {
     if (penalty.isSoloEjac) setSoloEjacTime();
+    if (intervalBonusPts > 0) {
+      addPoints(intervalBonusPts);
+      savePoints();
+      return { lost: -intervalBonusPts, remaining: Math.round(points), extraMsg };
+    }
     return { lost: 0, remaining: Math.round(points), extraMsg };
   }
 
