@@ -97,6 +97,19 @@ const T = {
     settingsSexWeeklyLimit: 'セックス 週免除回数',
     settingsForgivenessLabel: '継続回復システム',
     settingsForgivenessHint: 'X日間継続でペナルティを自動回復',
+    settingsPeriodLabel: '月のサイクル（女性）',
+    settingsPeriodHint: '最終生理開始日を入力',
+    moonPhaseNames: ['🔴 生理期', '🌱 卵胞期', '✨ 排卵期', '🌘 黄体期'],
+    moonPhaseDescs: ['ペナルティ20%軽減', '通常', 'ボーナス活動+10%', 'ペナルティ10%軽減'],
+    moonPhaseDayLabel: (d) => `${d}日目`,
+    journalBtnText: '📝 今日の日記',
+    journalModalTitle: '今日の日記',
+    journalPlaceholder: '今日感じたこと、気づき、明日への一言…',
+    journalSaveBtn: (already) => already ? '今日はもう記録済み ✓' : '保存して +15pt',
+    journalStreak: (n) => `📝 ${n}日連続記録中`,
+    journalStreak7: '🎊 7日連続日記達成！ +100pt',
+    journalHistoryLabel: '過去の記録',
+    journalEmpty: 'まだ記録がありません',
     sexNoEjacOff: 'しない（推奨）',
     sexNoEjacOn: 'する（−5%）',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt 継続回復！`,
@@ -203,6 +216,19 @@ const T = {
     settingsSexWeeklyLimit: 'Weekly free quota (sex)',
     settingsForgivenessLabel: 'Recovery System',
     settingsForgivenessHint: 'Penalty restored after X clean days',
+    settingsPeriodLabel: 'Moon Cycle (Female)',
+    settingsPeriodHint: 'Enter last period start date',
+    moonPhaseNames: ['🔴 Menstrual', '🌱 Follicular', '✨ Ovulation', '🌘 Luteal'],
+    moonPhaseDescs: ['Penalty −20%', 'Normal', 'Activity bonus +10%', 'Penalty −10%'],
+    moonPhaseDayLabel: (d) => `Day ${d}`,
+    journalBtnText: '📝 Journal',
+    journalModalTitle: "Today's Journal",
+    journalPlaceholder: "Today's feelings, insights, a note for tomorrow…",
+    journalSaveBtn: (already) => already ? 'Already saved today ✓' : 'Save +15pt',
+    journalStreak: (n) => `📝 ${n}-day streak`,
+    journalStreak7: '🎊 7-Day Journal Streak! +100pt',
+    journalHistoryLabel: 'Past entries',
+    journalEmpty: 'No entries yet',
     sexNoEjacOff: 'Off (recommended)',
     sexNoEjacOn: 'On (−5%)',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt streak recovery!`,
@@ -581,6 +607,8 @@ function clearAllData() {
     'energy_gender', 'energy_welcomed',
     'energy_sex_ejac_pct_m', 'energy_sex_ejac_pct_f',
     'energy_sex_weekly_limit', 'energy_forgiveness_days', 'energy_sex_no_ejac',
+    'energy_period_start',
+    'energy_journal', 'energy_journal_streak', 'energy_journal_last_date',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -921,6 +949,13 @@ function recordActivity(actKey) {
   let earned = activity.points;
   let bonusMsg = '';
 
+  // Moon phase activity bonus (排卵期 +10%, female only)
+  const moonBonus = getMoonPhaseActivityBonus();
+  if (moonBonus > 0) {
+    const extra = Math.round(activity.points * moonBonus);
+    if (extra > 0) { addPoints(extra); earned += extra; }
+  }
+
   // Ejac recovery bonus: need both exercise AND meditation done within 48h window
   const ejacRec = getEjacRecovery();
   if (ejacRec && activity.isRecovery) {
@@ -1002,6 +1037,11 @@ function recordPenalty(penaltyKey) {
     if (mod.msg) extraMsg = mod.msg;
   }
 
+  // Moon phase modifier (female only, applies to all penalty types)
+  if (gender === 'female' && effectiveRate > 0) {
+    effectiveRate = effectiveRate * getMoonPhasePenaltyMult();
+  }
+
   // Update last ejac timestamp (always, regardless of penalty amount)
   if (penalty.isEjac) setLastEjacTime();
 
@@ -1050,6 +1090,185 @@ function recordPenalty(penaltyKey) {
   }
 
   return { lost, remaining: newPoints, extraMsg };
+}
+
+// ========== MOON CYCLE ==========
+
+function getPeriodStart() {
+  return localStorage.getItem('energy_period_start') || null;
+}
+
+function getMoonPhase() {
+  const startStr = getPeriodStart();
+  if (!startStr) return null;
+  const start = new Date(startStr + 'T00:00:00');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diffDays = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+  if (diffDays < 0) return null;
+  const cycleDay = (diffDays % 28) + 1; // 1–28
+  let phase;
+  if (cycleDay <= 5)       phase = 0; // 生理期
+  else if (cycleDay <= 13) phase = 1; // 卵胞期
+  else if (cycleDay <= 16) phase = 2; // 排卵期
+  else                     phase = 3; // 黄体期
+  return { phase, cycleDay };
+}
+
+// Returns penalty multiplier based on moon phase (female only)
+function getMoonPhasePenaltyMult() {
+  if (gender !== 'female') return 1.0;
+  const mp = getMoonPhase();
+  if (!mp) return 1.0;
+  if (mp.phase === 0) return 0.8;  // 生理期: −20%
+  if (mp.phase === 3) return 0.9;  // 黄体期: −10%
+  return 1.0;
+}
+
+// Returns bonus fraction for activity points during ovulation (排卵期)
+function getMoonPhaseActivityBonus() {
+  if (gender !== 'female') return 0;
+  const mp = getMoonPhase();
+  if (!mp) return 0;
+  if (mp.phase === 2) return 0.10; // 排卵期: +10%
+  return 0;
+}
+
+function updateMoonPhaseBar() {
+  const bar = document.getElementById('moon-phase-bar');
+  if (!bar) return;
+  if (gender !== 'female') { bar.classList.add('hidden'); return; }
+  const mp = getMoonPhase();
+  if (!mp) { bar.classList.add('hidden'); return; }
+  const t = tr();
+  bar.classList.remove('hidden');
+  document.getElementById('moon-phase-icon-name').textContent = t.moonPhaseNames[mp.phase];
+  document.getElementById('moon-phase-day').textContent = t.moonPhaseDayLabel(mp.cycleDay);
+  document.getElementById('moon-phase-effect').textContent = t.moonPhaseDescs[mp.phase];
+}
+
+// ========== JOURNAL ==========
+
+function getJournalEntries() {
+  try { return JSON.parse(localStorage.getItem('energy_journal') || '[]'); } catch(e) { return []; }
+}
+
+function getJournalStreak() {
+  return parseInt(localStorage.getItem('energy_journal_streak') || '0');
+}
+
+function updateJournalStreak() {
+  const lastDate = localStorage.getItem('energy_journal_last_date');
+  const today = todayStr();
+  if (lastDate === today) return getJournalStreak(); // already counted today
+  const yesterday = dateStr(new Date(Date.now() - 86400000));
+  const streak = lastDate === yesterday ? getJournalStreak() + 1 : 1;
+  localStorage.setItem('energy_journal_streak', streak.toString());
+  localStorage.setItem('energy_journal_last_date', today);
+  return streak;
+}
+
+function saveJournalEntry(text) {
+  if (!text.trim()) return null;
+  const today = todayStr();
+  const entries = getJournalEntries();
+  const existing = entries.find(e => e.date === today);
+  let pointsEarned = 0;
+  let bonusMsg = '';
+
+  if (!existing) {
+    // First entry today: +15pt
+    pointsEarned = 15;
+    addPoints(15);
+    savePoints();
+    // Streak
+    const streak = updateJournalStreak();
+    if (streak > 0 && streak % 7 === 0) {
+      addPoints(100);
+      pointsEarned += 100;
+      bonusMsg = tr().journalStreak7;
+    }
+  }
+
+  const entry = { date: today, text: text.trim(), ts: Date.now() };
+  const idx = entries.findIndex(e => e.date === today);
+  if (idx >= 0) { entries[idx] = entry; } else { entries.push(entry); }
+  if (entries.length > 90) entries.splice(0, entries.length - 90);
+  localStorage.setItem('energy_journal', JSON.stringify(entries));
+
+  return { pointsEarned, bonusMsg, isNew: !existing };
+}
+
+function updateJournalBadge() {
+  const badge = document.getElementById('journal-streak-badge');
+  if (!badge) return;
+  const streak = getJournalStreak();
+  const lastDate = localStorage.getItem('energy_journal_last_date');
+  const today = todayStr();
+  const yesterday = dateStr(new Date(Date.now() - 86400000));
+  const active = streak >= 2 && (lastDate === today || lastDate === yesterday);
+  if (active) {
+    badge.textContent = tr().journalStreak(streak);
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
+
+function openJournalModal() {
+  renderJournalModal();
+  document.getElementById('journal-modal').classList.add('open');
+}
+
+function closeJournalModal() {
+  document.getElementById('journal-modal').classList.remove('open');
+}
+
+function renderJournalModal() {
+  const t = tr();
+  const today = todayStr();
+  const entries = getJournalEntries();
+  const todayEntry = entries.find(e => e.date === today);
+
+  // Textarea
+  const textarea = document.getElementById('journal-textarea');
+  textarea.placeholder = t.journalPlaceholder;
+  textarea.value = todayEntry ? todayEntry.text : '';
+
+  // Save button
+  const saveBtn = document.getElementById('btn-journal-save');
+  saveBtn.textContent = t.journalSaveBtn(!!todayEntry);
+  saveBtn.disabled = !!todayEntry;
+  saveBtn.style.opacity = todayEntry ? '0.5' : '1';
+
+  // Streak info
+  const streakEl = document.getElementById('journal-streak-info');
+  const streak = getJournalStreak();
+  const lastDate = localStorage.getItem('energy_journal_last_date');
+  const yesterday = dateStr(new Date(Date.now() - 86400000));
+  const streakActive = streak >= 2 && (lastDate === today || lastDate === yesterday);
+  if (streakActive) {
+    streakEl.textContent = t.journalStreak(streak);
+    streakEl.classList.remove('hidden');
+  } else {
+    streakEl.textContent = '';
+    streakEl.classList.add('hidden');
+  }
+
+  // History (last 7 entries, excluding today, newest first)
+  const historyEl = document.getElementById('journal-history');
+  const past = entries.filter(e => e.date !== today).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 7);
+  if (past.length === 0) {
+    historyEl.innerHTML = `<div class="journal-empty">${t.journalEmpty}</div>`;
+  } else {
+    historyEl.innerHTML =
+      `<div class="journal-history-label">${t.journalHistoryLabel}</div>` +
+      past.map(e => {
+        const d = new Date(e.date + 'T00:00:00');
+        const dl = t.formatDate(d);
+        return `<div class="journal-history-item"><div class="journal-history-date">${dl}</div><div class="journal-history-text">${e.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div></div>`;
+      }).join('');
+  }
 }
 
 // ========== RENDER ==========
@@ -1681,8 +1900,9 @@ function applyLang() {
 function toggleLang() {
   lang = lang === 'ja' ? 'en' : 'ja';
   applyLang();
-  if (startDate) { render(); renderRecommend(); }
+  if (startDate) { render(); renderRecommend(); updateMoonPhaseBar(); updateJournalBadge(); }
   if (document.getElementById('emergency-modal').classList.contains('open')) renderTip();
+  if (document.getElementById('journal-modal').classList.contains('open')) renderJournalModal();
   updateSettingsModeDisplay();
   const ws = document.getElementById('welcome-screen');
   if (ws && !ws.classList.contains('hidden')) {
@@ -1752,6 +1972,8 @@ function showMain() {
   render();
   applyBg();
   renderRecommend();
+  updateMoonPhaseBar();
+  updateJournalBadge();
 }
 
 function showSetup() {
@@ -1787,6 +2009,12 @@ function openSettings() {
   document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
   document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
   document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
+
+  // Moon cycle section (female only)
+  const moonSection = document.getElementById('moon-cycle-section');
+  if (moonSection) moonSection.style.display = isMale ? 'none' : 'block';
+  const periodInput = document.getElementById('period-start-input');
+  if (periodInput) periodInput.value = getPeriodStart() || '';
 
   document.getElementById('settings-modal').classList.add('open');
 }
@@ -1910,8 +2138,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
       document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
       document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
+      const ms = document.getElementById('moon-cycle-section');
+      if (ms) ms.style.display = isMale ? 'none' : 'block';
       updateSettingsModeDisplay();
-      if (startDate) render();
+      if (startDate) { render(); updateMoonPhaseBar(); }
     });
   });
   document.getElementById('btn-limit-minus').addEventListener('click', () => {
@@ -1985,6 +2215,45 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('emergency-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeEmergency();
   });
+
+  // Journal modal
+  document.getElementById('btn-open-journal').addEventListener('click', openJournalModal);
+  document.getElementById('btn-journal-close').addEventListener('click', closeJournalModal);
+  document.getElementById('journal-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeJournalModal();
+  });
+  document.getElementById('btn-journal-save').addEventListener('click', () => {
+    const textarea = document.getElementById('journal-textarea');
+    const result = saveJournalEntry(textarea.value);
+    if (!result) return;
+    if (result.isNew) {
+      const saveBtn = document.getElementById('btn-journal-save');
+      saveBtn.textContent = tr().journalSaveBtn(true);
+      saveBtn.disabled = true;
+      saveBtn.style.opacity = '0.5';
+      const streakEl = document.getElementById('journal-streak-info');
+      const streak = getJournalStreak();
+      if (streak >= 2) {
+        streakEl.textContent = result.bonusMsg || tr().journalStreak(streak);
+        streakEl.classList.remove('hidden');
+      }
+      if (result.bonusMsg) streakEl.textContent = result.bonusMsg;
+      render();
+      updateJournalBadge();
+    }
+  });
+
+  // Period start date
+  const periodInput = document.getElementById('period-start-input');
+  if (periodInput) {
+    periodInput.addEventListener('change', () => {
+      const val = periodInput.value;
+      if (val) {
+        localStorage.setItem('energy_period_start', val);
+        updateMoonPhaseBar();
+      }
+    });
+  }
 
   // Lang toggles
   document.querySelectorAll('.btn-lang').forEach(btn => btn.addEventListener('click', toggleLang));
