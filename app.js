@@ -1761,6 +1761,8 @@ function playCelebrate() {
     document.getElementById('celebrate-video-32'),
     document.getElementById('celebrate-video-33'),
     document.getElementById('celebrate-video-34'),
+    document.getElementById('celebrate-video-35'),
+    document.getElementById('celebrate-video-36'),
   ], _celebrateTimer);
 }
 
