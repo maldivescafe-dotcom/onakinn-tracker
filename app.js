@@ -485,7 +485,7 @@ function getPenalties() {
       { key: 'solo',        icon: '💜', ja: '自慰（ポルノなし）', en: 'Self-care Solo',      rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: true,  isSexEjac: false },
       { key: 'sex',         icon: '💛', ja: 'セックス',            en: 'Sex',                 rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
       { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',        en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-      { key: 'sugar',       icon: '🍬', ja: '糖質',                  en: 'Sugar/Carbs',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'sugar',       icon: '🍬', ja: '糖質過多',               en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
       { key: 'alcohol',     icon: '🍺', ja: '過度な飲酒',            en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
       { key: 'bad_sleep',   icon: '🌙', ja: '睡眠不足・夜更かし',    en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
       { key: 'sns',         icon: '📱', ja: '長時間SNS',              en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
@@ -498,7 +498,7 @@ function getPenalties() {
     { key: 'sex_ejac',    icon: '💛', ja: 'セックス（射精あり）',   en: 'Sex (ejaculation)',     rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
     { key: 'sex_no_ejac', icon: '💚', ja: 'セックス（射精なし）',   en: 'Sex (no ejaculation)', rate: noEjacRate, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',          en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-    { key: 'sugar',       icon: '🍬', ja: '糖質',                    en: 'Sugar/Carbs',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'sugar',       icon: '🍬', ja: '糖質過多',                 en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'alcohol',     icon: '🍺', ja: '過度な飲酒',              en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'bad_sleep',   icon: '🌙', ja: '睡眠不足・夜更かし',      en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'sns',         icon: '📱', ja: '長時間SNS',                en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
@@ -1476,7 +1476,7 @@ const BG_STYLES = [
   'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero.png\') center right/cover no-repeat',
   'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero-male.jpg\') center right/cover no-repeat',
   'linear-gradient(135deg, rgba(10,10,20,0.52), rgba(20,10,30,0.42)), url(\'./bg-hero-female.jpg\') top right/cover no-repeat',
-  'linear-gradient(135deg, rgba(10,5,20,0.45), rgba(20,10,30,0.35)), url(\'./female-with-male.png\') center/cover no-repeat',
+  'linear-gradient(135deg, rgba(10,5,20,0.45), rgba(20,10,30,0.35)), url(\'./female-with-male.png\') top center/cover no-repeat',
   'linear-gradient(135deg, #1a2e0a, #2d4a10)',
 ];
 
