@@ -44,6 +44,7 @@ const T = {
     settingsModeLabel: 'モードを変更',
     settingsFemaleLimit: '「適度」の上限（回/週）',
     btnResetAll: '全データをリセット',
+    btnSettingsDone: '✓ 完了',
     shareTitle: 'Energy Tracker',
     clipboardMsg: 'クリップボードにコピーしました',
     langBtn: 'EN',
@@ -160,6 +161,7 @@ const T = {
     settingsModeLabel: 'Change Mode',
     settingsFemaleLimit: '"Moderate" limit (times/week)',
     btnResetAll: 'Reset All Data',
+    btnSettingsDone: '✓ Done',
     shareTitle: 'Energy Tracker',
     clipboardMsg: 'Copied to clipboard',
     langBtn: 'JP',
@@ -2206,6 +2208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   document.getElementById('btn-reset-all').addEventListener('click', onResetAll);
+  document.getElementById('btn-settings-done').addEventListener('click', closeSettings);
 
   // Sex ejac rate
   document.getElementById('btn-sex-ejac-minus').addEventListener('click', () => {
