@@ -115,6 +115,8 @@ const T = {
     effectsSubStart: (d) => `開始から${d}日目`,
     effectsNote: '※ セックスでは効果はリセットされません',
     effectsLocked: 'まだ未到達',
+    effectsNextUnlock: (dayTarget, text, daysLeft) => `🔒 次：${dayTarget}日目で解放 — ${text}（あと ${daysLeft}日）`,
+    effectsAllUnlocked: '🏆 全効果を解放済み！',
   },
   en: {
     appTitle: 'Energy Tracker',
@@ -226,6 +228,8 @@ const T = {
     effectsSubStart: (d) => `Day ${d} from start`,
     effectsNote: '* Sex with a partner does not reset your effects',
     effectsLocked: 'Not yet reached',
+    effectsNextUnlock: (dayTarget, text, daysLeft) => `🔒 Next: Day ${dayTarget} — ${text} (in ${daysLeft} days)`,
+    effectsAllUnlocked: '🏆 All effects unlocked!',
   }
 };
 
@@ -236,7 +240,7 @@ function tr() { return T[lang]; }
 const ACTIVITIES = [
   { key: 'workout_short', icon: '💪', ja: '筋トレ 30min',    en: 'Workout 30min',  points: 40, isRecovery: true, isJunkRecovery: false, isWorkout: true },
   { key: 'workout_long',  icon: '💪', ja: '筋トレ 60min以上', en: 'Workout 60min+', points: 70, isRecovery: true, isJunkRecovery: false, isWorkout: true },
-  { key: 'exercise',    icon: '🏋️', ja: '運動 30min',    en: 'Exercise 30min',   points: 30, isRecovery: true, isJunkRecovery: false },
+  { key: 'exercise',    icon: '🏃', ja: '有酸素運動 30min', en: 'Cardio 30min', jaFemale: 'ヨガ・ストレッチ 30min', enFemale: 'Yoga / Stretch 30min', iconFemale: '🧘', points: 30, isRecovery: true, isJunkRecovery: false },
   { key: 'meditation',  icon: '🧘', ja: '瞑想',           en: 'Meditation',       points: 25, isRecovery: true, isJunkRecovery: false },
   { key: 'cold_shower', icon: '🚿', ja: '冷水シャワー',   en: 'Cold Shower',      points: 20, isRecovery: false, isJunkRecovery: false },
   { key: 'reading',     icon: '📚', ja: '読書 30min',    en: 'Reading 30min',    points: 15, isRecovery: false, isJunkRecovery: false },
@@ -452,6 +456,15 @@ const RECOMMEND_LINKS_EN = [
 ];
 
 // ========== HELPERS ==========
+
+// Gender-aware activity label/icon
+function actLabel(a) {
+  if (gender === 'female' && a.jaFemale) return lang === 'en' ? (a.enFemale || a.en) : a.jaFemale;
+  return lang === 'en' ? a.en : a.ja;
+}
+function actIcon(a) {
+  return (gender === 'female' && a.iconFemale) ? a.iconFemale : a.icon;
+}
 
 function todayStr() {
   const d = new Date();
@@ -1135,6 +1148,7 @@ function updateMoonPhaseBar() {
 
 let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
 let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
+let _effectsExpanded = false;
 
 function render() {
   if (!startDate) return;
@@ -1219,6 +1233,30 @@ function renderEffects() {
   const t = tr();
   const lastSolo = localStorage.getItem('energy_last_solo_ejac');
 
+  // Summary line (always visible)
+  const summaryEl = document.getElementById('effects-summary');
+  if (summaryEl) {
+    const nextEff = effects.find(e => effectDays < e.days);
+    if (!nextEff) {
+      summaryEl.textContent = t.effectsAllUnlocked;
+      summaryEl.className = 'effects-summary all-unlocked';
+    } else {
+      const label = lang === 'en' ? nextEff.en : nextEff.ja;
+      const daysLeft = nextEff.days - effectDays;
+      summaryEl.textContent = t.effectsNextUnlock(nextEff.days, label, daysLeft);
+      summaryEl.className = 'effects-summary';
+    }
+  }
+
+  // Toggle icon
+  const iconEl = document.getElementById('effects-toggle-icon');
+  if (iconEl) iconEl.textContent = _effectsExpanded ? '∨' : '›';
+
+  // Show/hide detail
+  const detailEl = document.getElementById('effects-detail');
+  if (detailEl) detailEl.classList.toggle('hidden', !_effectsExpanded);
+  if (!_effectsExpanded) return;
+
   // Sub label
   const sub = document.getElementById('effects-sub');
   if (sub) {
@@ -1235,7 +1273,6 @@ function renderEffects() {
   const list = document.getElementById('effects-list');
   if (!list) return;
   list.innerHTML = '';
-
   effects.forEach(eff => {
     const unlocked = effectDays >= eff.days;
     const label = lang === 'en' ? eff.en : eff.ja;
@@ -1288,7 +1325,7 @@ function renderTodayActivityRow() {
     if (!a) return;
     const chip = document.createElement('span');
     chip.className = 'activity-done-chip';
-    chip.textContent = `${a.icon} ${lang === 'en' ? a.en : a.ja}`;
+    chip.textContent = `${actIcon(a)} ${actLabel(a)}`;
     row.appendChild(chip);
   });
 }
@@ -1314,7 +1351,8 @@ function renderActivityModal() {
 
   ACTIVITIES.forEach(a => {
     const done = isActivityDone(a.key);
-    const label = lang === 'en' ? a.en : a.ja;
+    const label = actLabel(a);
+    const icon  = actIcon(a);
     const btn = document.createElement('button');
     btn.className = `btn-activity-item${done ? ' done' : ''}`;
     btn.dataset.key = a.key;
@@ -1324,7 +1362,7 @@ function renderActivityModal() {
     const recovTag = isJunkRecovDay && !done ? ' ★' : '';
 
     btn.innerHTML = `
-      <span class="act-icon">${a.icon}</span>
+      <span class="act-icon">${icon}</span>
       <span class="act-label">${label}${recovTag}</span>
       <span class="act-pts">${done ? t.alreadyDone : '+' + a.points + 'pt'}</span>
     `;
@@ -1961,6 +1999,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-welcome-start').addEventListener('click', () => {
     localStorage.setItem('energy_welcomed', '1');
     showMain();
+  });
+
+  // Effects accordion
+  document.getElementById('effects-label-toggle').addEventListener('click', () => {
+    _effectsExpanded = !_effectsExpanded;
+    renderEffects();
   });
 
   // Main screen

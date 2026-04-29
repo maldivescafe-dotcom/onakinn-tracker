@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0d1a0d">
   <title>Energy Tracker</title>
   <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css?v=9">
+  <link rel="stylesheet" href="./style.css?v=10">
 </head>
 <body>
 
@@ -125,10 +125,16 @@
 
     <!-- Effects -->
     <div class="effects-section">
-      <div class="label" data-i18n="effectsLabel">想定される効果</div>
-      <div class="effects-sub" id="effects-sub"></div>
-      <div class="effects-list" id="effects-list"></div>
-      <div class="effects-note" id="effects-note"></div>
+      <div class="label effects-label-toggle" id="effects-label-toggle">
+        <span data-i18n="effectsLabel">想定される効果</span>
+        <span class="effects-toggle-icon" id="effects-toggle-icon">›</span>
+      </div>
+      <div class="effects-summary" id="effects-summary"></div>
+      <div class="effects-detail hidden" id="effects-detail">
+        <div class="effects-sub" id="effects-sub"></div>
+        <div class="effects-list" id="effects-list"></div>
+        <div class="effects-note" id="effects-note"></div>
+      </div>
     </div>
 
     <!-- Emergency Button -->
@@ -432,6 +438,6 @@
     </video>
   </div>
 
-  <script src="./app.js?v=8"></script>
+  <script src="./app.js?v=9"></script>
 </body>
 </html>

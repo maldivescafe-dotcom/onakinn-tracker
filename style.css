@@ -1072,6 +1072,29 @@ header h1 {
   padding: 20px 18px 16px;
   margin-bottom: 18px;
 }
+.effects-label-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.effects-toggle-icon {
+  font-size: 1.1rem;
+  color: var(--muted);
+  transition: transform 0.2s;
+  line-height: 1;
+}
+.effects-summary {
+  font-size: 0.82rem;
+  color: rgba(180,220,180,0.75);
+  margin-top: 8px;
+  line-height: 1.45;
+}
+.effects-summary.all-unlocked {
+  color: var(--gold);
+  font-weight: 700;
+}
 .effects-sub {
   font-size: 0.8rem;
   color: var(--accent);
