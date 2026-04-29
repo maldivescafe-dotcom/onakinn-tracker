@@ -1505,6 +1505,9 @@ function playCelebrate() {
     document.getElementById('celebrate-video-29'),
     document.getElementById('celebrate-video-30'),
     document.getElementById('celebrate-video-31'),
+    document.getElementById('celebrate-video-32'),
+    document.getElementById('celebrate-video-33'),
+    document.getElementById('celebrate-video-34'),
   ], _celebrateTimer);
 }
 
