@@ -66,6 +66,8 @@ const T = {
     recoveryBonusMsg: '🎉 回復ボーナス +15%！',
     junkRecoveryMsg: '🥦 ジャンク回復ボーナス！',
     junkFreeWeekMsg: '🎊 7日間ジャンクゼロ達成！ +200pt',
+    workoutStreak3: '💪 3日連続筋トレ達成！ +100pt',
+    workoutStreak7: '🏆 7日連続筋トレ達成！ +300pt',
     pointAdded: (n) => `+${n}pt 獲得！`,
     selfCareUnlocked: '✨ セルフケアボーナス解放中！',
     femaleLimitReached: '今週の上限に達しています（設定で変更可）',
@@ -164,6 +166,8 @@ const T = {
     recoveryBonusMsg: '🎉 Recovery Bonus +15%!',
     junkRecoveryMsg: '🥦 Junk Recovery Bonus!',
     junkFreeWeekMsg: '🎊 7-Day Junk-Free! +200pt',
+    workoutStreak3: '💪 3-Day Workout Streak! +100pt',
+    workoutStreak7: '🏆 7-Day Workout Streak! +300pt',
     pointAdded: (n) => `+${n}pt earned!`,
     selfCareUnlocked: '✨ Self-care bonus unlocked!',
     femaleLimitReached: 'Weekly limit reached (change in Settings)',
@@ -208,6 +212,8 @@ function tr() { return T[lang]; }
 // ========== DATA: ACTIVITIES ==========
 
 const ACTIVITIES = [
+  { key: 'workout_short', icon: '💪', ja: '筋トレ 30min',    en: 'Workout 30min',  points: 40, isRecovery: true, isJunkRecovery: false, isWorkout: true },
+  { key: 'workout_long',  icon: '💪', ja: '筋トレ 60min以上', en: 'Workout 60min+', points: 70, isRecovery: true, isJunkRecovery: false, isWorkout: true },
   { key: 'exercise',    icon: '🏋️', ja: '運動 30min',    en: 'Exercise 30min',   points: 30, isRecovery: true, isJunkRecovery: false },
   { key: 'meditation',  icon: '🧘', ja: '瞑想',           en: 'Meditation',       points: 25, isRecovery: true, isJunkRecovery: false },
   { key: 'cold_shower', icon: '🚿', ja: '冷水シャワー',   en: 'Cold Shower',      points: 20, isRecovery: false, isJunkRecovery: false },
@@ -559,6 +565,7 @@ function clearAllData() {
     'energy_junk_bonus_awarded', 'energy_female_week_count',
     'energy_last_solo_ejac', 'energy_history',
     'energy_sex_ejac_week', 'energy_forgiveness_q', 'energy_last_ejac',
+    'energy_workout_streak', 'energy_last_workout_date',
     'energy_gender', 'energy_welcomed',
     'energy_sex_ejac_pct_m', 'energy_sex_ejac_pct_f',
     'energy_sex_weekly_limit', 'energy_forgiveness_days', 'energy_sex_no_ejac',
@@ -733,6 +740,23 @@ function checkJunkFreeWeekBonus() {
   return null;
 }
 
+// ========== WORKOUT STREAK ==========
+
+function getWorkoutStreak() {
+  return parseInt(localStorage.getItem('energy_workout_streak') || '0');
+}
+
+function updateWorkoutStreak() {
+  const lastDate = localStorage.getItem('energy_last_workout_date');
+  const today = todayStr();
+  if (lastDate === today) return null; // 今日すでにカウント済み
+  const yesterday = dateStr(new Date(Date.now() - 86400000));
+  const streak = lastDate === yesterday ? getWorkoutStreak() + 1 : 1;
+  localStorage.setItem('energy_workout_streak', streak.toString());
+  localStorage.setItem('energy_last_workout_date', today);
+  return streak;
+}
+
 // ========== FEMALE WEEKLY COUNT ==========
 
 function getFemaleWeekCount() {
@@ -894,7 +918,8 @@ function recordActivity(actKey) {
       ejacRec.done = done;
       localStorage.setItem('energy_ejac_recovery', JSON.stringify(ejacRec));
     }
-    if (done.includes('exercise') && done.includes('meditation')) {
+    const hasWorkout = done.some(k => ['exercise','workout_short','workout_long'].includes(k));
+    if (hasWorkout && done.includes('meditation')) {
       const bonus = Math.round(points * 0.15);
       addPoints(bonus);
       earned += bonus;
@@ -914,6 +939,18 @@ function recordActivity(actKey) {
       localStorage.removeItem('energy_junk_recovery_date');
       localStorage.removeItem('energy_junk_penalty_amt');
       if (!bonusMsg) bonusMsg = tr().junkRecoveryMsg;
+    }
+  }
+
+  // Workout streak bonus (first workout of the day only)
+  if (activity.isWorkout) {
+    const streak = updateWorkoutStreak();
+    if (streak === 3) {
+      addPoints(100); earned += 100;
+      if (!bonusMsg) bonusMsg = tr().workoutStreak3;
+    } else if (streak === 7) {
+      addPoints(300); earned += 300;
+      if (!bonusMsg) bonusMsg = tr().workoutStreak7;
     }
   }
 
