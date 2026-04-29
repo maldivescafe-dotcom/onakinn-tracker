@@ -1195,6 +1195,30 @@ footer {
   opacity: 1;
 }
 
+/* ========== SETUP PERIOD SECTION ========== */
+.setup-period-section {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 160, 200, 0.07);
+  border: 1px solid rgba(255, 160, 200, 0.2);
+  border-radius: 14px;
+  text-align: left;
+}
+.setup-period-section label {
+  display: block;
+  font-size: 0.88rem;
+  color: #f5c0d8;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.setup-period-hint {
+  font-size: 0.75rem;
+  color: rgba(245, 192, 216, 0.65);
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
 /* ========== SETTINGS DONE BUTTON ========== */
 .btn-settings-done {
   width: 100%;

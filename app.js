@@ -15,6 +15,8 @@ const T = {
     setupDesc: 'エネルギーを積み上げ、自分を進化させよう。',
     startDateLabel: '開始日を選択',
     btnStart: 'スタートする',
+    setupPeriodLabel: '最終生理開始日（任意）',
+    setupPeriodHint: '入力すると生理周期に合わせたメッセージが表示されます',
     headerTitle: '⚡ Energy Tracker',
     activityBtnText: '活動を記録する',
     activityModalTitle: '活動を記録する',
@@ -132,6 +134,8 @@ const T = {
     setupDesc: 'Build your energy and evolve every day.',
     startDateLabel: 'Start Date',
     btnStart: 'Start',
+    setupPeriodLabel: 'Last period start date (optional)',
+    setupPeriodHint: 'Enables cycle-matched messages when entered',
     headerTitle: '⚡ Energy Tracker',
     activityBtnText: 'Log Activity',
     activityModalTitle: 'Log Activity',
@@ -2023,6 +2027,11 @@ function showSetup() {
   const mm = String(today.getMonth() + 1).padStart(2, '0');
   const dd = String(today.getDate()).padStart(2, '0');
   document.getElementById('start-date-input').value = `${yyyy}-${mm}-${dd}`;
+  // Show period input for female mode
+  const periodSection = document.getElementById('setup-period-section');
+  if (periodSection) periodSection.classList.toggle('hidden', gender !== 'female');
+  const periodInput = document.getElementById('setup-period-input');
+  if (periodInput) periodInput.value = getPeriodStart() || '';
 }
 
 function showGenderScreen() {
@@ -2095,6 +2104,11 @@ function onStart() {
   now.setHours(23, 59, 59, 999);
   if (date > now) { alert(t.alertFutureDate); return; }
   saveState(date);
+  // Save period start date if provided (female only)
+  const periodVal = document.getElementById('setup-period-input')?.value;
+  if (periodVal && gender === 'female') {
+    localStorage.setItem('energy_period_start', periodVal);
+  }
   if (!localStorage.getItem('energy_welcomed')) {
     showWelcome();
   } else {
