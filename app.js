@@ -1199,7 +1199,7 @@ function saveJournalEntry(text) {
   const entry = { date: today, text: text.trim(), ts: Date.now() };
   const idx = entries.findIndex(e => e.date === today);
   if (idx >= 0) { entries[idx] = entry; } else { entries.push(entry); }
-  if (entries.length > 90) entries.splice(0, entries.length - 90);
+  // 上限なし（全件保持）
   localStorage.setItem('energy_journal', JSON.stringify(entries));
 
   return { pointsEarned, bonusMsg, isNew: !existing };
