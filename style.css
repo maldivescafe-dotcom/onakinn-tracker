@@ -947,7 +947,14 @@ header h1 {
 .welcome-row-icon { font-size: 1rem; text-align: center; }
 .welcome-row-label { color: var(--text); }
 .welcome-row-rate { font-size: 0.76rem; font-weight: 700; color: #f87171; text-align: right; line-height: 1.4; }
-.welcome-recovery-desc { font-size: 0.85rem; color: var(--text); }
+.welcome-recovery-desc { font-size: 0.85rem; color: var(--text); margin-bottom: 8px; }
+.welcome-interval-rows { display: flex; flex-direction: column; gap: 5px; margin: 4px 0 10px; }
+.welcome-interval-row { font-size: 0.82rem; padding: 5px 10px; border-radius: 8px; }
+.welcome-interval-row.muted  { background: rgba(255,255,255,0.05); color: var(--muted); }
+.welcome-interval-row.half   { background: rgba(245,200,66,0.12);  color: #f5c842; }
+.welcome-interval-row.none   { background: rgba(74,222,128,0.12);  color: #4ade80; }
+.welcome-interval-row.bonus  { background: rgba(251,191,36,0.18);  color: #fbbf24; }
+.welcome-forgiveness-note { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
 .welcome-settings-note {
   font-size: 0.82rem;
   color: var(--muted);

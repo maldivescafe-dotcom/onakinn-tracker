@@ -76,7 +76,13 @@ const T = {
     welcomeTitle: '初期設定のご確認',
     welcomeIntro: 'このアプリの初期設定です。あなたに合わせて自由に変更できます。',
     welcomePenaltyLabel: 'ペナルティ設定',
-    welcomeRecoveryLabel: '継続回復システム',
+    welcomeRecoveryLabel: 'インターバル回復システム',
+    welcomeIntervalDesc: '前回の行為からの経過日数でペナルティが変わります',
+    welcomeInterval1: '3日未満　→　通常ペナルティ',
+    welcomeInterval2: '3〜6日後　→　ペナルティ半減 ✓',
+    welcomeInterval3: '7日以上後　→　ペナルティ無効 🎉',
+    welcomeInterval4: '14日以上後　→　ボーナス +100pt 🌟',
+    welcomeForgivenessNote: (n) => `※ ${n}日間継続でも蓄積ペナルティが自動回復（設定で変更可）`,
     welcomeSettingsNote: '⚙️ 右上の設定ボタンからいつでも変更できます',
     welcomeBtn: 'はじめる →',
     welcomeSexLimitDesc: (n, r) => `週${n}回まで免除、以降 −${r}%`,
@@ -176,7 +182,13 @@ const T = {
     welcomeTitle: 'Default Settings',
     welcomeIntro: 'Here are your starting settings. You can adjust them anytime.',
     welcomePenaltyLabel: 'Penalty Settings',
-    welcomeRecoveryLabel: 'Recovery System',
+    welcomeRecoveryLabel: 'Interval Recovery System',
+    welcomeIntervalDesc: 'Penalty changes based on days since last act',
+    welcomeInterval1: 'Under 3 days　→　Full penalty',
+    welcomeInterval2: '3–6 days　→　Penalty halved ✓',
+    welcomeInterval3: '7+ days　→　Penalty nullified 🎉',
+    welcomeInterval4: '14+ days　→　Bonus +100pt 🌟',
+    welcomeForgivenessNote: (n) => `※ Accumulated penalties also auto-restore after ${n} clean days`,
     welcomeSettingsNote: '⚙️ Tap the Settings button anytime to adjust',
     welcomeBtn: 'Get Started →',
     welcomeSexLimitDesc: (n, r) => `first ${n}/wk free, then −${r}%`,
@@ -1714,7 +1726,14 @@ function renderWelcomeContent() {
     </div>
     <div class="welcome-section">
       <div class="welcome-section-title">${t.welcomeRecoveryLabel}</div>
-      <div class="welcome-recovery-desc">🔄 ${t.welcomeForgivenessDesc(forgiveDays)}</div>
+      <div class="welcome-recovery-desc">${t.welcomeIntervalDesc}</div>
+      <div class="welcome-interval-rows">
+        <div class="welcome-interval-row muted">${t.welcomeInterval1}</div>
+        <div class="welcome-interval-row half">${t.welcomeInterval2}</div>
+        <div class="welcome-interval-row none">${t.welcomeInterval3}</div>
+        <div class="welcome-interval-row bonus">${t.welcomeInterval4}</div>
+      </div>
+      <div class="welcome-forgiveness-note">${t.welcomeForgivenessNote(forgiveDays)}</div>
     </div>
   `;
 }
