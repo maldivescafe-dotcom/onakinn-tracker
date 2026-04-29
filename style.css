@@ -1279,6 +1279,19 @@ footer {
   transition: opacity 0.15s;
 }
 .btn-journal-save:active { opacity: 0.7; }
+.btn-journal-export {
+  width: 100%;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-bottom: 14px;
+  transition: opacity 0.15s;
+}
+.btn-journal-export:active { opacity: 0.6; }
 .journal-history-label {
   font-size: 0.75rem;
   color: var(--muted);

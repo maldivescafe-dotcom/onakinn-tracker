@@ -110,6 +110,9 @@ const T = {
     journalStreak7: '🎊 7日連続日記達成！ +100pt',
     journalHistoryLabel: '過去の記録',
     journalEmpty: 'まだ記録がありません',
+    journalExportBtn: '📤 日記をエクスポート',
+    journalExportEmpty: 'エクスポートできる日記がありません',
+    journalExportCopied: 'クリップボードにコピーしました',
     sexNoEjacOff: 'しない（推奨）',
     sexNoEjacOn: 'する（−5%）',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt 継続回復！`,
@@ -229,6 +232,9 @@ const T = {
     journalStreak7: '🎊 7-Day Journal Streak! +100pt',
     journalHistoryLabel: 'Past entries',
     journalEmpty: 'No entries yet',
+    journalExportBtn: '📤 Export Journal',
+    journalExportEmpty: 'No entries to export',
+    journalExportCopied: 'Copied to clipboard',
     sexNoEjacOff: 'Off (recommended)',
     sexNoEjacOn: 'On (−5%)',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt streak recovery!`,
@@ -1197,6 +1203,34 @@ function saveJournalEntry(text) {
   localStorage.setItem('energy_journal', JSON.stringify(entries));
 
   return { pointsEarned, bonusMsg, isNew: !existing };
+}
+
+function exportJournal() {
+  const t = tr();
+  const entries = getJournalEntries();
+  if (entries.length === 0) {
+    alert(t.journalExportEmpty);
+    return;
+  }
+  // Sort oldest → newest
+  const sorted = entries.slice().sort((a, b) => a.date.localeCompare(b.date));
+  const header = lang === 'en'
+    ? `📝 Energy Tracker — Journal Export\n${'─'.repeat(30)}\n\n`
+    : `📝 Energy Tracker — 日記エクスポート\n${'─'.repeat(30)}\n\n`;
+  const body = sorted.map(e => {
+    const d = new Date(e.date + 'T00:00:00');
+    const dl = t.formatDate(d);
+    return `【${dl}】\n${e.text}`;
+  }).join('\n\n');
+  const text = header + body;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Energy Tracker Journal', text }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(text)
+      .then(() => alert(t.journalExportCopied))
+      .catch(() => alert(text));
+  }
 }
 
 function updateJournalBadge() {
@@ -2219,6 +2253,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Journal modal
   document.getElementById('btn-open-journal').addEventListener('click', openJournalModal);
   document.getElementById('btn-journal-close').addEventListener('click', closeJournalModal);
+  document.getElementById('btn-journal-export').addEventListener('click', exportJournal);
   document.getElementById('journal-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeJournalModal();
   });
