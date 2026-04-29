@@ -102,17 +102,6 @@ const T = {
     moonPhaseNames: ['🔴 生理期', '🌱 卵胞期', '✨ 排卵期', '🌘 黄体期'],
     moonPhaseDescs: ['ペナルティ20%軽減', '通常', 'ボーナス活動+10%', 'ペナルティ10%軽減'],
     moonPhaseDayLabel: (d) => `${d}日目`,
-    journalBtnText: '📝 今日の日記',
-    journalModalTitle: '今日の日記',
-    journalPlaceholder: '今日感じたこと、気づき、明日への一言…',
-    journalSaveBtn: (already) => already ? '今日はもう記録済み ✓' : '保存して +15pt',
-    journalStreak: (n) => `📝 ${n}日連続記録中`,
-    journalStreak7: '🎊 7日連続日記達成！ +100pt',
-    journalHistoryLabel: '過去の記録',
-    journalEmpty: 'まだ記録がありません',
-    journalExportBtn: '📤 日記をエクスポート',
-    journalExportEmpty: 'エクスポートできる日記がありません',
-    journalExportCopied: 'クリップボードにコピーしました',
     sexNoEjacOff: 'しない（推奨）',
     sexNoEjacOn: 'する（−5%）',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt 継続回復！`,
@@ -224,17 +213,6 @@ const T = {
     moonPhaseNames: ['🔴 Menstrual', '🌱 Follicular', '✨ Ovulation', '🌘 Luteal'],
     moonPhaseDescs: ['Penalty −20%', 'Normal', 'Activity bonus +10%', 'Penalty −10%'],
     moonPhaseDayLabel: (d) => `Day ${d}`,
-    journalBtnText: '📝 Journal',
-    journalModalTitle: "Today's Journal",
-    journalPlaceholder: "Today's feelings, insights, a note for tomorrow…",
-    journalSaveBtn: (already) => already ? 'Already saved today ✓' : 'Save +15pt',
-    journalStreak: (n) => `📝 ${n}-day streak`,
-    journalStreak7: '🎊 7-Day Journal Streak! +100pt',
-    journalHistoryLabel: 'Past entries',
-    journalEmpty: 'No entries yet',
-    journalExportBtn: '📤 Export Journal',
-    journalExportEmpty: 'No entries to export',
-    journalExportCopied: 'Copied to clipboard',
     sexNoEjacOff: 'Off (recommended)',
     sexNoEjacOn: 'On (−5%)',
     forgivenessMsg: (n) => `🎉 +${n.toLocaleString()}pt streak recovery!`,
@@ -614,7 +592,6 @@ function clearAllData() {
     'energy_sex_ejac_pct_m', 'energy_sex_ejac_pct_f',
     'energy_sex_weekly_limit', 'energy_forgiveness_days', 'energy_sex_no_ejac',
     'energy_period_start',
-    'energy_journal', 'energy_journal_streak', 'energy_journal_last_date',
   ];
   keysToRemove.forEach(k => localStorage.removeItem(k));
   points = 0;
@@ -1153,157 +1130,6 @@ function updateMoonPhaseBar() {
   document.getElementById('moon-phase-effect').textContent = t.moonPhaseDescs[mp.phase];
 }
 
-// ========== JOURNAL ==========
-
-function getJournalEntries() {
-  try { return JSON.parse(localStorage.getItem('energy_journal') || '[]'); } catch(e) { return []; }
-}
-
-function getJournalStreak() {
-  return parseInt(localStorage.getItem('energy_journal_streak') || '0');
-}
-
-function updateJournalStreak() {
-  const lastDate = localStorage.getItem('energy_journal_last_date');
-  const today = todayStr();
-  if (lastDate === today) return getJournalStreak(); // already counted today
-  const yesterday = dateStr(new Date(Date.now() - 86400000));
-  const streak = lastDate === yesterday ? getJournalStreak() + 1 : 1;
-  localStorage.setItem('energy_journal_streak', streak.toString());
-  localStorage.setItem('energy_journal_last_date', today);
-  return streak;
-}
-
-function saveJournalEntry(text) {
-  if (!text.trim()) return null;
-  const today = todayStr();
-  const entries = getJournalEntries();
-  const existing = entries.find(e => e.date === today);
-  let pointsEarned = 0;
-  let bonusMsg = '';
-
-  if (!existing) {
-    // First entry today: +15pt
-    pointsEarned = 15;
-    addPoints(15);
-    savePoints();
-    // Streak
-    const streak = updateJournalStreak();
-    if (streak > 0 && streak % 7 === 0) {
-      addPoints(100);
-      pointsEarned += 100;
-      bonusMsg = tr().journalStreak7;
-    }
-  }
-
-  const entry = { date: today, text: text.trim(), ts: Date.now() };
-  const idx = entries.findIndex(e => e.date === today);
-  if (idx >= 0) { entries[idx] = entry; } else { entries.push(entry); }
-  // 上限なし（全件保持）
-  localStorage.setItem('energy_journal', JSON.stringify(entries));
-
-  return { pointsEarned, bonusMsg, isNew: !existing };
-}
-
-function exportJournal() {
-  const t = tr();
-  const entries = getJournalEntries();
-  if (entries.length === 0) {
-    alert(t.journalExportEmpty);
-    return;
-  }
-  // Sort oldest → newest
-  const sorted = entries.slice().sort((a, b) => a.date.localeCompare(b.date));
-  const header = lang === 'en'
-    ? `📝 Energy Tracker — Journal Export\n${'─'.repeat(30)}\n\n`
-    : `📝 Energy Tracker — 日記エクスポート\n${'─'.repeat(30)}\n\n`;
-  const body = sorted.map(e => {
-    const d = new Date(e.date + 'T00:00:00');
-    const dl = t.formatDate(d);
-    return `【${dl}】\n${e.text}`;
-  }).join('\n\n');
-  const text = header + body;
-
-  if (navigator.share) {
-    navigator.share({ title: 'Energy Tracker Journal', text }).catch(() => {});
-  } else {
-    navigator.clipboard?.writeText(text)
-      .then(() => alert(t.journalExportCopied))
-      .catch(() => alert(text));
-  }
-}
-
-function updateJournalBadge() {
-  const badge = document.getElementById('journal-streak-badge');
-  if (!badge) return;
-  const streak = getJournalStreak();
-  const lastDate = localStorage.getItem('energy_journal_last_date');
-  const today = todayStr();
-  const yesterday = dateStr(new Date(Date.now() - 86400000));
-  const active = streak >= 2 && (lastDate === today || lastDate === yesterday);
-  if (active) {
-    badge.textContent = tr().journalStreak(streak);
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
-}
-
-function openJournalModal() {
-  renderJournalModal();
-  document.getElementById('journal-modal').classList.add('open');
-}
-
-function closeJournalModal() {
-  document.getElementById('journal-modal').classList.remove('open');
-}
-
-function renderJournalModal() {
-  const t = tr();
-  const today = todayStr();
-  const entries = getJournalEntries();
-  const todayEntry = entries.find(e => e.date === today);
-
-  // Textarea
-  const textarea = document.getElementById('journal-textarea');
-  textarea.placeholder = t.journalPlaceholder;
-  textarea.value = todayEntry ? todayEntry.text : '';
-
-  // Save button
-  const saveBtn = document.getElementById('btn-journal-save');
-  saveBtn.textContent = t.journalSaveBtn(!!todayEntry);
-  saveBtn.disabled = !!todayEntry;
-  saveBtn.style.opacity = todayEntry ? '0.5' : '1';
-
-  // Streak info
-  const streakEl = document.getElementById('journal-streak-info');
-  const streak = getJournalStreak();
-  const lastDate = localStorage.getItem('energy_journal_last_date');
-  const yesterday = dateStr(new Date(Date.now() - 86400000));
-  const streakActive = streak >= 2 && (lastDate === today || lastDate === yesterday);
-  if (streakActive) {
-    streakEl.textContent = t.journalStreak(streak);
-    streakEl.classList.remove('hidden');
-  } else {
-    streakEl.textContent = '';
-    streakEl.classList.add('hidden');
-  }
-
-  // History (last 7 entries, excluding today, newest first)
-  const historyEl = document.getElementById('journal-history');
-  const past = entries.filter(e => e.date !== today).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 7);
-  if (past.length === 0) {
-    historyEl.innerHTML = `<div class="journal-empty">${t.journalEmpty}</div>`;
-  } else {
-    historyEl.innerHTML =
-      `<div class="journal-history-label">${t.journalHistoryLabel}</div>` +
-      past.map(e => {
-        const d = new Date(e.date + 'T00:00:00');
-        const dl = t.formatDate(d);
-        return `<div class="journal-history-item"><div class="journal-history-date">${dl}</div><div class="journal-history-text">${e.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/\n/g,'<br>')}</div></div>`;
-      }).join('');
-  }
-}
 
 // ========== RENDER ==========
 
@@ -1936,9 +1762,8 @@ function applyLang() {
 function toggleLang() {
   lang = lang === 'ja' ? 'en' : 'ja';
   applyLang();
-  if (startDate) { render(); renderRecommend(); updateMoonPhaseBar(); updateJournalBadge(); }
+  if (startDate) { render(); renderRecommend(); updateMoonPhaseBar(); }
   if (document.getElementById('emergency-modal').classList.contains('open')) renderTip();
-  if (document.getElementById('journal-modal').classList.contains('open')) renderJournalModal();
   updateSettingsModeDisplay();
   const ws = document.getElementById('welcome-screen');
   if (ws && !ws.classList.contains('hidden')) {
@@ -2009,7 +1834,6 @@ function showMain() {
   applyBg();
   renderRecommend();
   updateMoonPhaseBar();
-  updateJournalBadge();
 }
 
 function showSetup() {
@@ -2250,34 +2074,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-tip-prev').addEventListener('click', onTipPrev);
   document.getElementById('emergency-modal').addEventListener('click', e => {
     if (e.target === e.currentTarget) closeEmergency();
-  });
-
-  // Journal modal
-  document.getElementById('btn-open-journal').addEventListener('click', openJournalModal);
-  document.getElementById('btn-journal-close').addEventListener('click', closeJournalModal);
-  document.getElementById('btn-journal-export').addEventListener('click', exportJournal);
-  document.getElementById('journal-modal').addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeJournalModal();
-  });
-  document.getElementById('btn-journal-save').addEventListener('click', () => {
-    const textarea = document.getElementById('journal-textarea');
-    const result = saveJournalEntry(textarea.value);
-    if (!result) return;
-    if (result.isNew) {
-      const saveBtn = document.getElementById('btn-journal-save');
-      saveBtn.textContent = tr().journalSaveBtn(true);
-      saveBtn.disabled = true;
-      saveBtn.style.opacity = '0.5';
-      const streakEl = document.getElementById('journal-streak-info');
-      const streak = getJournalStreak();
-      if (streak >= 2) {
-        streakEl.textContent = result.bonusMsg || tr().journalStreak(streak);
-        streakEl.classList.remove('hidden');
-      }
-      if (result.bonusMsg) streakEl.textContent = result.bonusMsg;
-      render();
-      updateJournalBadge();
-    }
   });
 
   // Period start date
