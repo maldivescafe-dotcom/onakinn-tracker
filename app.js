@@ -2152,8 +2152,6 @@ function openSettings() {
   const isMale = gender === 'male';
   document.getElementById('sex-ejac-rate-label').style.display = isMale ? '' : 'none';
   document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
-  document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
-  document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
 
   // Video toggle
   updateVideoToggleBtn();
@@ -2295,8 +2293,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const isMale = gender === 'male';
       document.getElementById('sex-ejac-rate-label').style.display = isMale ? '' : 'none';
       document.getElementById('sex-ejac-rate-row').style.display  = isMale ? 'flex' : 'none';
-      document.getElementById('sex-no-ejac-label').style.display  = isMale ? '' : 'none';
-      document.getElementById('sex-no-ejac-row').style.display    = isMale ? 'flex' : 'none';
       const ms = document.getElementById('moon-cycle-section');
       if (ms) ms.style.display = isMale ? 'none' : 'block';
       updateSettingsModeDisplay();
@@ -2328,13 +2324,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-sex-ejac-plus').addEventListener('click', () => {
     const cur = getSexEjacPct();
     if (cur < 30) { setSexEjacPct(cur + 5); document.getElementById('sex-ejac-pct-display').textContent = getSexEjacPct() + '%'; if (startDate) render(); }
-  });
-
-  // Sex no-ejac toggle
-  document.getElementById('btn-sex-no-ejac-toggle').addEventListener('click', () => {
-    localStorage.setItem('energy_sex_no_ejac', getSexNoEjacEnabled() ? 'false' : 'true');
-    updateSexNoEjacBtn();
-    if (startDate) render();
   });
 
   // Sex weekly limit
