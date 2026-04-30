@@ -1,9 +1,21 @@
-const CACHE_NAME = 'onakinn-v9';
+const CACHE_NAME = 'onakinn-v11';
 const ASSETS = [
   './index.html',
   './style.css',
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './img/level1.jpg',
+  './img/level2.jpg',
+  './img/level3.jpg',
+  './img/level4.jpg',
+  './img/level5.jpg',
+  './img/level6.jpg',
+  './img/level7.jpg',
+  './img/level8.jpg',
+  './img/level9.jpg',
+  './img/level10.jpg',
+  './img/level11.jpg',
+  './img/level12.jpg',
 ];
 
 self.addEventListener('install', e => {

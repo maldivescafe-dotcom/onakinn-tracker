@@ -87,13 +87,18 @@
       </div>
       <!-- Stats view (default) -->
       <div id="card-stats">
-        <div class="level-label" id="level-label">Lv.1 スターター</div>
-        <div class="points-row">
-          <span class="streak-days" id="points-display">0</span>
-          <span class="streak-unit">pt</span>
+        <div class="level-card-row">
+          <img id="level-img" class="level-img" src="./img/level1.jpg" alt="Lv.1 スターター">
+          <div class="level-card-info">
+            <div class="level-label" id="level-label">Lv.1 スターター</div>
+            <div class="points-row">
+              <span class="streak-days" id="points-display">0</span>
+              <span class="streak-unit">pt</span>
+            </div>
+            <div class="streak-sub" id="today-gain-display">今日 +50pt</div>
+            <div class="streak-next-level" id="next-level-display"></div>
+          </div>
         </div>
-        <div class="streak-sub" id="today-gain-display">今日 +50pt</div>
-        <div class="streak-next-level" id="next-level-display"></div>
         <div class="streak-start" id="streak-start"></div>
       </div>
       <!-- Chart view (hidden) -->
@@ -130,9 +135,9 @@
       <div class="message-text" id="message-text"></div>
     </div>
 
-    <!-- Milestones -->
+    <!-- Level list -->
     <div class="progress-section">
-      <div class="label" data-i18n="milestonesLabel">マイルストーン</div>
+      <div class="label" data-i18n="milestonesLabel">レベル一覧</div>
       <div class="milestones" id="milestones"></div>
     </div>
 

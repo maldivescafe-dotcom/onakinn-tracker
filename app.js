@@ -23,7 +23,7 @@ const T = {
     activityModalDesc: '今日行ったことをタップしてください',
     alreadyDone: '記録済み ✓',
     messageLabel: '今日のメッセージ',
-    milestonesLabel: 'マイルストーン',
+    milestonesLabel: 'レベル一覧',
     milestoneCheck: '✓',
     emergencyBtn: '今すぐしたくなった…',
     penaltyLabel: '悪習慣を記録',
@@ -142,7 +142,7 @@ const T = {
     activityModalDesc: 'Tap what you did today',
     alreadyDone: 'Done ✓',
     messageLabel: "Today's Message",
-    milestonesLabel: 'Milestones',
+    milestonesLabel: 'Level List',
     milestoneCheck: '✓',
     emergencyBtn: 'I want to do it...',
     penaltyLabel: 'Log a Setback',
@@ -267,28 +267,18 @@ const ACTIVITIES = [
 // ========== DATA: LEVELS ==========
 
 const LEVELS = [
-  { min: 0,     ja: 'Lv.1 スターター',        en: 'Lv.1 Starter'      },
-  { min: 150,   ja: 'Lv.2 チャレンジャー',    en: 'Lv.2 Challenger'   },
-  { min: 400,   ja: 'Lv.3 ライジング',        en: 'Lv.3 Rising'       },
-  { min: 750,   ja: 'Lv.4 ファイター',        en: 'Lv.4 Fighter'      },
-  { min: 1200,  ja: 'Lv.5 ウォリアー',        en: 'Lv.5 Warrior'      },
-  { min: 1800,  ja: 'Lv.6 ストライカー',      en: 'Lv.6 Striker'      },
-  { min: 2700,  ja: 'Lv.7 チャンピオン',      en: 'Lv.7 Champion'     },
-  { min: 3800,  ja: 'Lv.8 エリート',          en: 'Lv.8 Elite'        },
-  { min: 5200,  ja: 'Lv.9 マスター',          en: 'Lv.9 Master'       },
-  { min: 7000,  ja: 'Lv.10 グランドマスター', en: 'Lv.10 Grandmaster' },
-  { min: 10000, ja: 'Lv.15 エリートⅡ',       en: 'Lv.15 Elite II'    },
-  { min: 15000, ja: 'Lv.20 伝説の存在',       en: 'Lv.20 Legend'      },
-];
-
-// ========== DATA: MILESTONES ==========
-
-const MILESTONES = [
-  { ja: 'ルーキー', en: 'Rookie',      points: 100   },
-  { ja: 'ウォリアー',en: 'Warrior',    points: 500   },
-  { ja: 'チャンピオン',en: 'Champion', points: 1500  },
-  { ja: 'マスター',  en: 'Master',     points: 5000  },
-  { ja: 'レジェンド',en: 'Legend',     points: 15000 },
+  { min: 0,     ja: 'Lv.1 スターター',   en: 'Lv.1 Starter',    img: './img/level1.jpg'  },
+  { min: 100,   ja: 'Lv.2 ルーキー',    en: 'Lv.2 Rookie',     img: './img/level2.jpg'  },
+  { min: 300,   ja: 'Lv.3 ベテラン',    en: 'Lv.3 Veteran',    img: './img/level3.jpg'  },
+  { min: 600,   ja: 'Lv.4 ライジング',  en: 'Lv.4 Rising',     img: './img/level4.jpg'  },
+  { min: 1000,  ja: 'Lv.5 ファイター',  en: 'Lv.5 Fighter',    img: './img/level5.jpg'  },
+  { min: 1500,  ja: 'Lv.6 エース',      en: 'Lv.6 Ace',        img: './img/level6.jpg'  },
+  { min: 2500,  ja: 'Lv.7 ヒーロー',    en: 'Lv.7 Hero',       img: './img/level7.jpg'  },
+  { min: 3800,  ja: 'Lv.8 チャンピオン',en: 'Lv.8 Champion',   img: './img/level8.jpg'  },
+  { min: 5500,  ja: 'Lv.9 エリート',    en: 'Lv.9 Elite',      img: './img/level9.jpg'  },
+  { min: 7500,  ja: 'Lv.10 マスター',   en: 'Lv.10 Master',    img: './img/level10.jpg' },
+  { min: 11000, ja: 'Lv.11 アイコン',   en: 'Lv.11 Icon',      img: './img/level11.jpg' },
+  { min: 16000, ja: 'Lv.12 レジェンド', en: 'Lv.12 Legendary', img: './img/level12.jpg' },
 ];
 
 // ========== DATA: MESSAGES ==========
@@ -1309,6 +1299,13 @@ function render() {
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
 
+  // Level image
+  const levelImgEl = document.getElementById('level-img');
+  if (levelImgEl && currentLevelObj.img) {
+    levelImgEl.src = currentLevelObj.img;
+    levelImgEl.alt = currentLevel;
+  }
+
   const todayChange = getTodayChange();
   document.getElementById('today-gain-display').textContent = t.todayGain(todayChange);
 
@@ -1342,21 +1339,30 @@ function render() {
   }
   document.getElementById('message-text').textContent = messages[days % messages.length];
 
-  // Milestones
+  // Level list (unified)
   const container = document.getElementById('milestones');
   container.innerHTML = '';
-  MILESTONES.forEach(m => {
-    const label = lang === 'en' ? m.en : m.ja;
-    const pct = Math.min(100, Math.round((Math.round(points) / m.points) * 100));
-    const done = Math.round(points) >= m.points;
+  const currentPtsRounded = Math.round(points);
+  LEVELS.forEach((lv, i) => {
+    const label = lang === 'en' ? lv.en : lv.ja;
+    const done = currentPtsRounded >= lv.min;
+    const isCurrent = getLevelObj(currentPtsRounded).min === lv.min;
+    const nextLv = LEVELS[i + 1];
+    let pct = 100;
+    if (!done) {
+      pct = 0;
+    } else if (isCurrent && nextLv) {
+      const range = nextLv.min - lv.min;
+      pct = Math.min(100, Math.round(((currentPtsRounded - lv.min) / range) * 100));
+    }
     const row = document.createElement('div');
-    row.className = `milestone${done ? ' done' : ''}`;
+    row.className = `milestone${done ? ' done' : ''}${isCurrent ? ' current' : ''}`;
     row.innerHTML = `
       <span class="milestone-name">${label}</span>
       <div class="milestone-bar-bg">
         <div class="milestone-bar-fill" style="width:${pct}%"></div>
       </div>
-      <span class="milestone-pct">${done ? t.milestoneCheck : pct + '%'}</span>
+      <span class="milestone-pct">${done && !isCurrent ? t.milestoneCheck : (isCurrent && nextLv ? pct + '%' : (done ? t.milestoneCheck : ''))}</span>
     `;
     container.appendChild(row);
   });
