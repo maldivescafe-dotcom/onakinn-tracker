@@ -1343,7 +1343,9 @@ function updateMoonPhaseBar() {
 
 let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
 let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
-let _effectsExpanded = false;
+let _effectsExpanded = true; // always expanded now
+let _levelsExpanded = false;
+let _penaltyExpanded = false;
 
 function render() {
   if (!startDate) return;
@@ -1435,8 +1437,17 @@ function render() {
     }
   }
 
+  // Level list accordion toggle icon
+  const lvToggleIcon = document.getElementById('milestones-toggle-icon');
+  if (lvToggleIcon) lvToggleIcon.textContent = _levelsExpanded ? '∨' : '›';
+  const milestonesEl = document.getElementById('milestones');
+  if (milestonesEl) milestonesEl.classList.toggle('hidden', !_levelsExpanded);
+
   // Level list (unified)
   const container = document.getElementById('milestones');
+  if (!_levelsExpanded) {
+    // skip rendering content when collapsed
+  } else {
   container.innerHTML = '';
   const currentPtsRounded = Math.round(points);
   LEVELS.forEach((lv, i) => {
@@ -1462,6 +1473,7 @@ function render() {
     `;
     container.appendChild(row);
   });
+  } // end _levelsExpanded
 
   // Effects section
   renderEffects();
@@ -1478,30 +1490,6 @@ function renderEffects() {
   const effects = gender === 'female' ? EFFECTS_FEMALE : EFFECTS_MALE;
   const t = tr();
   const lastSolo = localStorage.getItem('energy_last_solo_ejac');
-
-  // Summary line (always visible)
-  const summaryEl = document.getElementById('effects-summary');
-  if (summaryEl) {
-    const nextEff = effects.find(e => effectDays < e.days);
-    if (!nextEff) {
-      summaryEl.textContent = t.effectsAllUnlocked;
-      summaryEl.className = 'effects-summary all-unlocked';
-    } else {
-      const label = lang === 'en' ? nextEff.en : nextEff.ja;
-      const daysLeft = nextEff.days - effectDays;
-      summaryEl.textContent = t.effectsNextUnlock(nextEff.days, label, daysLeft);
-      summaryEl.className = 'effects-summary';
-    }
-  }
-
-  // Toggle icon
-  const iconEl = document.getElementById('effects-toggle-icon');
-  if (iconEl) iconEl.textContent = _effectsExpanded ? '∨' : '›';
-
-  // Show/hide detail
-  const detailEl = document.getElementById('effects-detail');
-  if (detailEl) detailEl.classList.toggle('hidden', !_effectsExpanded);
-  if (!_effectsExpanded) return;
 
   // Sub label
   const sub = document.getElementById('effects-sub');
@@ -1541,6 +1529,13 @@ function penaltyRateLabel(p) {
 }
 
 function renderPenaltyButtons() {
+  // Penalty accordion toggle icon
+  const penToggleIcon = document.getElementById('penalty-toggle-icon');
+  if (penToggleIcon) penToggleIcon.textContent = _penaltyExpanded ? '∨' : '›';
+  const penBtns = document.getElementById('penalty-buttons');
+  if (penBtns) penBtns.classList.toggle('hidden', !_penaltyExpanded);
+  if (!_penaltyExpanded) return;
+
   const penalties = getPenalties();
   const container = document.getElementById('penalty-buttons');
   container.innerHTML = '';
@@ -2265,10 +2260,16 @@ document.addEventListener('DOMContentLoaded', () => {
     showMain();
   });
 
-  // Effects accordion
-  document.getElementById('effects-label-toggle').addEventListener('click', () => {
-    _effectsExpanded = !_effectsExpanded;
-    renderEffects();
+  // Level list accordion
+  document.getElementById('milestones-label-toggle').addEventListener('click', () => {
+    _levelsExpanded = !_levelsExpanded;
+    render();
+  });
+
+  // Penalty accordion
+  document.getElementById('penalty-label-toggle').addEventListener('click', () => {
+    _penaltyExpanded = !_penaltyExpanded;
+    renderPenaltyButtons();
   });
 
   // Main screen

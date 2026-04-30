@@ -1129,6 +1129,21 @@ header h1 {
   border: 1px solid rgba(245, 200, 66, 0.15);
 }
 
+/* ========== ACCORDION (shared: レベル一覧 / 悪習慣を記録) ========== */
+.accordion-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.accordion-toggle-icon {
+  font-size: 1.1rem;
+  color: var(--muted);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 /* ========== EFFECTS SECTION ========== */
 .effects-section {
   background: var(--card);
@@ -1140,17 +1155,14 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
-  user-select: none;
 }
 .effects-toggle-icon {
   font-size: 1.1rem;
   color: var(--muted);
-  transition: transform 0.2s;
   line-height: 1;
 }
 .effects-summary {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: rgba(180,220,180,0.75);
   margin-top: 8px;
   line-height: 1.45;
@@ -1160,27 +1172,27 @@ header h1 {
   font-weight: 700;
 }
 .effects-sub {
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--accent);
   font-weight: 600;
   margin-top: 2px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   letter-spacing: 0.02em;
 }
 .effects-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 10px;
 }
 .effect-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 9px;
+  padding: 8px 10px;
   opacity: 0.42;
   transition: opacity 0.2s;
 }
@@ -1192,12 +1204,12 @@ header h1 {
 .effect-day-badge {
   background: rgba(245, 200, 66, 0.12);
   color: var(--gold);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  border-radius: 6px;
-  padding: 2px 7px;
+  border-radius: 5px;
+  padding: 2px 6px;
   white-space: nowrap;
-  min-width: 38px;
+  min-width: 34px;
   text-align: center;
   flex-shrink: 0;
 }
@@ -1206,13 +1218,13 @@ header h1 {
   color: var(--accent2);
 }
 .effect-icon-col {
-  font-size: 1.1rem;
+  font-size: 1rem;
   flex-shrink: 0;
-  width: 22px;
+  width: 20px;
   text-align: center;
 }
 .effect-text {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   color: var(--text);
   line-height: 1.4;
 }
@@ -1220,7 +1232,7 @@ header h1 {
   color: #d4f5e0;
 }
 .effects-note {
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   color: var(--muted);
   line-height: 1.5;
   padding-top: 2px;

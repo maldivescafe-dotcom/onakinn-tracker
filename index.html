@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#0d1a0d">
   <title>Energy Tracker</title>
   <link rel="manifest" href="./manifest.json">
-  <link rel="stylesheet" href="./style.css?v=11">
+  <link rel="stylesheet" href="./style.css?v=12">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6PK2PZ27DB"></script>
   <script>
@@ -147,24 +147,23 @@
       <div class="feminine-tips-text" id="feminine-tips-text"></div>
     </div>
 
-    <!-- Level list -->
+    <!-- Level list (accordion) -->
     <div class="progress-section">
-      <div class="label" data-i18n="milestonesLabel">レベル一覧</div>
-      <div class="milestones" id="milestones"></div>
+      <div class="label accordion-label" id="milestones-label-toggle">
+        <span data-i18n="milestonesLabel">レベル一覧</span>
+        <span class="accordion-toggle-icon" id="milestones-toggle-icon">›</span>
+      </div>
+      <div class="milestones hidden" id="milestones"></div>
     </div>
 
-    <!-- Effects -->
+    <!-- Effects (always expanded) -->
     <div class="effects-section">
-      <div class="label effects-label-toggle" id="effects-label-toggle">
+      <div class="label" id="effects-label">
         <span data-i18n="effectsLabel">想定される効果</span>
-        <span class="effects-toggle-icon" id="effects-toggle-icon">›</span>
       </div>
-      <div class="effects-summary" id="effects-summary"></div>
-      <div class="effects-detail hidden" id="effects-detail">
-        <div class="effects-sub" id="effects-sub"></div>
-        <div class="effects-list" id="effects-list"></div>
-        <div class="effects-note" id="effects-note"></div>
-      </div>
+      <div class="effects-sub" id="effects-sub"></div>
+      <div class="effects-list" id="effects-list"></div>
+      <div class="effects-note" id="effects-note"></div>
     </div>
 
     <!-- Emergency Button -->
@@ -175,10 +174,13 @@
       </button>
     </div>
 
-    <!-- Penalty Section -->
+    <!-- Penalty Section (accordion) -->
     <div class="penalty-section">
-      <div class="label" data-i18n="penaltyLabel">悪習慣を記録</div>
-      <div class="penalty-buttons" id="penalty-buttons">
+      <div class="label accordion-label" id="penalty-label-toggle">
+        <span data-i18n="penaltyLabel">悪習慣を記録</span>
+        <span class="accordion-toggle-icon" id="penalty-toggle-icon">›</span>
+      </div>
+      <div class="penalty-buttons hidden" id="penalty-buttons">
         <!-- rendered by JS -->
       </div>
     </div>
