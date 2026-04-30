@@ -1876,6 +1876,7 @@ function playCelebrate() {
     document.getElementById('celebrate-video-36'),
     document.getElementById('celebrate-video-37'),
     document.getElementById('celebrate-video-38'),
+    document.getElementById('celebrate-video-39'),
   ], _celebrateTimer);
 }
 
