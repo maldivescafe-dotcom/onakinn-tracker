@@ -23,6 +23,8 @@ const T = {
     activityModalDesc: '今日行ったことをタップしてください',
     alreadyDone: '記録済み ✓',
     messageLabel: '今日のメッセージ',
+    womensTipsLabel: '💗 女性からの視点',
+    feminineTipsLabel: '✨ フェミニンエネルギーの変化',
     milestonesLabel: 'レベル一覧',
     milestoneCheck: '✓',
     emergencyBtn: '今すぐしたくなった…',
@@ -142,6 +144,8 @@ const T = {
     activityModalDesc: 'Tap what you did today',
     alreadyDone: 'Done ✓',
     messageLabel: "Today's Message",
+    womensTipsLabel: "💗 Women's View",
+    feminineTipsLabel: '✨ Feminine Energy',
     milestonesLabel: 'Level List',
     milestoneCheck: '✓',
     emergencyBtn: 'I want to do it...',
@@ -279,6 +283,70 @@ const LEVELS = [
   { min: 7500,  ja: 'Lv.10 マスター',   en: 'Lv.10 Master',    img: './img/level10.jpg', imgF: './img/level10f.jpg' },
   { min: 11000, ja: 'Lv.11 アイコン',   en: 'Lv.11 Icon',      img: './img/level11.jpg', imgF: './img/level11f.jpg' },
   { min: 16000, ja: 'Lv.12 レジェンド', en: 'Lv.12 Legendary', img: './img/level12.jpg', imgF: './img/level12f.jpg' },
+];
+
+// ========== DATA: WOMEN'S PERSPECTIVE TIPS (male mode only) ==========
+
+const WOMENS_TIPS = [
+  { maxDays: 2,   ja: 'まだ始まったばかり。でも、自分を変えようとしている男性は、そうでない人とは目が違う。その一歩が、あなたをもう少し魅力的にしている。' },
+  { maxDays: 6,   ja: '目の奥が少し落ち着いてきた感じ。ギラついていない視線って、実はすごく安心感がある。話しかけやすくなったと感じる女性は多いはず。' },
+  { maxDays: 13,  ja: '1週間が過ぎた頃から、話し方に余裕が出てくる。焦らず聞いてくれる男性って、今どき珍しい。それだけで「一緒にいたい」と思わせる力がある。' },
+  { maxDays: 20,  ja: '声のトーンが安定してきた気がする。低くて穏やかな声は、それだけで女性をドキッとさせる。落ち着いた男性のそばにいると、こちらも自然と笑顔になれる。' },
+  { maxDays: 29,  ja: '3週間。自分の軸を持っている人だと感じ始める頃。ブレない男性って、なんだか守られている感じがして、無意識に近くにいたくなってしまう。' },
+  { maxDays: 44,  ja: '1ヶ月達成。肌のツヤが変わってくる頃。清潔感のある男性は、それだけで女性の好感度が上がる。「この人、ちゃんとしてるな」という印象は大切にしてほしい。' },
+  { maxDays: 59,  ja: '視線が真っ直ぐになってきた。目を逸らさないのに、圧迫感がない。そのバランスが心地よくて、自然と目が合う回数が増えてしまう。' },
+  { maxDays: 89,  ja: '2ヶ月。一緒にいると落ち着く、という感覚が生まれる頃。安心できる人のそばにいたい──女性がそう感じるのは、このくらいの変化が蓄積したときだと思う。' },
+  { maxDays: 119, ja: '3ヶ月。この人は本物だと感じる。継続できる人は、約束を守れる人でもある。信頼できる男性というのは、それだけで唯一無二の存在になれる。' },
+  { maxDays: 179, ja: '4ヶ月が過ぎた。オーラが違う。言葉では説明できないけれど、存在感が増している。そばにいると「この人、なんか特別だな」と思わせる何かがある。' },
+  { maxDays: 364, ja: '半年。本当に自分を大切にしている男性だと伝わる。それって、相手のことも大切にできる人だということ。そういう人を、女性はずっと探している。' },
+  { maxDays: Infinity, ja: '1年以上。人としての深みが違う。自分の内側を磨いてきた人は、外見では測れない魅力がある。そんな男性と一緒にいられたら、と思う女性は必ずいる。' },
+];
+
+const WOMENS_TIPS_EN = [
+  { maxDays: 2,   en: "You've just started — but the fact that you did already sets you apart. A man who chooses to change himself has something different in his eyes." },
+  { maxDays: 6,   en: "There's a calm settling behind your eyes. A gaze that isn't restless feels surprisingly safe. Many women find it easier to approach you now." },
+  { maxDays: 13,  en: "After the first week, there's a new ease in how you carry yourself. A man who listens without rushing is rare these days — and genuinely attractive." },
+  { maxDays: 20,  en: "Your voice sounds steadier now. A calm, low voice can make a woman's heart skip a beat. Being near someone grounded makes her smile without thinking." },
+  { maxDays: 29,  en: "Three weeks in. You're starting to feel like someone with a clear centre. A man who doesn't waver makes a woman feel protected — and drawn to stay close." },
+  { maxDays: 44,  en: "One month. Your skin is beginning to glow. A man who looks clean and vital earns quiet admiration. That 'he takes care of himself' impression really does matter." },
+  { maxDays: 59,  en: "Your gaze has become direct but never heavy. That balance is rare and genuinely appealing — without even trying, she finds herself looking back more often." },
+  { maxDays: 89,  en: "Two months. A sense of calm settles around you. Women are drawn to people who make them feel at ease. That feeling builds from exactly this kind of quiet change." },
+  { maxDays: 119, en: "Three months. You feel like the real thing. A man who follows through is a man who can be trusted — and that makes you one of a kind." },
+  { maxDays: 179, en: "Past four months. Your presence is different now. Hard to put into words, but there's a weight to you — a quiet 'something' that makes her think you're special." },
+  { maxDays: 364, en: "Half a year. It shows that you genuinely care for yourself. That means you can care for others too. Women have been looking for exactly that." },
+  { maxDays: Infinity, en: "Over a year. There's a depth to you that can't be faked. A man who has polished his inner self has a pull that goes beyond appearance. Someone is out there looking for exactly you." },
+];
+
+// ========== DATA: FEMININE ENERGY TIPS (female mode only) ==========
+
+const FEMININE_TIPS = [
+  { maxDays: 3,   ja: '自分を大切にしようと決めた、その瞬間から輝きは始まっている。まだ変化は見えなくても、あなたの内側では何かが静かに動き始めた。' },
+  { maxDays: 7,   ja: '肌が少しずつ整い始める頃。エネルギーを内側に向けると、身体は正直に応えてくれる。鏡を見るのが、少しだけ楽しくなっているかもしれない。' },
+  { maxDays: 13,  ja: '感情の波が穏やかになってきた気がしない？イライラや不安が少し和らぐのは、ホルモンバランスが整い始めているサイン。心が軽くなってくる頃。' },
+  { maxDays: 20,  ja: '自分の軸が少しずつ固まってくる時期。「なんとなく流される」感覚が減って、自分が何を望んでいるかが、以前より見えやすくなっているはず。' },
+  { maxDays: 29,  ja: '3週間。周りの人があなたの変化に気づき始める頃。「最近なんか雰囲気変わった？」そう言われたら、それはあなたのフェミニンエネルギーが外に滲み出ている証拠。' },
+  { maxDays: 44,  ja: '1ヶ月達成。肌のツヤ、目の輝き、声のトーン──細かい部分から変わっていく。自分を大切にした時間は、すべてあなたの美しさとして蓄積されている。' },
+  { maxDays: 59,  ja: '視線が澄んできた。媚びない目力は、何より強い魅力になる。自分の価値を知っている女性の目は、人を引き寄せる不思議な力を持っている。' },
+  { maxDays: 89,  ja: '2ヶ月。一緒にいると安心できると言われるようになる頃。自分が安定しているから、相手にも安心を与えられる。それが本当のフェミニンな強さ。' },
+  { maxDays: 119, ja: '3ヶ月。自分への信頼が積み重なってきた。「私はできる」という感覚は、毎日の小さな選択から生まれる。あなたはそれを3ヶ月、続けてきた。' },
+  { maxDays: 179, ja: '4ヶ月以上。オーラが変わっている。言葉では説明できないけれど、あなたのそばにいると心地よいと感じる人が増えているはず。それがフェミニンオーラの本質。' },
+  { maxDays: 364, ja: '半年。自分を愛することと、人を愛することが、同じ根っこから来ていると実感できる頃。自分を大切にしてきたあなたは、大切にされる関係を自然と引き寄せていく。' },
+  { maxDays: Infinity, ja: '1年以上。内側から溢れる輝きは、どんな化粧品にも作れない。あなたが磨いてきたのは外側ではなく、魂そのもの。その美しさは、年を重ねるほど深まっていく。' },
+];
+
+const FEMININE_TIPS_EN = [
+  { maxDays: 3,   en: "The moment you decided to honour yourself, your glow began. You may not see the change yet — but something inside you has quietly started to shift." },
+  { maxDays: 7,   en: "Your skin is beginning to settle. When you direct your energy inward, your body responds honestly. Looking in the mirror might feel just a little brighter today." },
+  { maxDays: 13,  en: "Notice how the emotional waves feel gentler? Less irritability, less anxiety — that's your hormones starting to rebalance. Your mind is getting lighter." },
+  { maxDays: 20,  en: "Your inner centre is slowly taking shape. That feeling of 'just going along with things' is fading. What you actually want is becoming clearer than before." },
+  { maxDays: 29,  en: "Three weeks. The people around you are starting to notice. 'Have you changed somehow lately?' — if you hear that, it means your feminine energy is beginning to show." },
+  { maxDays: 44,  en: "One month. Your skin's glow, the light in your eyes, the tone of your voice — the details are shifting. Every moment of self-care is adding up as beauty." },
+  { maxDays: 59,  en: "Your gaze has cleared. Eyes that don't seek approval become the strongest kind of attractive. A woman who knows her own worth draws people in without trying." },
+  { maxDays: 89,  en: "Two months. People feel at ease around you now. Because you're grounded in yourself, you can offer that calm to others. That's what true feminine strength looks like." },
+  { maxDays: 119, en: "Three months. Trust in yourself has been building. That quiet sense of 'I can do this' is born from small choices made every single day — and you've made them for three months." },
+  { maxDays: 179, en: "Past four months. Your aura has changed. Hard to put into words, but more people are finding your presence comforting. That's the essence of feminine energy." },
+  { maxDays: 364, en: "Half a year. You're starting to feel that loving yourself and loving others come from the same root. A woman who honours herself naturally draws relationships that honour her back." },
+  { maxDays: Infinity, en: "Over a year. The radiance flowing from within is something no cosmetic can create. What you've been polishing isn't your surface — it's your soul. That beauty only deepens with time." },
 ];
 
 // ========== DATA: MESSAGES ==========
@@ -1338,6 +1406,34 @@ function render() {
     }
   }
   document.getElementById('message-text').textContent = messages[days % messages.length];
+
+  // Women's Perspective Tips (male only)
+  const tipCard = document.getElementById('womens-tips-card');
+  const tipText = document.getElementById('womens-tips-text');
+  if (tipCard) {
+    if (gender === 'female') {
+      tipCard.classList.add('hidden');
+    } else {
+      tipCard.classList.remove('hidden');
+      const tipsArr = lang === 'en' ? WOMENS_TIPS_EN : WOMENS_TIPS;
+      const tip = tipsArr.find(t => days <= t.maxDays) || tipsArr[tipsArr.length - 1];
+      if (tipText) tipText.textContent = lang === 'en' ? tip.en : tip.ja;
+    }
+  }
+
+  // Feminine Energy Tips (female only)
+  const femCard = document.getElementById('feminine-tips-card');
+  const femText = document.getElementById('feminine-tips-text');
+  if (femCard) {
+    if (gender !== 'female') {
+      femCard.classList.add('hidden');
+    } else {
+      femCard.classList.remove('hidden');
+      const femArr = lang === 'en' ? FEMININE_TIPS_EN : FEMININE_TIPS;
+      const femTip = femArr.find(t => days <= t.maxDays) || femArr[femArr.length - 1];
+      if (femText) femText.textContent = lang === 'en' ? femTip.en : femTip.ja;
+    }
+  }
 
   // Level list (unified)
   const container = document.getElementById('milestones');
