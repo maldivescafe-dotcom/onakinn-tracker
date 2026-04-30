@@ -1346,6 +1346,7 @@ function updateMoonPhaseBar() {
 
 let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
 let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
+let _pendingTantra    = false; // set true when タントラ is tapped → plays couple video
 let _effectsExpanded = true; // always expanded now
 let _levelsExpanded = false;
 
@@ -1362,11 +1363,15 @@ function render() {
 
   if (didLevelUp) {
     playLevelUp();
-    _pendingCelebrate = false; // cancel regular celebrate when level-up
+    _pendingCelebrate = false;
+    _pendingTantra    = false;
+  } else if (_pendingTantra) {
+    playTantraCelebrate();
   } else if (_pendingCelebrate) {
     playCelebrate();
   }
   _pendingCelebrate = false;
+  _pendingTantra    = false;
 
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
@@ -1629,7 +1634,11 @@ function onActivityTap(key, btn) {
   setTimeout(() => feedbackEl.classList.remove('show'), 2500);
 
   // Request celebrate — render() will play levelup video instead if level-up occurred
-  _pendingCelebrate = true;
+  if (key === 'tantra') {
+    _pendingTantra = true;
+  } else {
+    _pendingCelebrate = true;
+  }
 
   // Update main screen
   render();
@@ -1865,6 +1874,12 @@ function playCelebrate() {
     document.getElementById('celebrate-video-34'),
     document.getElementById('celebrate-video-35'),
     document.getElementById('celebrate-video-36'),
+  ], _celebrateTimer);
+}
+
+function playTantraCelebrate() {
+  if (!getVideosEnabled()) return;
+  _playOverlay('celebrate-overlay', [
     document.getElementById('celebrate-video-37'),
     document.getElementById('celebrate-video-38'),
     document.getElementById('celebrate-video-39'),
