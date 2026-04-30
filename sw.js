@@ -1,4 +1,4 @@
-const CACHE_NAME = 'onakinn-v12';
+const CACHE_NAME = 'onakinn-v13';
 const ASSETS = [
   './index.html',
   './style.css',
