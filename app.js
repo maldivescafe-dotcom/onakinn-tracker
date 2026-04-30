@@ -267,18 +267,18 @@ const ACTIVITIES = [
 // ========== DATA: LEVELS ==========
 
 const LEVELS = [
-  { min: 0,     ja: 'Lv.1 スターター',   en: 'Lv.1 Starter',    img: './img/level1.jpg'  },
-  { min: 100,   ja: 'Lv.2 ルーキー',    en: 'Lv.2 Rookie',     img: './img/level2.jpg'  },
-  { min: 300,   ja: 'Lv.3 ベテラン',    en: 'Lv.3 Veteran',    img: './img/level3.jpg'  },
-  { min: 600,   ja: 'Lv.4 ライジング',  en: 'Lv.4 Rising',     img: './img/level4.jpg'  },
-  { min: 1000,  ja: 'Lv.5 ファイター',  en: 'Lv.5 Fighter',    img: './img/level5.jpg'  },
-  { min: 1500,  ja: 'Lv.6 エース',      en: 'Lv.6 Ace',        img: './img/level6.jpg'  },
-  { min: 2500,  ja: 'Lv.7 ヒーロー',    en: 'Lv.7 Hero',       img: './img/level7.jpg'  },
-  { min: 3800,  ja: 'Lv.8 チャンピオン',en: 'Lv.8 Champion',   img: './img/level8.jpg'  },
-  { min: 5500,  ja: 'Lv.9 エリート',    en: 'Lv.9 Elite',      img: './img/level9.jpg'  },
-  { min: 7500,  ja: 'Lv.10 マスター',   en: 'Lv.10 Master',    img: './img/level10.jpg' },
-  { min: 11000, ja: 'Lv.11 アイコン',   en: 'Lv.11 Icon',      img: './img/level11.jpg' },
-  { min: 16000, ja: 'Lv.12 レジェンド', en: 'Lv.12 Legendary', img: './img/level12.jpg' },
+  { min: 0,     ja: 'Lv.1 スターター',   en: 'Lv.1 Starter',    img: './img/level1.jpg',  imgF: './img/level1f.jpg'  },
+  { min: 100,   ja: 'Lv.2 ルーキー',    en: 'Lv.2 Rookie',     img: './img/level2.jpg',  imgF: './img/level2f.jpg'  },
+  { min: 300,   ja: 'Lv.3 ベテラン',    en: 'Lv.3 Veteran',    img: './img/level3.jpg',  imgF: './img/level3f.jpg'  },
+  { min: 600,   ja: 'Lv.4 ライジング',  en: 'Lv.4 Rising',     img: './img/level4.jpg',  imgF: './img/level4f.jpg'  },
+  { min: 1000,  ja: 'Lv.5 ファイター',  en: 'Lv.5 Fighter',    img: './img/level5.jpg',  imgF: './img/level5f.jpg'  },
+  { min: 1500,  ja: 'Lv.6 エース',      en: 'Lv.6 Ace',        img: './img/level6.jpg',  imgF: './img/level6f.jpg'  },
+  { min: 2500,  ja: 'Lv.7 ヒーロー',    en: 'Lv.7 Hero',       img: './img/level7.jpg',  imgF: './img/level7f.jpg'  },
+  { min: 3800,  ja: 'Lv.8 チャンピオン',en: 'Lv.8 Champion',   img: './img/level8.jpg',  imgF: './img/level8f.jpg'  },
+  { min: 5500,  ja: 'Lv.9 エリート',    en: 'Lv.9 Elite',      img: './img/level9.jpg',  imgF: './img/level9f.jpg'  },
+  { min: 7500,  ja: 'Lv.10 マスター',   en: 'Lv.10 Master',    img: './img/level10.jpg', imgF: './img/level10f.jpg' },
+  { min: 11000, ja: 'Lv.11 アイコン',   en: 'Lv.11 Icon',      img: './img/level11.jpg', imgF: './img/level11f.jpg' },
+  { min: 16000, ja: 'Lv.12 レジェンド', en: 'Lv.12 Legendary', img: './img/level12.jpg', imgF: './img/level12f.jpg' },
 ];
 
 // ========== DATA: MESSAGES ==========
@@ -1299,11 +1299,11 @@ function render() {
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
 
-  // Level image
+  // Level image (male: img / female: imgF)
   const levelImgEl = document.getElementById('level-img');
-  if (levelImgEl && currentLevelObj.img) {
-    levelImgEl.src = currentLevelObj.img;
-    levelImgEl.alt = currentLevel;
+  if (levelImgEl) {
+    const imgSrc = (gender === 'female' && currentLevelObj.imgF) ? currentLevelObj.imgF : currentLevelObj.img;
+    if (imgSrc) { levelImgEl.src = imgSrc; levelImgEl.alt = currentLevel; }
   }
 
   const todayChange = getTodayChange();

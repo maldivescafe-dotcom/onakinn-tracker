@@ -1,21 +1,21 @@
-const CACHE_NAME = 'onakinn-v11';
+const CACHE_NAME = 'onakinn-v12';
 const ASSETS = [
   './index.html',
   './style.css',
   './app.js',
   './manifest.json',
-  './img/level1.jpg',
-  './img/level2.jpg',
-  './img/level3.jpg',
-  './img/level4.jpg',
-  './img/level5.jpg',
-  './img/level6.jpg',
-  './img/level7.jpg',
-  './img/level8.jpg',
-  './img/level9.jpg',
-  './img/level10.jpg',
-  './img/level11.jpg',
-  './img/level12.jpg',
+  './img/level1.jpg',  './img/level1f.jpg',
+  './img/level2.jpg',  './img/level2f.jpg',
+  './img/level3.jpg',  './img/level3f.jpg',
+  './img/level4.jpg',  './img/level4f.jpg',
+  './img/level5.jpg',  './img/level5f.jpg',
+  './img/level6.jpg',  './img/level6f.jpg',
+  './img/level7.jpg',  './img/level7f.jpg',
+  './img/level8.jpg',  './img/level8f.jpg',
+  './img/level9.jpg',  './img/level9f.jpg',
+  './img/level10.jpg', './img/level10f.jpg',
+  './img/level11.jpg', './img/level11f.jpg',
+  './img/level12.jpg', './img/level12f.jpg',
 ];
 
 self.addEventListener('install', e => {
