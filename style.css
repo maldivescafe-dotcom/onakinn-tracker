@@ -172,6 +172,11 @@ header h1 {
   color: rgba(255,255,255,0.38);
   margin-top: 8px;
 }
+.streak-start .days-num {
+  font-size: 1rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.72);
+}
 
 /* ========== CARD TOP BUTTONS ========== */
 .card-top-btns {

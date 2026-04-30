@@ -264,6 +264,7 @@ const ACTIVITIES = [
   { key: 'creative',    icon: '🎨', ja: '創作活動',       en: 'Creative Work',    points: 15, isRecovery: false, isJunkRecovery: false },
   { key: 'good_sleep',  icon: '😴', ja: '良質な睡眠',    en: 'Good Sleep',       points: 10, isRecovery: false, isJunkRecovery: false },
   { key: 'healthy_meal',icon: '🥦', ja: '野菜多め',       en: 'Healthy Meal',     points: 10, isRecovery: false, isJunkRecovery: true  },
+  { key: 'tantra',      icon: '💚', ja: 'タントラ（射精なし）', en: 'Tantra (no ejac)', jaFemale: 'タントラ（意識的な交わり）', enFemale: 'Tantra (conscious intimacy)', points: 20, isRecovery: false, isJunkRecovery: false },
 ];
 
 // ========== DATA: PENALTIES (dynamic — built in getPenalties()) ==========
@@ -617,6 +618,8 @@ const RECOMMEND_LINKS = [
   { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru日本語', desc: 'サドゥグルの動画を日本語字幕・吹き替えで届けるチャンネル。エネルギー・瞑想・内なる変容。', url: 'https://www.youtube.com/@SadhguruJapanese' },
   { type: '🇯🇵 まとめ', icon: '💬', title: 'Note「エネルギー管理」記事一覧', desc: '日本人ユーザーによる体験談・コツをまとめた記事が多数掲載。', url: 'https://note.com/search?q=%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC+%E7%AE%A1%E7%90%86' },
   { type: '🇯🇵 まとめ 🌸', icon: '💬', title: 'Note「フェミニンエネルギー」', desc: '女性向け：フェミニンエネルギー・生活習慣・自己肯定感に関する記事。', url: 'https://note.com/search?q=%E3%83%95%E3%82%A7%E3%83%9F%E3%83%8B%E3%83%B3%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC' },
+  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: '大愚和尚の一問一答', desc: '仏教的視点から「心の豊かさ」「生きる意味」「人間関係」を解説。精神的豊かさを深めたい人に。', url: 'https://www.youtube.com/@taigu_osho' },
+  { type: '🇯🇵 YouTube 💰', icon: '▶️', title: '両学長 リベラルアーツ大学', desc: 'お金の知識・投資・FIRE・人生設計をわかりやすく解説。「金銭的豊かさ」を学ぶなら最初の一本。', url: 'https://www.youtube.com/@ryogakucho' },
 ];
 
 const RECOMMEND_LINKS_EN = [
@@ -635,6 +638,8 @@ const RECOMMEND_LINKS_EN = [
   { type: 'Tool', icon: '🛠️', title: 'Cold Turkey Blocker', desc: 'Block adult sites on PC and mobile. Supports your willpower.', url: 'https://getcoldturkey.com' },
   { type: '🇯🇵 YouTube', icon: '▶️', title: 'Mentalist DaiGo (JP)', desc: 'Science-based explanations of addiction & self-control. (Japanese)', url: 'https://www.youtube.com/@mentalistdaigo' },
   { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru Japanese', desc: "Sadhguru's teachings on energy, meditation & inner transformation in Japanese.", url: 'https://www.youtube.com/@SadhguruJapanese' },
+  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: 'Daigū Oshō Q&A (JP)', desc: 'A Buddhist monk explores mental wealth, purpose & relationships. Deep inner richness. (Japanese)', url: 'https://www.youtube.com/@taigu_osho' },
+  { type: '🇯🇵 YouTube 💰', icon: '▶️', title: 'Ryo Gakucho — Liberal Arts Univ (JP)', desc: 'Plain-language financial literacy: investing, FIRE & life design. Top Japanese finance channel.', url: 'https://www.youtube.com/@ryogakucho' },
 ];
 
 // ========== HELPERS ==========
@@ -714,12 +719,10 @@ function getPenalties() {
       { key: 'sns',         icon: '📱', ja: '長時間SNS',              en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     ];
   }
-  const noEjacRate = getSexNoEjacEnabled() ? 0.05 : 0;
   return [
     { key: 'porn_solo',   icon: '⛔', ja: 'ポルノ＋自慰（射精）',  en: 'Porn + Solo (ejac)',    rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
     { key: 'solo',        icon: '⚠️', ja: '自慰（射精あり）',       en: 'Solo (ejaculation)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
     { key: 'sex_ejac',    icon: '💛', ja: 'セックス（射精あり）',   en: 'Sex (ejaculation)',     rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
-    { key: 'sex_no_ejac', icon: '💚', ja: 'セックス（射精なし）',   en: 'Sex (no ejaculation)', rate: noEjacRate, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',          en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'sugar',       icon: '🍬', ja: '糖質過多',                 en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     { key: 'alcohol',     icon: '🍺', ja: '過度な飲酒',              en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
@@ -1345,7 +1348,6 @@ let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
 let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
 let _effectsExpanded = true; // always expanded now
 let _levelsExpanded = false;
-let _penaltyExpanded = false;
 
 function render() {
   if (!startDate) return;
@@ -1394,8 +1396,8 @@ function render() {
   }
 
   if (startDate) {
-    document.getElementById('streak-start').textContent =
-      `${t.startedPrefix}${t.formatDate(startDate)} ／ ${days}${t.daysUnit}`;
+    document.getElementById('streak-start').innerHTML =
+      `${t.startedPrefix}${t.formatDate(startDate)} ／ <span class="days-num">${days}</span>${t.daysUnit}`;
   }
 
   // Message (female: use phase-specific messages if period date is set)
@@ -1529,13 +1531,6 @@ function penaltyRateLabel(p) {
 }
 
 function renderPenaltyButtons() {
-  // Penalty accordion toggle icon
-  const penToggleIcon = document.getElementById('penalty-toggle-icon');
-  if (penToggleIcon) penToggleIcon.textContent = _penaltyExpanded ? '∨' : '›';
-  const penBtns = document.getElementById('penalty-buttons');
-  if (penBtns) penBtns.classList.toggle('hidden', !_penaltyExpanded);
-  if (!_penaltyExpanded) return;
-
   const penalties = getPenalties();
   const container = document.getElementById('penalty-buttons');
   container.innerHTML = '';
@@ -1590,7 +1585,8 @@ function renderActivityModal() {
   // Female: check if self-care bonus unlock day
   const junkRecovDate = localStorage.getItem('energy_junk_recovery_date');
 
-  ACTIVITIES.forEach(a => {
+  const visibleActivities = ACTIVITIES;
+  visibleActivities.forEach(a => {
     const done = isActivityDone(a.key);
     const label = actLabel(a);
     const icon  = actIcon(a);
@@ -2264,12 +2260,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('milestones-label-toggle').addEventListener('click', () => {
     _levelsExpanded = !_levelsExpanded;
     render();
-  });
-
-  // Penalty accordion
-  document.getElementById('penalty-label-toggle').addEventListener('click', () => {
-    _penaltyExpanded = !_penaltyExpanded;
-    renderPenaltyButtons();
   });
 
   // Main screen
