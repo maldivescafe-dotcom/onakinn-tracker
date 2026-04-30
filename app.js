@@ -1815,7 +1815,8 @@ function _playOverlay(overlayId, videos, timeoutRef) {
 
   if (timeoutRef.id) { clearTimeout(timeoutRef.id); timeoutRef.id = null; }
 
-  validVideos.forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
+  // オーバーレイ内の全動画をリセット（別プールの動画が残らないように）
+  overlay.querySelectorAll('.celebrate-video').forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
   active.classList.remove('hidden');
   active.currentTime = 0;
 
