@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v10';
+const CACHE_NAME = 'energy-v11';
 const ASSETS = [
   './index.html',
   './style.css',
@@ -21,6 +21,10 @@ const ASSETS = [
   './act-meditation.jpg','./act-tantra.jpg',    './act-cleaning.jpg',
   './act-toilet.jpg',    './act-earlyrise.jpg', './act-gratitude.jpg',
   './act-smile.jpg',     './act-veggies.jpg',   './act-sowaka.jpg',
+  // アクティビティ専用動画（各フォルダに追加したらここにも追記）
+  './videos/tantra/tantra01.mp4',
+  './videos/tantra/tantra02.mp4',
+  './videos/tantra/tantra03.mp4',
 ];
 
 self.addEventListener('install', e => {

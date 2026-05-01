@@ -254,17 +254,17 @@ function tr() { return T[lang]; }
 // ========== DATA: ACTIVITIES ==========
 
 const ACTIVITIES = [
-  { key: 'workout',    icon: '💪', img: './act-workout.jpg',   ja: '筋トレ・有酸素運動',     en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true,  hint: '体を動かすほど、エネルギーが上がる', hintEn: 'Move more, raise your energy' },
-  { key: 'cold_shower',icon: '🚿', img: './act-shower.jpg',    ja: '冷水シャワー',           en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false, hint: '冷たさが意志力とエネルギーを鍛える', hintEn: 'Cold water forges willpower and energy' },
-  { key: 'yoga',       icon: '🧘', img: './act-yoga.jpg',      ja: 'ヨガ',                   en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false, hint: '呼吸と動きでエネルギーを巡らせる', hintEn: 'Breathe, move, and let energy flow' },
-  { key: 'meditation', icon: '🌬️',img: './act-meditation.jpg',ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false, hint: 'ただ観るだけで、心が整う', hintEn: 'Just observe — and find stillness' },
-  { key: 'tantra',     icon: '💚', img: './act-tantra.jpg',    ja: 'タントラ風の親密な時間', en: 'Tantric Intimacy',          jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.' },
-  { key: 'cleaning',   icon: '🧹', img: './act-cleaning.jpg',  ja: '清掃・片付け',           en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う', hintEn: 'A tidy space brings a clear mind' },
-  { key: 'toilet',     icon: '🚽', img: './act-toilet.jpg',    ja: 'トイレ掃除',             en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる', hintEn: 'Invite good flow into your life' },
-  { key: 'early_rise', icon: '🌅', img: './act-earlyrise.jpg', ja: '早起き',                 en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false, hint: '朝の静けさが、自分のエネルギーを最大化する', hintEn: 'Morning stillness maximizes your energy' },
-  { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false, hint: '感謝を書くほど、良いエネルギーが集まる', hintEn: 'Gratitude attracts more good energy' },
-  { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false, hint: '笑顔が良いエネルギーを呼び込む', hintEn: 'A smile invites good energy in' },
-  { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true,  hint: '体に良いものを入れて、エネルギーを安定させる', hintEn: 'Nourish your body, stabilize your energy' },
+  { key: 'workout',    icon: '💪', img: './act-workout.jpg',   ja: '筋トレ・有酸素運動',     en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true,  hint: '体を動かすほど、エネルギーが上がる',           hintEn: 'Move more, raise your energy',                videoGroup: [] },
+  { key: 'cold_shower',icon: '🚿', img: './act-shower.jpg',    ja: '冷水シャワー',           en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false, hint: '冷たさが意志力とエネルギーを鍛える',           hintEn: 'Cold water forges willpower and energy',       videoGroup: [] },
+  { key: 'yoga',       icon: '🧘', img: './act-yoga.jpg',      ja: 'ヨガ',                   en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false, hint: '呼吸と動きでエネルギーを巡らせる',             hintEn: 'Breathe, move, and let energy flow',           videoGroup: [] },
+  { key: 'meditation', icon: '🌬️',img: './act-meditation.jpg',ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false, hint: 'ただ観るだけで、心が整う',                     hintEn: 'Just observe — and find stillness',            videoGroup: [] },
+  { key: 'tantra',     icon: '💚', img: './act-tantra.jpg',    ja: 'タントラ風の親密な時間', en: 'Tantric Intimacy', jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.', videoGroup: ['./videos/tantra/tantra01.mp4', './videos/tantra/tantra02.mp4', './videos/tantra/tantra03.mp4'] },
+  { key: 'cleaning',   icon: '🧹', img: './act-cleaning.jpg',  ja: '清掃・片付け',           en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う',                         hintEn: 'A tidy space brings a clear mind',             videoGroup: [] },
+  { key: 'toilet',     icon: '🚽', img: './act-toilet.jpg',    ja: 'トイレ掃除',             en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる',                         hintEn: 'Invite good flow into your life',              videoGroup: [] },
+  { key: 'early_rise', icon: '🌅', img: './act-earlyrise.jpg', ja: '早起き',                 en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false, hint: '朝の静けさが、自分のエネルギーを最大化する',   hintEn: 'Morning stillness maximizes your energy',      videoGroup: [] },
+  { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false, hint: '感謝を書くほど、良いエネルギーが集まる',       hintEn: 'Gratitude attracts more good energy',          videoGroup: [] },
+  { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false, hint: '笑顔が良いエネルギーを呼び込む',               hintEn: 'A smile invites good energy in',               videoGroup: [] },
+  { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true,  hint: '体に良いものを入れて、エネルギーを安定させる', hintEn: 'Nourish your body, stabilize your energy',     videoGroup: [] },
   { key: 'sowaka',     icon: '✨', img: './act-sowaka.jpg',    ja: '掃除＋笑顔＋感謝',       en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
 ];
 
@@ -1363,8 +1363,8 @@ function updateMoonPhaseBar() {
 // ========== RENDER ==========
 
 let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
-let _pendingCelebrate = false; // set true by onActivityTap to request celebrate
-let _pendingTantra    = false; // set true when タントラ is tapped → plays couple video
+let _pendingCelebrate    = false; // set true by onActivityTap to request celebrate
+let _pendingActivityKey  = null;  // set to activity key when tapped → plays activity-specific video
 let _effectsExpanded = true; // always expanded now
 let _levelsExpanded = false;
 
@@ -1381,15 +1381,15 @@ function render() {
 
   if (didLevelUp) {
     playLevelUp();
-    _pendingCelebrate = false;
-    _pendingTantra    = false;
-  } else if (_pendingTantra) {
-    playTantraCelebrate();
+    _pendingCelebrate   = false;
+    _pendingActivityKey = null;
+  } else if (_pendingActivityKey) {
+    playActivityVideo(_pendingActivityKey);
   } else if (_pendingCelebrate) {
     playCelebrate();
   }
-  _pendingCelebrate = false;
-  _pendingTantra    = false;
+  _pendingCelebrate   = false;
+  _pendingActivityKey = null;
 
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
@@ -1654,9 +1654,10 @@ function onActivityTap(key, btn) {
   feedbackEl.className = 'activity-feedback show';
   setTimeout(() => feedbackEl.classList.remove('show'), 2500);
 
-  // Request celebrate — render() will play levelup video instead if level-up occurred
-  if (key === 'tantra') {
-    _pendingTantra = true;
+  // Request video — render() will play levelup video instead if level-up occurred
+  const act = ACTIVITIES.find(a => a.key === key);
+  if (act && act.videoGroup && act.videoGroup.length > 0) {
+    _pendingActivityKey = key;
   } else {
     _pendingCelebrate = true;
   }
@@ -1899,13 +1900,42 @@ function playCelebrate() {
   ], _celebrateTimer);
 }
 
-function playTantraCelebrate() {
+// アクティビティ専用動画再生（videoGroupが空なら汎用celebrateにフォールバック）
+function playActivityVideo(key) {
   if (!getVideosEnabled()) return;
-  _playOverlay('celebrate-overlay', [
-    document.getElementById('celebrate-video-37'),
-    document.getElementById('celebrate-video-38'),
-    document.getElementById('celebrate-video-39'),
-  ], _celebrateTimer);
+  const act = ACTIVITIES.find(a => a.key === key);
+  if (!act || !act.videoGroup || act.videoGroup.length === 0) {
+    playCelebrate();
+    return;
+  }
+  const src = act.videoGroup[Math.floor(Math.random() * act.videoGroup.length)];
+  const overlay = document.getElementById('celebrate-overlay');
+  const video   = document.getElementById('activity-video');
+  if (!overlay || !video) return;
+
+  if (_celebrateTimer.id) { clearTimeout(_celebrateTimer.id); _celebrateTimer.id = null; }
+
+  overlay.querySelectorAll('.celebrate-video').forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
+
+  const source = video.querySelector('source');
+  source.src = src;
+  video.load();
+  video.classList.remove('hidden');
+
+  overlay.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    overlay.classList.add('playing');
+    video.play().catch(() => {});
+  });
+
+  _celebrateTimer.id = setTimeout(() => {
+    overlay.classList.remove('playing');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      video.pause();
+      video.currentTime = 0;
+    }, 350);
+  }, 5000);
 }
 
 // ========== LEVELUP VIDEO（レベルアップ時） ==========
