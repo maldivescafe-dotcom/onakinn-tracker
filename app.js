@@ -621,6 +621,10 @@ const RECOMMEND_LINKS = [
   { type: '🇯🇵 まとめ 🌸', icon: '💬', title: 'Note「フェミニンエネルギー」', desc: '女性向け：フェミニンエネルギー・生活習慣・自己肯定感に関する記事。', url: 'https://note.com/search?q=%E3%83%95%E3%82%A7%E3%83%9F%E3%83%8B%E3%83%B3%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC' },
   { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: '大愚和尚の一問一答', desc: '仏教的視点から「心の豊かさ」「生きる意味」「人間関係」を解説。精神的豊かさを深めたい人に。', url: 'https://www.youtube.com/@osho_taigu' },
   { type: '🇯🇵 YouTube 💰', icon: '▶️', title: '両学長 リベラルアーツ大学', desc: 'お金の知識・投資・FIRE・人生設計をわかりやすく解説。「金銭的豊かさ」を学ぶなら最初の一本。', url: 'https://www.youtube.com/@ryogakucho' },
+  { type: '🇯🇵 解説 💚', icon: '📖', title: 'タントラセックス徹底解説（tantra.jp）', desc: 'タントラセックスとは何か、射精を目的としない性のあり方、歴史的背景をわかりやすく解説。', url: 'https://tantra.jp/%e3%82%bf%e3%83%b3%e3%83%88%e3%83%a9%e3%82%bb%e3%83%83%e3%82%af%e3%82%b9%e3%80%80%e5%be%b9%e5%ba%95%e8%a7%a3%e8%aa%ac' },
+  { type: '🇯🇵 Note 💚', icon: '📖', title: 'タントラヨガとは？性との関係は？', desc: '「タントラ＝性的なもの」という誤解を解き、エネルギー・意識の拡張という本来の意味を丁寧に解説。', url: 'https://note.com/tantrayogajapan/n/n19b5c13b23cf' },
+  { type: '🇯🇵 Note 💚', icon: '📖', title: 'タントラが扱う「性」について（Kaiho先生に聞く）', desc: 'タントラにおける性エネルギーの位置づけを、Q&A形式でスピリチュアルな視点からわかりやすく説明。', url: 'https://note.com/tantrayogajapan/n/n1a482b3ddd78' },
+  { type: '🇯🇵 サイト 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: '依存症・習慣改善・こころのケアをテーマにしたサイト。各種トラッカーアプリも公開中。', url: 'https://cocoro.tokyo' },
 ];
 
 const RECOMMEND_LINKS_EN = [
@@ -642,6 +646,10 @@ const RECOMMEND_LINKS_EN = [
   { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru Japanese', desc: "Sadhguru's teachings on energy, meditation & inner transformation in Japanese.", url: 'https://www.youtube.com/@SadhguruJapanese' },
   { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: 'Daigū Oshō Q&A (JP)', desc: 'A Buddhist monk explores mental wealth, purpose & relationships. Deep inner richness. (Japanese)', url: 'https://www.youtube.com/@osho_taigu' },
   { type: '🇯🇵 YouTube 💰', icon: '▶️', title: 'Ryo Gakucho — Liberal Arts Univ (JP)', desc: 'Plain-language financial literacy: investing, FIRE & life design. Top Japanese finance channel.', url: 'https://www.youtube.com/@ryogakucho' },
+  { type: '🇯🇵 Article 💚', icon: '📖', title: 'Tantra Sex Explained (JP)', desc: 'What is tantric sex? Non-ejaculatory intimacy, history & energy — clear Japanese explanation.', url: 'https://tantra.jp/%e3%82%bf%e3%83%b3%e3%83%88%e3%83%a9%e3%82%bb%e3%83%83%e3%82%af%e3%82%b9%e3%80%80%e5%be%b9%e5%ba%95%e8%a7%a3%e8%aa%ac' },
+  { type: '🇯🇵 Note 💚', icon: '📖', title: 'What is Tantra Yoga? (JP)', desc: 'Clears up misconceptions about tantra — consciousness, energy & the real meaning beyond sexuality.', url: 'https://note.com/tantrayogajapan/n/n19b5c13b23cf' },
+  { type: '🇯🇵 Note 💚', icon: '📖', title: 'Tantra & Sexuality — Q&A (JP)', desc: "How tantra views sexual energy from a spiritual perspective. Q&A format, easy to read.", url: 'https://note.com/tantrayogajapan/n/n1a482b3ddd78' },
+  { type: '🇯🇵 Site 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: 'Recovery support site covering addiction, habit change & mental wellness. Home of this app.', url: 'https://cocoro.tokyo' },
 ];
 
 // ========== HELPERS ==========
