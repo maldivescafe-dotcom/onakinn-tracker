@@ -785,17 +785,18 @@ header h1 {
 .btn-activity-item.has-img {
   position: relative;
   background-size: cover;
-  background-position: center top;
+  background-position: center center;
   overflow: hidden;
   border-color: rgba(255,255,255,0.15);
-  padding: 80px 8px 12px;
+  padding: 0 8px 10px;
   justify-content: flex-end;
+  aspect-ratio: 16 / 9;
 }
 .btn-activity-item.has-img::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(5,12,5,0.92) 30%, rgba(5,12,5,0.25) 100%);
+  background: linear-gradient(to top, rgba(5,12,5,0.88) 40%, rgba(5,12,5,0.15) 100%);
   border-radius: inherit;
   z-index: 0;
 }
