@@ -604,7 +604,7 @@ const RECOMMEND_LINKS = [
   { type: 'YouTube', icon: '▶️', title: 'Better Than Yesterday', desc: '自己改善・禁欲・習慣化をテーマにした英語チャンネル。科学的根拠に基づく解説が人気。', url: 'https://www.youtube.com/@BetterThanYesterday' },
   { type: 'YouTube', icon: '▶️', title: 'Improvement Pill', desc: 'NoFap・自己鍛錬・メンタル強化をアニメーション解説。初心者にわかりやすい。', url: 'https://www.youtube.com/@ImprovementPill' },
   { type: 'YouTube', icon: '▶️', title: 'RedFrost Motivation', desc: '禁欲・自己規律・モチベーション動画を多数公開。継続の後押しに最適。', url: 'https://www.youtube.com/@RedFrostMotivation' },
-  { type: 'YouTube 💚', icon: '▶️', title: 'Layla Martin', desc: 'タントラ・聖なる性愛を専門とする世界的教師。意識的なセックスとエネルギー管理を実践的に解説。', url: 'https://www.youtube.com/@LaylaMartin' },
+  { type: 'YouTube 💚', icon: '▶️', title: 'Layla Martin', desc: 'タントラ・聖なる性愛を専門とする世界的教師。意識的なセックスとエネルギー管理を実践的に解説。', url: 'https://www.youtube.com/@laylamartintv' },
   { type: 'YouTube 💚', icon: '▶️', title: 'Mantak Chia', desc: '道教の性エネルギー管理・射精なしセックス（マルチオーガズム）の第一人者。タントラの実践理論の源流。', url: 'https://www.youtube.com/@MantakChiaOfficial' },
   { type: 'YouTube 🌿', icon: '▶️', title: 'Yoga With Adriene', desc: 'ヨガ・呼吸・マインドフルネスで心身のエネルギーを整える。男女問わず人気の世界最大級ヨガチャンネル。', url: 'https://www.youtube.com/@yogawithadriene' },
   { type: 'YouTube ✨', icon: '▶️', title: 'Sadhguru', desc: 'クンダリニー・プラーナ・エネルギー管理をスピリチュアルな視点で解説。世界的グル。', url: 'https://www.youtube.com/@SadhguruJV' },
@@ -619,7 +619,7 @@ const RECOMMEND_LINKS = [
   { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru日本語', desc: 'サドゥグルの動画を日本語字幕・吹き替えで届けるチャンネル。エネルギー・瞑想・内なる変容。', url: 'https://www.youtube.com/@SadhguruJapanese' },
   { type: '🇯🇵 まとめ', icon: '💬', title: 'Note「エネルギー管理」記事一覧', desc: '日本人ユーザーによる体験談・コツをまとめた記事が多数掲載。', url: 'https://note.com/search?q=%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC+%E7%AE%A1%E7%90%86' },
   { type: '🇯🇵 まとめ 🌸', icon: '💬', title: 'Note「フェミニンエネルギー」', desc: '女性向け：フェミニンエネルギー・生活習慣・自己肯定感に関する記事。', url: 'https://note.com/search?q=%E3%83%95%E3%82%A7%E3%83%9F%E3%83%8B%E3%83%B3%E3%82%A8%E3%83%8D%E3%83%AB%E3%82%AE%E3%83%BC' },
-  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: '大愚和尚の一問一答', desc: '仏教的視点から「心の豊かさ」「生きる意味」「人間関係」を解説。精神的豊かさを深めたい人に。', url: 'https://www.youtube.com/@taigu_osho' },
+  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: '大愚和尚の一問一答', desc: '仏教的視点から「心の豊かさ」「生きる意味」「人間関係」を解説。精神的豊かさを深めたい人に。', url: 'https://www.youtube.com/@osho_taigu' },
   { type: '🇯🇵 YouTube 💰', icon: '▶️', title: '両学長 リベラルアーツ大学', desc: 'お金の知識・投資・FIRE・人生設計をわかりやすく解説。「金銭的豊かさ」を学ぶなら最初の一本。', url: 'https://www.youtube.com/@ryogakucho' },
 ];
 
@@ -627,7 +627,7 @@ const RECOMMEND_LINKS_EN = [
   { type: 'YouTube', icon: '▶️', title: 'Better Than Yesterday', desc: 'Self-improvement, NoFap & habit science. Research-based.', url: 'https://www.youtube.com/@BetterThanYesterday' },
   { type: 'YouTube', icon: '▶️', title: 'Improvement Pill', desc: 'Animated explanations of NoFap, discipline & mental training.', url: 'https://www.youtube.com/@ImprovementPill' },
   { type: 'YouTube', icon: '▶️', title: 'RedFrost Motivation', desc: 'NoFap, discipline & motivation videos.', url: 'https://www.youtube.com/@RedFrostMotivation' },
-  { type: 'YouTube 💚', icon: '▶️', title: 'Layla Martin', desc: 'World-renowned tantra teacher. Practical guidance on conscious sex, sacred intimacy & energy.', url: 'https://www.youtube.com/@LaylaMartin' },
+  { type: 'YouTube 💚', icon: '▶️', title: 'Layla Martin', desc: 'World-renowned tantra teacher. Practical guidance on conscious sex, sacred intimacy & energy.', url: 'https://www.youtube.com/@laylamartintv' },
   { type: 'YouTube 💚', icon: '▶️', title: 'Mantak Chia', desc: 'Taoist master of sexual energy & male multi-orgasm (non-ejaculatory sex). The foundational source.', url: 'https://www.youtube.com/@MantakChiaOfficial' },
   { type: 'YouTube 🌿', icon: '▶️', title: 'Yoga With Adriene', desc: 'Yoga, breathwork & mindfulness to restore energy balance. Beloved by millions worldwide.', url: 'https://www.youtube.com/@yogawithadriene' },
   { type: 'YouTube ✨', icon: '▶️', title: 'Sadhguru', desc: 'Kundalini, prana & energy management from a world-renowned spiritual guide.', url: 'https://www.youtube.com/@SadhguruJV' },
@@ -640,7 +640,7 @@ const RECOMMEND_LINKS_EN = [
   { type: 'Tool', icon: '🛠️', title: 'Cold Turkey Blocker', desc: 'Block adult sites on PC and mobile. Supports your willpower.', url: 'https://getcoldturkey.com' },
   { type: '🇯🇵 YouTube', icon: '▶️', title: 'Mentalist DaiGo (JP)', desc: 'Science-based explanations of addiction & self-control. (Japanese)', url: 'https://www.youtube.com/@mentalistdaigo' },
   { type: '🇯🇵 YouTube ✨', icon: '▶️', title: 'Sadhguru Japanese', desc: "Sadhguru's teachings on energy, meditation & inner transformation in Japanese.", url: 'https://www.youtube.com/@SadhguruJapanese' },
-  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: 'Daigū Oshō Q&A (JP)', desc: 'A Buddhist monk explores mental wealth, purpose & relationships. Deep inner richness. (Japanese)', url: 'https://www.youtube.com/@taigu_osho' },
+  { type: '🇯🇵 YouTube 🙏', icon: '▶️', title: 'Daigū Oshō Q&A (JP)', desc: 'A Buddhist monk explores mental wealth, purpose & relationships. Deep inner richness. (Japanese)', url: 'https://www.youtube.com/@osho_taigu' },
   { type: '🇯🇵 YouTube 💰', icon: '▶️', title: 'Ryo Gakucho — Liberal Arts Univ (JP)', desc: 'Plain-language financial literacy: investing, FIRE & life design. Top Japanese finance channel.', url: 'https://www.youtube.com/@ryogakucho' },
 ];
 
