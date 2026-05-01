@@ -254,17 +254,17 @@ function tr() { return T[lang]; }
 // ========== DATA: ACTIVITIES ==========
 
 const ACTIVITIES = [
-  { key: 'workout',    icon: '💪', img: './act-workout.jpg',   ja: '筋トレ・有酸素運動',     en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true },
-  { key: 'cold_shower',icon: '🚿', img: './act-shower.jpg',    ja: '冷水シャワー',           en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false },
-  { key: 'yoga',       icon: '🧘', img: './act-yoga.jpg',      ja: 'ヨガ',                   en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false },
-  { key: 'meditation', icon: '🌬️',img: './act-meditation.jpg',ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false },
+  { key: 'workout',    icon: '💪', img: './act-workout.jpg',   ja: '筋トレ・有酸素運動',     en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true,  hint: '体を動かすほど、心も強くなる', hintEn: 'Move your body, strengthen your mind' },
+  { key: 'cold_shower',icon: '🚿', img: './act-shower.jpg',    ja: '冷水シャワー',           en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false, hint: '不快に飛び込む習慣が意志力を鍛える', hintEn: 'Embrace discomfort, build willpower' },
+  { key: 'yoga',       icon: '🧘', img: './act-yoga.jpg',      ja: 'ヨガ',                   en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false, hint: '呼吸と動きでエネルギーを巡らせる', hintEn: 'Breathe, move, and let energy flow' },
+  { key: 'meditation', icon: '🌬️',img: './act-meditation.jpg',ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false, hint: '雑念をただ観る。それだけで十分', hintEn: 'Just watch your thoughts — that\'s enough' },
   { key: 'tantra',     icon: '💚', img: './act-tantra.jpg',    ja: 'タントラ風の親密な時間', en: 'Tantric Intimacy',          jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.' },
   { key: 'cleaning',   icon: '🧹', img: './act-cleaning.jpg',  ja: '清掃・片付け',           en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う', hintEn: 'A tidy space brings a clear mind' },
   { key: 'toilet',     icon: '🚽', img: './act-toilet.jpg',    ja: 'トイレ掃除',             en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる', hintEn: 'Invite good flow into your life' },
-  { key: 'early_rise', icon: '🌅', img: './act-earlyrise.jpg', ja: '早起き',                 en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false },
-  { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false },
-  { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false },
-  { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true  },
+  { key: 'early_rise', icon: '🌅', img: './act-earlyrise.jpg', ja: '早起き',                 en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false, hint: '朝の静けさは、自分だけの黄金時間', hintEn: 'Morning silence is your golden hour' },
+  { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false, hint: '書くことで、幸福のアンテナが鋭くなる', hintEn: 'Writing sharpens your antenna for joy' },
+  { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false, hint: '表情が感情をつくる。まず口角を上げる', hintEn: 'Your face shapes your feelings' },
+  { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true,  hint: '腸が整うと、メンタルも整う', hintEn: 'A healthy gut = a healthy mind' },
   { key: 'sowaka',     icon: '✨', img: './act-sowaka.jpg',    ja: '掃除＋笑顔＋感謝',       en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
 ];
 
