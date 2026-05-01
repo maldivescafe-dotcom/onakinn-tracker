@@ -265,7 +265,7 @@ const ACTIVITIES = [
   { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false, hint: '感謝を書くほど、良いエネルギーが集まる',       hintEn: 'Gratitude attracts more good energy',          videoGroup: ['./videos/gratitude/act-gratitude1.mp4'] },
   { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false, hint: '笑顔が良いエネルギーを呼び込む',               hintEn: 'A smile invites good energy in',               videoGroup: ['./videos/smile/act-smile1.mp4'] },
   { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true,  hint: '体に良いものを入れて、エネルギーを安定させる', hintEn: 'Nourish your body, stabilize your energy',     videoGroup: ['./videos/veggies/act-veggies1.mp4'] },
-  { key: 'sowaka',     icon: '✨', img: './act-sowaka.jpg',    ja: '掃除＋笑顔＋感謝',       en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
+  { key: 'sowaka',     icon: '✨', img: './act-sowaka.jpg',    ja: '掃除＋笑顔＋感謝',       en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka',          videoGroup: ['./videos/sowaka/act-sowaka.mp4'] },
 ];
 
 // ========== DATA: PENALTIES (dynamic — built in getPenalties()) ==========
@@ -628,7 +628,6 @@ const RECOMMEND_LINKS = [
   { type: '🇯🇵 サイト 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: '依存症・習慣改善・こころのケアをテーマにしたサイト。各種トラッカーアプリも公開中。', url: 'https://cocoro.tokyo' },
   { type: '🇯🇵 YouTube 🧹', icon: '▶️', title: '小林正観（SKP公式）', desc: '「そ・わ・か（掃除・笑い・感謝）」の提唱者。掃除がいかに人生を変えるかを軽やかに語る。', url: 'https://www.youtube.com/@skp0358' },
   { type: '🇯🇵 動画 🧹', icon: '▶️', title: '【小林正観】掃けば掃くほど豊かになる', desc: '4つの時間に掃除をすることで豊かさを引き寄せる、正観さんの掃除哲学の代表的な一本。', url: 'https://www.youtube.com/watch?v=fMzgbjW8o0k' },
-  { type: '🇯🇵 サイト 🧹', icon: '📖', title: '小林正観 公式サイト', desc: '著書・CD・講演録など正観さんの教えが集まる公式サイト。そわかの哲学の出発点に。', url: 'https://www.masakan-kobayashi.com/' },
 ];
 
 const RECOMMEND_LINKS_EN = [
@@ -656,7 +655,6 @@ const RECOMMEND_LINKS_EN = [
   { type: '🇯🇵 Site 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: 'Recovery support site covering addiction, habit change & mental wellness. Home of this app.', url: 'https://cocoro.tokyo' },
   { type: '🇯🇵 YouTube 🧹', icon: '▶️', title: 'Kobayashi Masakan (SKP Official)', desc: 'Pioneer of "so·wa·ka" — cleaning, laughter & gratitude. Talks on how cleaning transforms life. (JP)', url: 'https://www.youtube.com/@skp0358' },
   { type: '🇯🇵 Video 🧹', icon: '▶️', title: 'Kobayashi Masakan — Clean to Abundance', desc: 'The richer you sweep: Masakan\'s iconic talk on the power of cleaning. (JP)', url: 'https://www.youtube.com/watch?v=fMzgbjW8o0k' },
-  { type: '🇯🇵 Site 🧹', icon: '📖', title: 'Kobayashi Masakan Official Site (JP)', desc: 'Books, lectures & teachings on so·wa·ka philosophy — the starting point.', url: 'https://www.masakan-kobayashi.com/' },
 ];
 
 // ========== HELPERS ==========
