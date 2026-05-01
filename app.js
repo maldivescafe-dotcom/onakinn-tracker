@@ -254,17 +254,18 @@ function tr() { return T[lang]; }
 // ========== DATA: ACTIVITIES ==========
 
 const ACTIVITIES = [
-  { key: 'workout_short', icon: '💪', ja: '筋トレ 30min',    en: 'Workout 30min',  points: 40, isRecovery: true, isJunkRecovery: false, isWorkout: true },
-  { key: 'workout_long',  icon: '💪', ja: '筋トレ 60min以上', en: 'Workout 60min+', points: 70, isRecovery: true, isJunkRecovery: false, isWorkout: true },
-  { key: 'exercise',    icon: '🏃', ja: '有酸素運動 30min', en: 'Cardio 30min', jaFemale: 'ヨガ・ストレッチ 30min', enFemale: 'Yoga / Stretch 30min', iconFemale: '🧘', points: 30, isRecovery: true, isJunkRecovery: false },
-  { key: 'meditation',  icon: '🧘', ja: '瞑想',           en: 'Meditation',       points: 25, isRecovery: true, isJunkRecovery: false },
-  { key: 'cold_shower', icon: '🚿', ja: '冷水シャワー',   en: 'Cold Shower',      points: 20, isRecovery: false, isJunkRecovery: false },
-  { key: 'reading',     icon: '📚', ja: '読書 30min',    en: 'Reading 30min',    points: 15, isRecovery: false, isJunkRecovery: false },
-  { key: 'junk_free',   icon: '🥗', ja: 'ジャンクゼロ',  en: 'Junk-Free Day',    points: 20, isRecovery: false, isJunkRecovery: false },
-  { key: 'creative',    icon: '🎨', ja: '創作活動',       en: 'Creative Work',    points: 15, isRecovery: false, isJunkRecovery: false },
-  { key: 'good_sleep',  icon: '😴', ja: '良質な睡眠',    en: 'Good Sleep',       points: 10, isRecovery: false, isJunkRecovery: false },
-  { key: 'healthy_meal',icon: '🥦', ja: '野菜多め',       en: 'Healthy Meal',     points: 10, isRecovery: false, isJunkRecovery: true  },
-  { key: 'tantra',      icon: '💚', ja: 'タントラ（射精なし）', en: 'Tantra (no ejac)', jaFemale: 'タントラ（意識的な交わり）', enFemale: 'Tantra (conscious intimacy)', points: 20, isRecovery: false, isJunkRecovery: false },
+  { key: 'workout',     icon: '💪', ja: '筋トレ・有酸素運動',      en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true },
+  { key: 'cold_shower', icon: '🚿', ja: '冷水シャワー',            en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false },
+  { key: 'yoga',        icon: '🧘', ja: 'ヨガ',                    en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false },
+  { key: 'meditation',  icon: '🌬️', ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false },
+  { key: 'tantra',      icon: '💚', ja: 'タントラ風の親密な時間',  en: 'Tantric Intimacy',          jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.' },
+  { key: 'cleaning',    icon: '🧹', ja: '清掃・片付け',            en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う', hintEn: 'A tidy space brings a clear mind' },
+  { key: 'toilet',      icon: '🚽', ja: 'トイレ掃除',              en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる', hintEn: 'Invite good flow into your life' },
+  { key: 'early_rise',  icon: '🌅', ja: '早起き',                  en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false },
+  { key: 'gratitude',   icon: '📝', ja: '感謝日記',                en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false },
+  { key: 'smile',       icon: '😊', ja: '笑顔を作る',              en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false },
+  { key: 'veggies',     icon: '🥦', ja: '野菜中心の食事',          en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true  },
+  { key: 'sowaka',      icon: '✨', ja: '掃除＋笑顔＋感謝',        en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
 ];
 
 // ========== DATA: PENALTIES (dynamic — built in getPenalties()) ==========
@@ -625,6 +626,9 @@ const RECOMMEND_LINKS = [
   { type: '🇯🇵 Note 💚', icon: '📖', title: 'タントラヨガとは？性との関係は？', desc: '「タントラ＝性的なもの」という誤解を解き、エネルギー・意識の拡張という本来の意味を丁寧に解説。', url: 'https://note.com/tantrayogajapan/n/n19b5c13b23cf' },
   { type: '🇯🇵 Note 💚', icon: '📖', title: 'タントラが扱う「性」について（Kaiho先生に聞く）', desc: 'タントラにおける性エネルギーの位置づけを、Q&A形式でスピリチュアルな視点からわかりやすく説明。', url: 'https://note.com/tantrayogajapan/n/n1a482b3ddd78' },
   { type: '🇯🇵 サイト 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: '依存症・習慣改善・こころのケアをテーマにしたサイト。各種トラッカーアプリも公開中。', url: 'https://cocoro.tokyo' },
+  { type: '🇯🇵 YouTube 🧹', icon: '▶️', title: '小林正観（SKP公式）', desc: '「そ・わ・か（掃除・笑い・感謝）」の提唱者。掃除がいかに人生を変えるかを軽やかに語る。', url: 'https://www.youtube.com/@skp0358' },
+  { type: '🇯🇵 動画 🧹', icon: '▶️', title: '【小林正観】掃けば掃くほど豊かになる', desc: '4つの時間に掃除をすることで豊かさを引き寄せる、正観さんの掃除哲学の代表的な一本。', url: 'https://www.youtube.com/watch?v=fMzgbjW8o0k' },
+  { type: '🇯🇵 サイト 🧹', icon: '📖', title: '小林正観 公式サイト', desc: '著書・CD・講演録など正観さんの教えが集まる公式サイト。そわかの哲学の出発点に。', url: 'https://www.masakan-kobayashi.com/' },
 ];
 
 const RECOMMEND_LINKS_EN = [
@@ -650,6 +654,9 @@ const RECOMMEND_LINKS_EN = [
   { type: '🇯🇵 Note 💚', icon: '📖', title: 'What is Tantra Yoga? (JP)', desc: 'Clears up misconceptions about tantra — consciousness, energy & the real meaning beyond sexuality.', url: 'https://note.com/tantrayogajapan/n/n19b5c13b23cf' },
   { type: '🇯🇵 Note 💚', icon: '📖', title: 'Tantra & Sexuality — Q&A (JP)', desc: "How tantra views sexual energy from a spiritual perspective. Q&A format, easy to read.", url: 'https://note.com/tantrayogajapan/n/n1a482b3ddd78' },
   { type: '🇯🇵 Site 🌿', icon: '🌸', title: 'cocoro.tokyo', desc: 'Recovery support site covering addiction, habit change & mental wellness. Home of this app.', url: 'https://cocoro.tokyo' },
+  { type: '🇯🇵 YouTube 🧹', icon: '▶️', title: 'Kobayashi Masakan (SKP Official)', desc: 'Pioneer of "so·wa·ka" — cleaning, laughter & gratitude. Talks on how cleaning transforms life. (JP)', url: 'https://www.youtube.com/@skp0358' },
+  { type: '🇯🇵 Video 🧹', icon: '▶️', title: 'Kobayashi Masakan — Clean to Abundance', desc: 'The richer you sweep: Masakan\'s iconic talk on the power of cleaning. (JP)', url: 'https://www.youtube.com/watch?v=fMzgbjW8o0k' },
+  { type: '🇯🇵 Site 🧹', icon: '📖', title: 'Kobayashi Masakan Official Site (JP)', desc: 'Books, lectures & teachings on so·wa·ka philosophy — the starting point.', url: 'https://www.masakan-kobayashi.com/' },
 ];
 
 // ========== HELPERS ==========
@@ -1156,8 +1163,9 @@ function recordActivity(actKey) {
       ejacRec.done = done;
       localStorage.setItem('energy_ejac_recovery', JSON.stringify(ejacRec));
     }
-    const hasWorkout = done.some(k => ['exercise','workout_short','workout_long'].includes(k));
-    if (hasWorkout && done.includes('meditation')) {
+    const hasPhysical = done.some(k => ['workout','yoga'].includes(k));
+    const hasMental   = done.some(k => ['meditation','yoga'].includes(k));
+    if (hasPhysical && hasMental && done.length >= 2) {
       const bonus = Math.round(points * 0.15);
       addPoints(bonus);
       earned += bonus;
@@ -1168,7 +1176,7 @@ function recordActivity(actKey) {
 
   // Junk food recovery bonus (next day after junk)
   const junkRecovDate = localStorage.getItem('energy_junk_recovery_date');
-  if (junkRecovDate === todayStr() && (activity.isJunkRecovery || actKey === 'exercise')) {
+  if (junkRecovDate === todayStr() && (activity.isJunkRecovery || actKey === 'workout')) {
     const junkPenAmt = parseInt(localStorage.getItem('energy_junk_penalty_amt') || '0');
     const recovAmt = Math.round(junkPenAmt * 0.5);
     if (recovAmt > 0) {
@@ -1613,9 +1621,11 @@ function renderActivityModal() {
     const isJunkRecovDay = junkRecovDate === todayStr() && (a.isJunkRecovery || a.key === 'exercise');
     const recovTag = isJunkRecovDay && !done ? ' ★' : '';
 
+    const hint = lang === 'en' ? (a.hintEn || '') : (a.hint || '');
     btn.innerHTML = `
       <span class="act-icon">${icon}</span>
       <span class="act-label">${label}${recovTag}</span>
+      ${hint ? `<span class="act-hint">${hint}</span>` : ''}
       <span class="act-pts">${done ? t.alreadyDone : '+' + a.points + 'pt'}</span>
     `;
     if (!done) {

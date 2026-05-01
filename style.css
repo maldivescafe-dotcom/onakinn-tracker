@@ -774,6 +774,7 @@ header h1 {
 }
 .act-icon { font-size: 1.6rem; }
 .act-label { font-size: 0.8rem; color: var(--text); font-weight: 600; line-height: 1.3; }
+.act-hint { font-size: 0.65rem; color: rgba(255,255,255,0.42); line-height: 1.35; text-align: center; padding: 0 2px; }
 .act-pts { font-size: 0.75rem; color: var(--accent); font-weight: 700; }
 .btn-activity-item.done .act-pts { color: var(--accent2); }
 
