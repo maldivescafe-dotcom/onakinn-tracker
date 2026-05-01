@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v6';
+const CACHE_NAME = 'energy-v7';
 const ASSETS = [
   './index.html',
   './style.css',
