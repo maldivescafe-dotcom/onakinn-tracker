@@ -1,4 +1,6 @@
-const CACHE_NAME = 'energy-v12';
+const CACHE_NAME = 'energy-v13';
+
+// 動画ファイルはここに登録しない（ブラウザのネイティブキャッシュに任せる）
 const ASSETS = [
   './index.html',
   './style.css',
@@ -21,19 +23,7 @@ const ASSETS = [
   './act-meditation.jpg','./act-tantra.jpg',    './act-cleaning.jpg',
   './act-toilet.jpg',    './act-earlyrise.jpg', './act-gratitude.jpg',
   './act-smile.jpg',     './act-veggies.jpg',   './act-sowaka.jpg',
-  // アクティビティ専用動画（各フォルダに追加したらここにも追記）
-  './videos/workout/act-workout1.mp4',
-  './videos/cold_shower/act-shower1.mp4',
-  './videos/yoga/act-yoga1.mp4',
-  './videos/meditation/act-meditation1.mp4',
-  './videos/tantra/act-tantra1.mp4',
-  './videos/cleaning/act-cleaning1.mp4',
-  './videos/toilet/act-toilet1.mp4',
-  './videos/early_rise/act-earlyrise1.mp4',
-  './videos/gratitude/act-gratitude1.mp4',
-  './videos/smile/act-smile1.mp4',
-  './videos/veggies/act-veggies1.mp4',
-  './videos/sowaka/act-sowaka.mp4',
+  './levelup1.mp4',
 ];
 
 self.addEventListener('install', e => {
@@ -49,9 +39,16 @@ self.addEventListener('activate', e => {
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
     )
   );
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
+  // mp4動画（levelup以外）はService Workerをバイパス
+  // → ブラウザのHTTPキャッシュで管理され、新しい動画が追加されたら自動で取得できる
+  if (e.request.url.includes('/videos/')) {
+    return;
+  }
+  // その他はキャッシュ優先
   e.respondWith(
     caches.match(e.request).then(res => res || fetch(e.request))
   );
