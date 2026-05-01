@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v5';
+const CACHE_NAME = 'energy-v6';
 const ASSETS = [
   './index.html',
   './style.css',
@@ -17,6 +17,10 @@ const ASSETS = [
   './img/level11.jpg', './img/level11f.jpg',
   './img/level12.jpg', './img/level12f.jpg',
   './bg-energy-banner.jpg',
+  './act-workout.jpg',   './act-shower.jpg',    './act-yoga.jpg',
+  './act-meditation.jpg','./act-tantra.jpg',    './act-cleaning.jpg',
+  './act-toilet.jpg',    './act-earlyrise.jpg', './act-gratitude.jpg',
+  './act-smile.jpg',     './act-veggies.jpg',   './act-sowaka.jpg',
 ];
 
 self.addEventListener('install', e => {

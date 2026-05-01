@@ -254,18 +254,18 @@ function tr() { return T[lang]; }
 // ========== DATA: ACTIVITIES ==========
 
 const ACTIVITIES = [
-  { key: 'workout',     icon: '💪', ja: '筋トレ・有酸素運動',      en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true },
-  { key: 'cold_shower', icon: '🚿', ja: '冷水シャワー',            en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false },
-  { key: 'yoga',        icon: '🧘', ja: 'ヨガ',                    en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false },
-  { key: 'meditation',  icon: '🌬️', ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false },
-  { key: 'tantra',      icon: '💚', ja: 'タントラ風の親密な時間',  en: 'Tantric Intimacy',          jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.' },
-  { key: 'cleaning',    icon: '🧹', ja: '清掃・片付け',            en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う', hintEn: 'A tidy space brings a clear mind' },
-  { key: 'toilet',      icon: '🚽', ja: 'トイレ掃除',              en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる', hintEn: 'Invite good flow into your life' },
-  { key: 'early_rise',  icon: '🌅', ja: '早起き',                  en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false },
-  { key: 'gratitude',   icon: '📝', ja: '感謝日記',                en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false },
-  { key: 'smile',       icon: '😊', ja: '笑顔を作る',              en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false },
-  { key: 'veggies',     icon: '🥦', ja: '野菜中心の食事',          en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true  },
-  { key: 'sowaka',      icon: '✨', ja: '掃除＋笑顔＋感謝',        en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
+  { key: 'workout',    icon: '💪', img: './act-workout.jpg',   ja: '筋トレ・有酸素運動',     en: 'Exercise',                  points: 40, isRecovery: true,  isJunkRecovery: false, isWorkout: true },
+  { key: 'cold_shower',icon: '🚿', img: './act-shower.jpg',    ja: '冷水シャワー',           en: 'Cold Shower',               points: 30, isRecovery: false, isJunkRecovery: false },
+  { key: 'yoga',       icon: '🧘', img: './act-yoga.jpg',      ja: 'ヨガ',                   en: 'Yoga',                      points: 35, isRecovery: true,  isJunkRecovery: false },
+  { key: 'meditation', icon: '🌬️',img: './act-meditation.jpg',ja: '瞑想・呼吸法',           en: 'Meditation / Breathwork',   points: 35, isRecovery: true,  isJunkRecovery: false },
+  { key: 'tantra',     icon: '💚', img: './act-tantra.jpg',    ja: 'タントラ風の親密な時間', en: 'Tantric Intimacy',          jaFemale: 'タントラ風の親密な時間', enFemale: 'Tantric Intimacy', points: 40, isRecovery: false, isJunkRecovery: false, hint: 'パートナーと意識的に行う、射精を伴わない親密な時間。エネルギーを循環させる新しい発見があるかも。', hintEn: 'Conscious intimacy — no ejaculation. Discover a new flow of energy together.' },
+  { key: 'cleaning',   icon: '🧹', img: './act-cleaning.jpg',  ja: '清掃・片付け',           en: 'Clean & Tidy',              points: 30, isRecovery: false, isJunkRecovery: false, hint: '外を整えると内も整う', hintEn: 'A tidy space brings a clear mind' },
+  { key: 'toilet',     icon: '🚽', img: './act-toilet.jpg',    ja: 'トイレ掃除',             en: 'Clean the Toilet',          points: 25, isRecovery: false, isJunkRecovery: false, hint: '良い流れを引き寄せる', hintEn: 'Invite good flow into your life' },
+  { key: 'early_rise', icon: '🌅', img: './act-earlyrise.jpg', ja: '早起き',                 en: 'Early Rise',                points: 25, isRecovery: false, isJunkRecovery: false },
+  { key: 'gratitude',  icon: '📝', img: './act-gratitude.jpg', ja: '感謝日記',               en: 'Gratitude Journal',         points: 25, isRecovery: false, isJunkRecovery: false },
+  { key: 'smile',      icon: '😊', img: './act-smile.jpg',     ja: '笑顔を作る',             en: 'Practice Smiling',          points: 20, isRecovery: false, isJunkRecovery: false },
+  { key: 'veggies',    icon: '🥦', img: './act-veggies.jpg',   ja: '野菜中心の食事',         en: 'Veggie-Rich Meal',          points: 30, isRecovery: false, isJunkRecovery: true  },
+  { key: 'sowaka',     icon: '✨', img: './act-sowaka.jpg',    ja: '掃除＋笑顔＋感謝',       en: 'Clean + Smile + Gratitude', points: 60, isRecovery: false, isJunkRecovery: false, hint: '今日の最強コンボ（そ・わ・か）', hintEn: 'The ultimate daily combo — so·wa·ka' },
 ];
 
 // ========== DATA: PENALTIES (dynamic — built in getPenalties()) ==========
@@ -1614,8 +1614,9 @@ function renderActivityModal() {
     const label = actLabel(a);
     const icon  = actIcon(a);
     const btn = document.createElement('button');
-    btn.className = `btn-activity-item${done ? ' done' : ''}`;
+    btn.className = `btn-activity-item${done ? ' done' : ''}${a.img ? ' has-img' : ''}`;
     btn.dataset.key = a.key;
+    if (a.img) btn.style.backgroundImage = `url('${a.img}')`;
 
     // Junk recovery indicator
     const isJunkRecovDay = junkRecovDate === todayStr() && (a.isJunkRecovery || a.key === 'exercise');

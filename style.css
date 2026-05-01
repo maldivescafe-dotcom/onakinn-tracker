@@ -781,6 +781,36 @@ header h1 {
   opacity: 0.7;
   cursor: default;
 }
+/* キャラ画像付きボタン */
+.btn-activity-item.has-img {
+  position: relative;
+  background-size: cover;
+  background-position: center top;
+  overflow: hidden;
+  border-color: rgba(255,255,255,0.15);
+  padding: 80px 8px 12px;
+  justify-content: flex-end;
+}
+.btn-activity-item.has-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,12,5,0.92) 30%, rgba(5,12,5,0.25) 100%);
+  border-radius: inherit;
+  z-index: 0;
+}
+.btn-activity-item.has-img > * { position: relative; z-index: 1; }
+.btn-activity-item.has-img .act-icon { display: none; }
+.btn-activity-item.has-img .act-label { font-size: 0.78rem; }
+.btn-activity-item.has-img .act-hint { color: rgba(255,255,255,0.5); }
+.btn-activity-item.has-img.done::after {
+  content: '✓';
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 1rem;
+  color: var(--accent2);
+  z-index: 2;
+}
 .act-icon { font-size: 1.6rem; }
 .act-label { font-size: 0.8rem; color: var(--text); font-weight: 600; line-height: 1.3; }
 .act-hint { font-size: 0.65rem; color: rgba(255,255,255,0.42); line-height: 1.35; text-align: center; padding: 0 2px; }
