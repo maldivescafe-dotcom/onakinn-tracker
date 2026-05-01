@@ -600,6 +600,15 @@ header h1 {
 }
 .btn-start:active { transform: scale(0.97); }
 
+/* ========== GENDER BANNER IMAGE ========== */
+.gender-banner-img {
+  width: 100%;
+  max-width: 360px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  display: block;
+}
+
 /* ========== GENDER SCREEN ========== */
 .gender-buttons {
   display: flex;

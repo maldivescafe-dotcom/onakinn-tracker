@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v4';
+const CACHE_NAME = 'energy-v5';
 const ASSETS = [
   './index.html',
   './style.css',
@@ -16,6 +16,7 @@ const ASSETS = [
   './img/level10.jpg', './img/level10f.jpg',
   './img/level11.jpg', './img/level11f.jpg',
   './img/level12.jpg', './img/level12f.jpg',
+  './bg-energy-banner.jpg',
 ];
 
 self.addEventListener('install', e => {
