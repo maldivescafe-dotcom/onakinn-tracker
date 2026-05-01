@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v15';
+const CACHE_NAME = 'energy-v16';
 
 // 動画ファイルはここに登録しない（ブラウザのネイティブキャッシュに任せる）
 const ASSETS = [
