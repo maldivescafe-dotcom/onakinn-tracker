@@ -1908,11 +1908,25 @@ function playLevelUp() {
 // ========== BACKGROUND TOGGLE ==========
 
 const BG_STYLES = [
+  // --- デフォルト壁紙 ---
   'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero.png\') center right/cover no-repeat',
   'linear-gradient(135deg, rgba(20,30,10,0.6), rgba(40,60,10,0.5)), url(\'./bg-hero-male.jpg\') center right/cover no-repeat',
   'linear-gradient(135deg, rgba(10,10,20,0.52), rgba(20,10,30,0.42)), url(\'./bg-hero-female.jpg\') top right/cover no-repeat',
   'linear-gradient(135deg, rgba(10,5,20,0.45), rgba(20,10,30,0.35)), url(\'./female-with-male.png\') top center/cover no-repeat',
   'linear-gradient(135deg, #1a2e0a, #2d4a10)',
+  // --- アクティビティ壁紙 ---
+  'linear-gradient(135deg, rgba(10,20,5,0.58), rgba(5,15,0,0.48)), url(\'./act-workout.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(5,15,25,0.58), rgba(0,10,20,0.48)), url(\'./act-shower.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(10,20,5,0.58), rgba(5,15,0,0.48)), url(\'./act-yoga.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(15,10,25,0.58), rgba(10,5,20,0.48)), url(\'./act-meditation.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(20,5,20,0.55), rgba(15,0,15,0.45)), url(\'./act-tantra.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(10,20,5,0.58), rgba(5,15,0,0.48)), url(\'./act-cleaning.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(5,20,15,0.58), rgba(0,15,10,0.48)), url(\'./act-toilet.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(20,15,5,0.55), rgba(15,10,0,0.45)), url(\'./act-earlyrise.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(10,20,5,0.58), rgba(5,15,0,0.48)), url(\'./act-gratitude.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(20,10,5,0.55), rgba(15,5,0,0.45)), url(\'./act-smile.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(5,20,5,0.58), rgba(0,15,0,0.48)), url(\'./act-veggies.jpg\') center center/cover no-repeat',
+  'linear-gradient(135deg, rgba(20,15,0,0.55), rgba(15,10,0,0.45)), url(\'./act-sowaka.jpg\') center center/cover no-repeat',
 ];
 
 function applyBg() {
