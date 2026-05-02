@@ -1813,37 +1813,6 @@ function onTipPrev() {
   renderTip();
 }
 
-// ========== VIDEO OVERLAY HELPER ==========
-
-function _playOverlay(overlayId, videos, timeoutRef) {
-  const overlay = document.getElementById(overlayId);
-  const validVideos = videos.filter(Boolean);
-  if (!overlay || validVideos.length === 0) return;
-
-  const active = validVideos[Math.floor(Math.random() * validVideos.length)];
-
-  if (timeoutRef.id) { clearTimeout(timeoutRef.id); timeoutRef.id = null; }
-
-  // オーバーレイ内の全動画をリセット（別プールの動画が残らないように）
-  overlay.querySelectorAll('.celebrate-video').forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
-  active.classList.remove('hidden');
-  active.currentTime = 0;
-
-  overlay.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    overlay.classList.add('playing');
-    active.play().catch(() => {});
-  });
-
-  timeoutRef.id = setTimeout(() => {
-    overlay.classList.remove('playing');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      active.pause();
-      active.currentTime = 0;
-    }, 350);
-  }, 5000);
-}
 
 // ========== FEEDBACK HELPER ==========
 
@@ -1913,14 +1882,9 @@ function playActivityVideo(key, onClosed) {
 
 // ========== LEVELUP VIDEO（レベルアップ時） ==========
 
-const _levelupTimer = { id: null };
-
 function playLevelUp() {
   if (!getVideosEnabled()) return;
-  _playOverlay('levelup-overlay', [
-    document.getElementById('levelup-video-1'),
-    // 今後の動画はここに追加: document.getElementById('levelup-video-2'), ...
-  ], _levelupTimer);
+  showRewardModal('./levelup1.mp4', null);
 }
 
 // ========== BACKGROUND TOGGLE ==========
