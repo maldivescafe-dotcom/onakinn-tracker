@@ -1361,8 +1361,8 @@ function updateMoonPhaseBar() {
 // ========== RENDER ==========
 
 let _lastRenderedLevel = -1; // stores level min threshold (number), -1 = unset
-let _pendingCelebrate    = false; // set true by onActivityTap to request celebrate
-let _pendingActivityKey  = null;  // set to activity key when tapped → plays activity-specific video
+let _pendingActivityKey  = null;  // set to activity key when tapped → plays reward modal
+let _pendingFeedbackMsg  = null;  // feedback message to show after modal closes
 let _effectsExpanded = true; // always expanded now
 let _levelsExpanded = false;
 
@@ -1379,15 +1379,14 @@ function render() {
 
   if (didLevelUp) {
     playLevelUp();
-    _pendingCelebrate   = false;
+    showPendingFeedback(); // レベルアップ時はすぐ表示
     _pendingActivityKey = null;
+    _pendingFeedbackMsg = null;
   } else if (_pendingActivityKey) {
-    playActivityVideo(_pendingActivityKey);
-  } else if (_pendingCelebrate) {
-    playCelebrate();
+    const key = _pendingActivityKey;
+    _pendingActivityKey = null;
+    playActivityVideo(key, showPendingFeedback); // モーダルが閉じたら表示
   }
-  _pendingCelebrate   = false;
-  _pendingActivityKey = null;
 
   document.getElementById('points-display').textContent = Math.round(points).toLocaleString();
   document.getElementById('level-label').textContent = currentLevel;
@@ -1644,21 +1643,11 @@ function onActivityTap(key, btn) {
   ptsEl.textContent = tr().alreadyDone;
   btn.removeEventListener('click', () => {});
 
-  // Show feedback
-  const feedbackEl = document.getElementById('activity-feedback');
+  // フィードバックはモーダルが閉じた後に表示（レベルアップ時はrender()内で即表示）
   let msg = tr().pointAdded(result.earned);
   if (result.bonusMsg) msg += '  ' + result.bonusMsg;
-  feedbackEl.textContent = msg;
-  feedbackEl.className = 'activity-feedback show';
-  setTimeout(() => feedbackEl.classList.remove('show'), 2500);
-
-  // Request video — render() will play levelup video instead if level-up occurred
-  const act = ACTIVITIES.find(a => a.key === key);
-  if (act && act.videoGroup && act.videoGroup.length > 0) {
-    _pendingActivityKey = key;
-  } else {
-    _pendingCelebrate = true;
-  }
+  _pendingFeedbackMsg = msg;
+  _pendingActivityKey = key;
 
   // Update main screen
   render();
@@ -1856,45 +1845,70 @@ function _playOverlay(overlayId, videos, timeoutRef) {
   }, 5000);
 }
 
-// ========== CELEBRATE VIDEO（ポイント加算時） ==========
+// ========== FEEDBACK HELPER ==========
 
-const _celebrateTimer = { id: null };
+function showPendingFeedback() {
+  if (!_pendingFeedbackMsg) return;
+  const feedbackEl = document.getElementById('activity-feedback');
+  feedbackEl.textContent = _pendingFeedbackMsg;
+  feedbackEl.className = 'activity-feedback show';
+  setTimeout(() => feedbackEl.classList.remove('show'), 2500);
+  _pendingFeedbackMsg = null;
+}
 
-// アクティビティ専用動画再生（videoGroupが空なら動画なしでスキップ）
-function playActivityVideo(key) {
-  if (!getVideosEnabled()) return;
-  const act = ACTIVITIES.find(a => a.key === key);
-  if (!act || !act.videoGroup || act.videoGroup.length === 0) {
-    return;
-  }
-  const src = act.videoGroup[Math.floor(Math.random() * act.videoGroup.length)];
-  const overlay = document.getElementById('celebrate-overlay');
-  const video   = document.getElementById('activity-video');
-  if (!overlay || !video) return;
+// ========== REWARD MODAL ==========
 
-  if (_celebrateTimer.id) { clearTimeout(_celebrateTimer.id); _celebrateTimer.id = null; }
+let _rewardTimer = null;
 
-  overlay.querySelectorAll('.celebrate-video').forEach(v => { v.classList.add('hidden'); v.pause(); v.currentTime = 0; });
+function showRewardModal(src, onClosed) {
+  const backdrop = document.getElementById('reward-backdrop');
+  const video    = document.getElementById('reward-video');
+  if (!backdrop || !video) { if (onClosed) onClosed(); return; }
 
   const source = video.querySelector('source');
   source.src = src;
   video.load();
-  video.classList.remove('hidden');
 
-  overlay.classList.remove('hidden');
-  requestAnimationFrame(() => {
-    overlay.classList.add('playing');
+  backdrop.classList.remove('hidden');
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    backdrop.classList.add('show');
     video.play().catch(() => {});
-  });
+  }));
 
-  _celebrateTimer.id = setTimeout(() => {
-    overlay.classList.remove('playing');
+  let closed = false;
+  const close = () => {
+    if (closed) return;
+    closed = true;
+    if (_rewardTimer) { clearTimeout(_rewardTimer); _rewardTimer = null; }
+    backdrop.classList.remove('show');
+    backdrop.removeEventListener('click', onBackdropClick);
     setTimeout(() => {
-      overlay.classList.add('hidden');
+      backdrop.classList.add('hidden');
       video.pause();
       video.currentTime = 0;
-    }, 350);
-  }, 5000);
+      source.src = '';
+      if (onClosed) onClosed();
+    }, 280);
+  };
+
+  _rewardTimer = setTimeout(close, 5000);
+
+  const onBackdropClick = (e) => {
+    if (e.target === backdrop || e.target.closest('#reward-close')) close();
+  };
+  backdrop.addEventListener('click', onBackdropClick);
+}
+
+// アクティビティ専用動画再生（videoGroupが空ならフィードバックだけ表示）
+function playActivityVideo(key, onClosed) {
+  if (!getVideosEnabled()) { if (onClosed) onClosed(); return; }
+  const act = ACTIVITIES.find(a => a.key === key);
+  if (!act || !act.videoGroup || act.videoGroup.length === 0) {
+    if (onClosed) onClosed();
+    return;
+  }
+  const src = act.videoGroup[Math.floor(Math.random() * act.videoGroup.length)];
+  showRewardModal(src, onClosed);
 }
 
 // ========== LEVELUP VIDEO（レベルアップ時） ==========

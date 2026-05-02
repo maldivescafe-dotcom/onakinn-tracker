@@ -374,12 +374,14 @@
     </video>
   </div>
 
-  <!-- ======== CELEBRATE OVERLAY ======== -->
-  <div id="celebrate-overlay" class="celebrate-overlay hidden">
-    <!-- アクティビティ専用動画（動的にsrcをセット） -->
-    <video id="activity-video" class="celebrate-video hidden" playsinline muted preload="none">
-      <source src="" type="video/mp4">
-    </video>
+  <!-- ======== REWARD MODAL ======== -->
+  <div id="reward-backdrop" class="reward-backdrop hidden" role="dialog" aria-modal="true" aria-label="ご褒美動画">
+    <div class="reward-modal" id="reward-modal">
+      <button class="reward-close" id="reward-close" aria-label="閉じる">✕</button>
+      <video id="reward-video" class="reward-video" playsinline muted preload="none">
+        <source src="" type="video/mp4">
+      </video>
+    </div>
   </div>
 
   <script src="./app.js?v=10"></script>
