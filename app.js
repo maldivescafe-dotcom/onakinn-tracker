@@ -2254,6 +2254,7 @@ function onResetCancel() {
 
 function onResetConfirm() {
   document.getElementById('reset-modal').classList.remove('open');
+  _lastRenderedLevel = -1; // レベルアップ誤検知防止
   clearAllData();
   showGenderScreen();
 }
