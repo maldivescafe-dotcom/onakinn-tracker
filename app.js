@@ -1868,15 +1868,33 @@ function showRewardModal(src, onClosed) {
   backdrop.addEventListener('click', onBackdropClick);
 }
 
-// アクティビティ専用動画再生（videoGroupが空ならフィードバックだけ表示）
+// celebrate動画プール（汎用ご褒美）
+const CELEBRATE_POOL = [
+  './celebrate.mp4','./celebrate2.mp4','./celebrate3.mp4','./celebrate4.mp4',
+  './celebrate5.mp4','./celebrate6.mp4','./celebrate7.mp4','./celebrate8.mp4',
+  './celebrate9.mp4','./celebrate12.mp4','./celebrate14.mp4','./celebrate15.mp4',
+  './celebrate16.mp4','./celebrate17.mp4','./celebrate18.mp4','./celebrate20.mp4',
+  './celebrate21.mp4','./celebrate22.mp4','./celebrate23.mp4','./celebrate24.mp4',
+  './celebrate25.mp4','./celebrate26.mp4','./celebrate27.mp4','./celebrate28.mp4',
+  './celebrate29.mp4','./celebrate30.mp4','./celebrate31.mp4','./celebrate32.mp4',
+  './celebrate33.mp4','./celebrate34.mp4','./celebrate35.mp4','./celebrate36.mp4',
+];
+
+// アクティビティ動画再生
+// 50%: ボタン専用動画からランダム / 50%: celebrate汎用プールからランダム
 function playActivityVideo(key, onClosed) {
   if (!getVideosEnabled()) { if (onClosed) onClosed(); return; }
   const act = ACTIVITIES.find(a => a.key === key);
-  if (!act || !act.videoGroup || act.videoGroup.length === 0) {
-    if (onClosed) onClosed();
-    return;
+  const hasOwn = act && act.videoGroup && act.videoGroup.length > 0;
+
+  let src;
+  if (hasOwn && Math.random() < 0.5) {
+    // 50%: ボタン専用動画
+    src = act.videoGroup[Math.floor(Math.random() * act.videoGroup.length)];
+  } else {
+    // 50%（または専用動画なし）: celebrate汎用プール
+    src = CELEBRATE_POOL[Math.floor(Math.random() * CELEBRATE_POOL.length)];
   }
-  const src = act.videoGroup[Math.floor(Math.random() * act.videoGroup.length)];
   showRewardModal(src, onClosed);
 }
 
