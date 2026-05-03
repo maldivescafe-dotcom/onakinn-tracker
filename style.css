@@ -449,8 +449,8 @@ header h1 {
   padding: 18px 20px;
 }
 .penalty-buttons {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
 }
 .btn-penalty-inline {
@@ -468,9 +468,31 @@ header h1 {
   text-align: left;
 }
 .btn-penalty-inline:active { background: rgba(239, 68, 68, 0.14); }
+.btn-penalty-inline.has-img {
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+  border-color: rgba(255,255,255,0.15);
+  padding: 0 8px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  aspect-ratio: 16 / 9;
+  gap: 2px;
+}
+.btn-penalty-inline.has-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,5,5,0.88) 40%, rgba(30,5,5,0.15) 100%);
+  border-radius: inherit;
+  z-index: 0;
+}
+.btn-penalty-inline.has-img > * { position: relative; z-index: 1; }
 .penalty-btn-icon { font-size: 1.1rem; flex-shrink: 0; }
-.penalty-btn-label { font-size: 0.92rem; color: var(--text); flex: 1; }
-.penalty-btn-rate { font-size: 0.82rem; color: #fca5a5; font-weight: 700; flex-shrink: 0; }
+.penalty-btn-label { font-size: 0.78rem; color: var(--text); flex: 1; font-weight: 600; line-height: 1.3; }
+.penalty-btn-rate { font-size: 0.72rem; color: #fca5a5; font-weight: 700; flex-shrink: 0; }
 
 /* ========== RECOMMEND CARD ========== */
 .recommend-card {
@@ -840,8 +862,8 @@ header h1 {
   overflow-y: auto;
 }
 .penalty-modal-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 .btn-penalty-modal-item {
@@ -859,9 +881,31 @@ header h1 {
   transition: background 0.15s;
 }
 .btn-penalty-modal-item:active { background: rgba(239,68,68,0.15); }
+.btn-penalty-modal-item.has-img {
+  position: relative;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+  border-color: rgba(255,255,255,0.15);
+  padding: 0 8px 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  aspect-ratio: 16 / 9;
+  gap: 2px;
+}
+.btn-penalty-modal-item.has-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,5,5,0.88) 40%, rgba(30,5,5,0.15) 100%);
+  border-radius: inherit;
+  z-index: 0;
+}
+.btn-penalty-modal-item.has-img > * { position: relative; z-index: 1; }
 .penalty-item-icon { font-size: 1.2rem; flex-shrink: 0; }
-.penalty-item-label { font-size: 0.95rem; color: var(--text); flex: 1; }
-.penalty-item-rate { font-size: 0.85rem; color: #fca5a5; font-weight: 700; flex-shrink: 0; }
+.penalty-item-label { font-size: 0.78rem; color: var(--text); flex: 1; font-weight: 600; line-height: 1.3; }
+.penalty-item-rate { font-size: 0.72rem; color: #fca5a5; font-weight: 700; flex-shrink: 0; }
 
 /* Penalty confirm step */
 .penalty-confirm-box {

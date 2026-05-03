@@ -1,4 +1,4 @@
-const CACHE_NAME = 'energy-v25';
+const CACHE_NAME = 'energy-v26';
 
 // 動画ファイルはここに登録しない（ブラウザのネイティブキャッシュに任せる）
 const ASSETS = [
@@ -23,6 +23,9 @@ const ASSETS = [
   './act-meditation.jpg','./act-tantra.jpg',    './act-cleaning.jpg',
   './act-toilet.jpg',    './act-earlyrise.jpg', './act-gratitude.jpg',
   './act-smile.jpg',     './act-veggies.jpg',   './act-sowaka.jpg',
+  './pen-porn.jpg',      './pen-solo.jpg',      './pen-sex.jpg',
+  './pen-junk.jpg',      './pen-sugar.jpg',     './pen-alcohol.jpg',
+  './pen-sleep.jpg',     './pen-sns.jpg',
   './levelup1.mp4',
 ];
 

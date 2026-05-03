@@ -724,25 +724,25 @@ function getPenalties() {
   const sexEjacRate = getSexEjacPct() / 100;
   if (gender === 'female') {
     return [
-      { key: 'porn_solo',   icon: '⛔', ja: 'ポルノ＋自慰',      en: 'Porn + Solo',        rate: 0.35, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
-      { key: 'solo',        icon: '💜', ja: '自慰（ポルノなし）', en: 'Self-care Solo',      rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: true,  isSexEjac: false },
-      { key: 'sex',         icon: '💛', ja: 'セックス',            en: 'Sex',                 rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
-      { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',        en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-      { key: 'sugar',       icon: '🍬', ja: '糖質過多',               en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-      { key: 'alcohol',     icon: '🍺', ja: '過度な飲酒',            en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-      { key: 'bad_sleep',   icon: '🌙', ja: '睡眠不足・夜更かし',    en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-      { key: 'sns',         icon: '📱', ja: '長時間SNS',              en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'porn_solo',   icon: '⛔', img: './pen-porn.jpg',    ja: 'ポルノ＋自慰',      en: 'Porn + Solo',        rate: 0.35, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+      { key: 'solo',        icon: '💜', img: './pen-solo.jpg',    ja: '自慰（ポルノなし）', en: 'Self-care Solo',      rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: true,  isSexEjac: false },
+      { key: 'sex',         icon: '💛', img: './pen-sex.jpg',     ja: 'セックス',            en: 'Sex',                 rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
+      { key: 'junk',        icon: '🍔', img: './pen-junk.jpg',    ja: 'ジャンクフード',        en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'sugar',       icon: '🍬', img: './pen-sugar.jpg',   ja: '糖質過多',               en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'alcohol',     icon: '🍺', img: './pen-alcohol.jpg', ja: '過度な飲酒',            en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'bad_sleep',   icon: '🌙', img: './pen-sleep.jpg',   ja: '睡眠不足・夜更かし',    en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+      { key: 'sns',         icon: '📱', img: './pen-sns.jpg',     ja: '長時間SNS',              en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
     ];
   }
   return [
-    { key: 'porn_solo',   icon: '⛔', ja: 'ポルノ＋自慰（射精）',  en: 'Porn + Solo (ejac)',    rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
-    { key: 'solo',        icon: '⚠️', ja: '自慰（射精あり）',       en: 'Solo (ejaculation)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
-    { key: 'sex_ejac',    icon: '💛', ja: 'セックス（射精あり）',   en: 'Sex (ejaculation)',     rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
-    { key: 'junk',        icon: '🍔', ja: 'ジャンクフード',          en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-    { key: 'sugar',       icon: '🍬', ja: '糖質過多',                 en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-    { key: 'alcohol',     icon: '🍺', ja: '過度な飲酒',              en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-    { key: 'bad_sleep',   icon: '🌙', ja: '睡眠不足・夜更かし',      en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
-    { key: 'sns',         icon: '📱', ja: '長時間SNS',                en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'porn_solo',   icon: '⛔', img: './pen-porn.jpg',    ja: 'ポルノ＋自慰（射精）',  en: 'Porn + Solo (ejac)',    rate: 0.65, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+    { key: 'solo',        icon: '⚠️', img: './pen-solo.jpg',    ja: '自慰（射精あり）',       en: 'Solo (ejaculation)',    rate: 0.45, isEjac: true,  isSoloEjac: true,  isFemaleB: false, isSexEjac: false },
+    { key: 'sex_ejac',    icon: '💛', img: './pen-sex.jpg',     ja: 'セックス（射精あり）',   en: 'Sex (ejaculation)',     rate: sexEjacRate, isEjac: sexEjacRate > 0, isSoloEjac: false, isFemaleB: false, isSexEjac: true },
+    { key: 'junk',        icon: '🍔', img: './pen-junk.jpg',    ja: 'ジャンクフード',          en: 'Junk Food',             rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'sugar',       icon: '🍬', img: './pen-sugar.jpg',   ja: '糖質過多',                 en: 'Excess Sugar',           rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'alcohol',     icon: '🍺', img: './pen-alcohol.jpg', ja: '過度な飲酒',              en: 'Excessive Alcohol',     rate: 0.10, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'bad_sleep',   icon: '🌙', img: './pen-sleep.jpg',   ja: '睡眠不足・夜更かし',      en: 'Sleep Deprivation',     rate: 0.08, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
+    { key: 'sns',         icon: '📱', img: './pen-sns.jpg',     ja: '長時間SNS',                en: 'Long SNS Scroll',       rate: 0.05, isEjac: false, isSoloEjac: false, isFemaleB: false, isSexEjac: false },
   ];
 }
 
@@ -1557,9 +1557,15 @@ function renderPenaltyButtons() {
   penalties.forEach(p => {
     const label = lang === 'en' ? p.en : p.ja;
     const btn = document.createElement('button');
-    btn.className = 'btn-penalty-inline';
     btn.dataset.key = p.key;
-    btn.innerHTML = `<span class="penalty-btn-icon">${p.icon}</span><span class="penalty-btn-label">${label}</span><span class="penalty-btn-rate">${penaltyRateLabel(p)}</span>`;
+    if (p.img) {
+      btn.className = 'btn-penalty-inline has-img';
+      btn.style.backgroundImage = `url('${p.img}')`;
+      btn.innerHTML = `<span class="penalty-btn-label">${label}</span><span class="penalty-btn-rate">${penaltyRateLabel(p)}</span>`;
+    } else {
+      btn.className = 'btn-penalty-inline';
+      btn.innerHTML = `<span class="penalty-btn-icon">${p.icon}</span><span class="penalty-btn-label">${label}</span><span class="penalty-btn-rate">${penaltyRateLabel(p)}</span>`;
+    }
     btn.addEventListener('click', () => openPenaltyConfirm(p.key));
     container.appendChild(btn);
   });
@@ -1680,15 +1686,23 @@ function renderPenaltyModalList() {
   list.innerHTML = '';
   getPenalties().forEach(p => {
     const label = lang === 'en' ? p.en : p.ja;
-    const pct = Math.round(p.rate * 100);
     const btn = document.createElement('button');
-    btn.className = 'btn-penalty-modal-item';
     btn.dataset.key = p.key;
-    btn.innerHTML = `
-      <span class="penalty-item-icon">${p.icon}</span>
-      <span class="penalty-item-label">${label}</span>
-      <span class="penalty-item-rate">${penaltyRateLabel(p)}</span>
-    `;
+    if (p.img) {
+      btn.className = 'btn-penalty-modal-item has-img';
+      btn.style.backgroundImage = `url('${p.img}')`;
+      btn.innerHTML = `
+        <span class="penalty-item-label">${label}</span>
+        <span class="penalty-item-rate">${penaltyRateLabel(p)}</span>
+      `;
+    } else {
+      btn.className = 'btn-penalty-modal-item';
+      btn.innerHTML = `
+        <span class="penalty-item-icon">${p.icon}</span>
+        <span class="penalty-item-label">${label}</span>
+        <span class="penalty-item-rate">${penaltyRateLabel(p)}</span>
+      `;
+    }
     btn.addEventListener('click', () => openPenaltyConfirm(p.key));
     list.appendChild(btn);
   });
