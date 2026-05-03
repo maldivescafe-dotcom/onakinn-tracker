@@ -1672,6 +1672,10 @@ function openPenaltyModal() {
 
 function closePenaltyModal() {
   document.getElementById('penalty-modal').classList.remove('open');
+  const modalEl = document.querySelector('.modal-penalty');
+  modalEl.style.backgroundImage = '';
+  modalEl.style.backgroundSize = '';
+  modalEl.style.backgroundPosition = '';
   selectedPenaltyKey = null;
 }
 
@@ -1738,6 +1742,19 @@ function openPenaltyConfirm(key) {
     renderPenaltyModalList();
     modal.classList.add('open');
   }
+
+  // Set background image to the selected penalty's image
+  const modalEl = modal.querySelector('.modal-penalty');
+  if (p.img) {
+    modalEl.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.80)), url('${p.img}')`;
+    modalEl.style.backgroundSize = 'cover';
+    modalEl.style.backgroundPosition = 'center';
+  } else {
+    modalEl.style.backgroundImage = '';
+    modalEl.style.backgroundSize = '';
+    modalEl.style.backgroundPosition = '';
+  }
+
   showPenaltyStep(2);
 }
 
